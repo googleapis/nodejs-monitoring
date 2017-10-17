@@ -1,5 +1,5 @@
 {
-  "repository": "GoogleCloudPlatform/google-cloud-node",
+  "repository": "googleapis/nodejs-monitoring",
   "name": "@google-cloud/monitoring",
   "version": "0.3.0",
   "author": "Google Inc",
