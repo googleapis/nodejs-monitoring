@@ -254,7 +254,7 @@ require(`yargs`)
   .command(`list [projectId]`, `Lists uptime check configs.`, {}, opts =>
     listUptimeCheckConfigs(opts.projectId)
   )
-  .command(`list-ips`, `Lists uptime check config IPs.`, {}, opts =>
+  .command(`list-ips`, `Lists uptime check config IPs.`, {}, () =>
     listUptimeCheckIps()
   )
   .command(

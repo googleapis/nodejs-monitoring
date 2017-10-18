@@ -65,7 +65,7 @@ const request = {
 client
   .createTimeSeries(request)
   .then(results => {
-    console.log(`Done writing time series data.`);
+    console.log(`Done writing time series data.`, results[0]);
   })
   .catch(err => {
     console.error('ERROR:', err);

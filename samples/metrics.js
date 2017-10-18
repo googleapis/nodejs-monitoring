@@ -178,7 +178,7 @@ function deleteMetricDescriptor(projectId, metricId) {
   client
     .deleteMetricDescriptor(request)
     .then(results => {
-      console.log(`Deleted ${metricId}`);
+      console.log(`Deleted ${metricId}`, results[0]);
     })
     .catch(err => {
       console.error('ERROR:', err);
@@ -186,7 +186,7 @@ function deleteMetricDescriptor(projectId, metricId) {
   // [END monitoring_delete_metric]
 }
 
-function writeTimeSeriesData(projectId, metricId) {
+function writeTimeSeriesData(projectId) {
   // [START monitoring_write_timeseries]
   // Imports the Google Cloud client library
   const Monitoring = require('@google-cloud/monitoring');
@@ -235,7 +235,7 @@ function writeTimeSeriesData(projectId, metricId) {
   client
     .createTimeSeries(request)
     .then(results => {
-      console.log(`Done writing time series data.`);
+      console.log(`Done writing time series data.`, results[0]);
     })
     .catch(err => {
       console.error('ERROR:', err);

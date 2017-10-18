@@ -15,7 +15,6 @@
 
 'use strict';
 
-const client = require(`@google-cloud/monitoring`).uptimeCheck();
 const path = require(`path`);
 const test = require(`ava`);
 const tools = require(`@google-cloud/nodejs-repo-tools`);
