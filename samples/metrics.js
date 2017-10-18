@@ -26,10 +26,10 @@
 function createMetricDescriptor(projectId) {
   // [START monitoring_create_metric]
   // Imports the Google Cloud client library
-  const Monitoring = require('@google-cloud/monitoring');
+  const monitoring = require('@google-cloud/monitoring');
 
   // Creates a client
-  const client = Monitoring.metric();
+  const client = new monitoring.MetricServiceClient();
 
   /**
    * TODO(developer): Uncomment and edit the following lines of code.
@@ -84,10 +84,10 @@ function createMetricDescriptor(projectId) {
 function listMetricDescriptors(projectId) {
   // [START monitoring_list_descriptors]
   // Imports the Google Cloud client library
-  const Monitoring = require('@google-cloud/monitoring');
+  const monitoring = require('@google-cloud/monitoring');
 
   // Creates a client
-  const client = Monitoring.metric();
+  const client = new monitoring.MetricServiceClient();
 
   /**
    * TODO(developer): Uncomment and edit the following lines of code.
@@ -116,10 +116,10 @@ function listMetricDescriptors(projectId) {
 function getMetricDescriptor(projectId, metricId) {
   // [START monitoring_get_descriptor]
   // Imports the Google Cloud client library
-  const Monitoring = require('@google-cloud/monitoring');
+  const monitoring = require('@google-cloud/monitoring');
 
   // Creates a client
-  const client = Monitoring.metric();
+  const client = new monitoring.MetricServiceClient();
 
   /**
    * TODO(developer): Uncomment and edit the following lines of code.
@@ -159,10 +159,10 @@ function getMetricDescriptor(projectId, metricId) {
 function deleteMetricDescriptor(projectId, metricId) {
   // [START monitoring_delete_metric]
   // Imports the Google Cloud client library
-  const Monitoring = require('@google-cloud/monitoring');
+  const monitoring = require('@google-cloud/monitoring');
 
   // Creates a client
-  const client = Monitoring.metric();
+  const client = new monitoring.MetricServiceClient();
 
   /**
    * TODO(developer): Uncomment and edit the following lines of code.
@@ -189,10 +189,10 @@ function deleteMetricDescriptor(projectId, metricId) {
 function writeTimeSeriesData(projectId) {
   // [START monitoring_write_timeseries]
   // Imports the Google Cloud client library
-  const Monitoring = require('@google-cloud/monitoring');
+  const monitoring = require('@google-cloud/monitoring');
 
   // Creates a client
-  const client = Monitoring.metric();
+  const client = new monitoring.MetricServiceClient();
 
   /**
    * TODO(developer): Uncomment and edit the following lines of code.
@@ -246,10 +246,10 @@ function writeTimeSeriesData(projectId) {
 function readTimeSeriesData(projectId, filter) {
   // [START monitoring_read_timeseries_simple]
   // Imports the Google Cloud client library
-  const Monitoring = require('@google-cloud/monitoring');
+  const monitoring = require('@google-cloud/monitoring');
 
   // Creates a client
-  const client = Monitoring.metric();
+  const client = new monitoring.MetricServiceClient();
 
   /**
    * TODO(developer): Uncomment and edit the following lines of code.
@@ -293,10 +293,10 @@ function readTimeSeriesData(projectId, filter) {
 function readTimeSeriesFields(projectId) {
   // [START monitoring_read_timeseries_fields]
   // Imports the Google Cloud client library
-  const Monitoring = require('@google-cloud/monitoring');
+  const monitoring = require('@google-cloud/monitoring');
 
   // Creates a client
-  const client = Monitoring.metric();
+  const client = new monitoring.MetricServiceClient();
 
   /**
    * TODO(developer): Uncomment and edit the following lines of code.
@@ -340,10 +340,10 @@ function readTimeSeriesFields(projectId) {
 function readTimeSeriesAggregate(projectId) {
   // [START monitoring_read_timeseries_align]
   // Imports the Google Cloud client library
-  const Monitoring = require('@google-cloud/monitoring');
+  const monitoring = require('@google-cloud/monitoring');
 
   // Creates a client
-  const client = Monitoring.metric();
+  const client = new monitoring.MetricServiceClient();
 
   /**
    * TODO(developer): Uncomment and edit the following lines of code.
@@ -393,10 +393,10 @@ function readTimeSeriesAggregate(projectId) {
 function readTimeSeriesReduce(projectId) {
   // [START monitoring_read_timeseries_reduce]
   // Imports the Google Cloud client library
-  const Monitoring = require('@google-cloud/monitoring');
+  const monitoring = require('@google-cloud/monitoring');
 
   // Creates a client
-  const client = Monitoring.metric();
+  const client = new monitoring.MetricServiceClient();
 
   /**
    * TODO(developer): Uncomment and edit the following lines of code.
@@ -444,10 +444,10 @@ function readTimeSeriesReduce(projectId) {
 function listMonitoredResourceDescriptors(projectId) {
   // [START monitoring_list_resources]
   // Imports the Google Cloud client library
-  const Monitoring = require('@google-cloud/monitoring');
+  const monitoring = require('@google-cloud/monitoring');
 
   // Creates a client
-  const client = Monitoring.metric();
+  const client = new monitoring.MetricServiceClient();
 
   /**
    * TODO(developer): Uncomment and edit the following lines of code.
@@ -466,11 +466,6 @@ function listMonitoredResourceDescriptors(projectId) {
 
       console.log('Monitored Resource Descriptors:');
       descriptors.forEach(descriptor => {
-        if (descriptor.type === 'uptime_url') {
-          console.log(JSON.stringify(descriptor, null, 2));
-        } else {
-          return;
-        }
         console.log(descriptor.name);
         console.log(`  Type: ${descriptor.type}`);
         if (descriptor.labels) {
@@ -481,6 +476,7 @@ function listMonitoredResourceDescriptors(projectId) {
             );
           });
         }
+        console.log();
       });
     })
     .catch(err => {
@@ -492,10 +488,10 @@ function listMonitoredResourceDescriptors(projectId) {
 function getMonitoredResourceDescriptor(projectId, resourceType) {
   // [START monitoring_get_resource]
   // Imports the Google Cloud client library
-  const Monitoring = require('@google-cloud/monitoring');
+  const monitoring = require('@google-cloud/monitoring');
 
   // Creates a client
-  const client = Monitoring.metric();
+  const client = new monitoring.MetricServiceClient();
 
   /**
    * TODO(developer): Uncomment and edit the following lines of code.

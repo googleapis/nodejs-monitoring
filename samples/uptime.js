@@ -26,10 +26,10 @@
 function createUptimeCheckConfig(projectId, gceInstanceId) {
   // [START monitoring_uptime_check_create]
   // Imports the Google Cloud client library
-  const Monitoring = require('@google-cloud/monitoring');
+  const monitoring = require('@google-cloud/monitoring');
 
   // Creates a client
-  const client = Monitoring.uptimeCheck();
+  const client = new monitoring.UptimeCheckServiceClient();
 
   /**
    * TODO(developer): Uncomment and edit the following lines of code.
@@ -42,7 +42,7 @@ function createUptimeCheckConfig(projectId, gceInstanceId) {
     parent: client.projectPath(projectId),
     uptimeCheckConfig: {
       displayName: 'My GCE Instance Uptime Check',
-      resource: {
+      monitoredResource: {
         // See the Uptime Check docs for supported MonitoredResource types
         type: 'gce_instance',
         labels: {instance_id: gceInstanceId},
@@ -62,7 +62,7 @@ function createUptimeCheckConfig(projectId, gceInstanceId) {
       console.log('Uptime check created:');
       console.log(`ID: ${uptimeCheckConfig.name}`);
       console.log(`Display Name: ${uptimeCheckConfig.displayName}`);
-      console.log(`Resource: %j`, uptimeCheckConfig.resource);
+      console.log(`Resource: %j`, uptimeCheckConfig.monitoredResource);
       console.log(`Period: %j`, uptimeCheckConfig.period);
       console.log(`Timeout: %j`, uptimeCheckConfig.timeout);
       console.log(`Check type: ${uptimeCheckConfig.check_request_type}`);
@@ -86,10 +86,10 @@ function createUptimeCheckConfig(projectId, gceInstanceId) {
 function listUptimeCheckConfigs(projectId) {
   // [START monitoring_uptime_check_list_configs]
   // Imports the Google Cloud client library
-  const Monitoring = require('@google-cloud/monitoring');
+  const monitoring = require('@google-cloud/monitoring');
 
   // Creates a client
-  const client = Monitoring.uptimeCheck();
+  const client = new monitoring.UptimeCheckServiceClient();
 
   /**
    * TODO(developer): Uncomment and edit the following lines of code.
@@ -109,7 +109,7 @@ function listUptimeCheckConfigs(projectId) {
       uptimeCheckConfigs.forEach(uptimeCheckConfig => {
         console.log(`ID: ${uptimeCheckConfig.name}`);
         console.log(`  Display Name: ${uptimeCheckConfig.displayName}`);
-        console.log(`  Resource: %j`, uptimeCheckConfig.resource);
+        console.log(`  Resource: %j`, uptimeCheckConfig.monitoredResource);
         console.log(`  Period: %j`, uptimeCheckConfig.period);
         console.log(`  Timeout: %j`, uptimeCheckConfig.timeout);
         console.log(`  Check type: ${uptimeCheckConfig.check_request_type}`);
@@ -136,10 +136,10 @@ function listUptimeCheckConfigs(projectId) {
 function listUptimeCheckIps() {
   // [START monitoring_uptime_check_list_ips]
   // Imports the Google Cloud client library
-  const Monitoring = require('@google-cloud/monitoring');
+  const monitoring = require('@google-cloud/monitoring');
 
   // Creates a client
-  const client = Monitoring.uptimeCheck();
+  const client = new monitoring.UptimeCheckServiceClient();
 
   // List uptime check IPs
   client
@@ -163,10 +163,10 @@ function listUptimeCheckIps() {
 function getUptimeCheckConfig(projectId, uptimeCheckConfigId) {
   // [START monitoring_uptime_check_get]
   // Imports the Google Cloud client library
-  const Monitoring = require('@google-cloud/monitoring');
+  const monitoring = require('@google-cloud/monitoring');
 
   // Creates a client
-  const client = Monitoring.uptimeCheck();
+  const client = new monitoring.UptimeCheckServiceClient();
 
   /**
    * TODO(developer): Uncomment and edit the following lines of code.
@@ -189,7 +189,7 @@ function getUptimeCheckConfig(projectId, uptimeCheckConfigId) {
 
       console.log(`ID: ${uptimeCheckConfig.name}`);
       console.log(`Display Name: ${uptimeCheckConfig.displayName}`);
-      console.log(`Resource: %j`, uptimeCheckConfig.resource);
+      console.log(`Resource: %j`, uptimeCheckConfig.monitoredResource);
       console.log(`Period: %j`, uptimeCheckConfig.period);
       console.log(`Timeout: %j`, uptimeCheckConfig.timeout);
       console.log(`Check type: ${uptimeCheckConfig.check_request_type}`);
@@ -213,10 +213,10 @@ function getUptimeCheckConfig(projectId, uptimeCheckConfigId) {
 function deleteUptimeCheckConfig(projectId, uptimeCheckConfigId) {
   // [START monitoring_uptime_check_delete]
   // Imports the Google Cloud client library
-  const Monitoring = require('@google-cloud/monitoring');
+  const monitoring = require('@google-cloud/monitoring');
 
   // Creates a client
-  const client = Monitoring.uptimeCheck();
+  const client = new monitoring.UptimeCheckServiceClient();
 
   /**
    * TODO(developer): Uncomment and edit the following lines of code.
