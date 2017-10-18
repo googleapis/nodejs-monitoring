@@ -57,7 +57,7 @@
     "lodash.union": "^4.6.0"
   },
   "devDependencies": {
-    "@google-cloud/nodejs-repo-tools": "^2.0.9",
+    "@google-cloud/nodejs-repo-tools": "^2.0.10",
     "eslint": "^4.9.0",
     "eslint-config-prettier": "^2.6.0",
     "eslint-plugin-node": "^5.2.0",
