@@ -2,8 +2,6 @@
 
 # Stackdriver Monitoring: Node.js Client
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/googleapis/nodejs-monitoring.svg)](https://greenkeeper.io/)
-
 [![release level](https://img.shields.io/badge/release%20level-beta-yellow.svg?style&#x3D;flat)](https://cloud.google.com/terms/launch-stages)
 [![CircleCI](https://img.shields.io/circleci/project/github/googleapis/nodejs-monitoring.svg?style=flat)](https://circleci.com/gh/googleapis/nodejs-monitoring)
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/googleapis/nodejs-monitoring?branch=master&svg=true)](https://ci.appveyor.com/project/googleapis/nodejs-monitoring)
