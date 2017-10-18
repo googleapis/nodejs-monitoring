@@ -811,7 +811,7 @@ class GroupServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectName(projectName) {
-    return projectPathTemplate.match(projectName).project;
+    return this._pathTemplates.projectPathTemplate.match(projectName).project;
   }
 
   /**
@@ -822,7 +822,7 @@ class GroupServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromGroupName(groupName) {
-    return groupPathTemplate.match(groupName).project;
+    return this._pathTemplates.groupPathTemplate.match(groupName).project;
   }
 
   /**
@@ -833,7 +833,7 @@ class GroupServiceClient {
    * @returns {String} - A string representing the group.
    */
   matchGroupFromGroupName(groupName) {
-    return groupPathTemplate.match(groupName).group;
+    return this._pathTemplates.groupPathTemplate.match(groupName).group;
   }
 }
 

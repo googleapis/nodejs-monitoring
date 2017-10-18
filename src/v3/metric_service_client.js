@@ -1114,7 +1114,7 @@ class MetricServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectName(projectName) {
-    return projectPathTemplate.match(projectName).project;
+    return this._pathTemplates.projectPathTemplate.match(projectName).project;
   }
 
   /**
@@ -1125,7 +1125,9 @@ class MetricServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromMetricDescriptorName(metricDescriptorName) {
-    return metricDescriptorPathTemplate.match(metricDescriptorName).project;
+    return this._pathTemplates.metricDescriptorPathTemplate.match(
+      metricDescriptorName
+    ).project;
   }
 
   /**
@@ -1136,8 +1138,9 @@ class MetricServiceClient {
    * @returns {String} - A string representing the metric_descriptor.
    */
   matchMetricDescriptorFromMetricDescriptorName(metricDescriptorName) {
-    return metricDescriptorPathTemplate.match(metricDescriptorName)
-      .metric_descriptor;
+    return this._pathTemplates.metricDescriptorPathTemplate.match(
+      metricDescriptorName
+    ).metric_descriptor;
   }
 
   /**
@@ -1150,7 +1153,7 @@ class MetricServiceClient {
   matchProjectFromMonitoredResourceDescriptorName(
     monitoredResourceDescriptorName
   ) {
-    return monitoredResourceDescriptorPathTemplate.match(
+    return this._pathTemplates.monitoredResourceDescriptorPathTemplate.match(
       monitoredResourceDescriptorName
     ).project;
   }
@@ -1165,7 +1168,7 @@ class MetricServiceClient {
   matchMonitoredResourceDescriptorFromMonitoredResourceDescriptorName(
     monitoredResourceDescriptorName
   ) {
-    return monitoredResourceDescriptorPathTemplate.match(
+    return this._pathTemplates.monitoredResourceDescriptorPathTemplate.match(
       monitoredResourceDescriptorName
     ).monitored_resource_descriptor;
   }

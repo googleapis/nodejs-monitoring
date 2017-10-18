@@ -783,7 +783,7 @@ class UptimeCheckServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectName(projectName) {
-    return projectPathTemplate.match(projectName).project;
+    return this._pathTemplates.projectPathTemplate.match(projectName).project;
   }
 
   /**
@@ -794,7 +794,9 @@ class UptimeCheckServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromUptimeCheckConfigName(uptimeCheckConfigName) {
-    return uptimeCheckConfigPathTemplate.match(uptimeCheckConfigName).project;
+    return this._pathTemplates.uptimeCheckConfigPathTemplate.match(
+      uptimeCheckConfigName
+    ).project;
   }
 
   /**
@@ -805,8 +807,9 @@ class UptimeCheckServiceClient {
    * @returns {String} - A string representing the uptime_check_config.
    */
   matchUptimeCheckConfigFromUptimeCheckConfigName(uptimeCheckConfigName) {
-    return uptimeCheckConfigPathTemplate.match(uptimeCheckConfigName)
-      .uptime_check_config;
+    return this._pathTemplates.uptimeCheckConfigPathTemplate.match(
+      uptimeCheckConfigName
+    ).uptime_check_config;
   }
 }
 
