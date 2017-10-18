@@ -29,13 +29,13 @@ const client = Monitoring.v3.metric();
 const dataPoint = {
   interval: {
     endTime: {
-      seconds: Date.now() / 1000
-    }
+      seconds: Date.now() / 1000,
+    },
   },
   value: {
     // The amount of sales
-    doubleValue: 123.45
-  }
+    doubleValue: 123.45,
+  },
 };
 
 // Prepares the time series request
@@ -47,28 +47,27 @@ const request = {
       metric: {
         type: 'custom.googleapis.com/stores/daily_sales',
         labels: {
-          store_id: 'Pittsburgh'
-        }
+          store_id: 'Pittsburgh',
+        },
       },
       resource: {
         type: 'global',
         labels: {
-          project_id: projectId
-        }
+          project_id: projectId,
+        },
       },
-      points: [
-        dataPoint
-      ]
-    }
-  ]
+      points: [dataPoint],
+    },
+  ],
 };
 
 // Writes time series data
-client.createTimeSeries(request)
-  .then((results) => {
-    console.log(`Done writing time series data.`);
+client
+  .createTimeSeries(request)
+  .then(results => {
+    console.log(`Done writing time series data.`, results[0]);
   })
-  .catch((err) => {
+  .catch(err => {
     console.error('ERROR:', err);
   });
 // [END monitoring_quickstart]
