@@ -159,8 +159,8 @@ test(`should read time series data aggregated`, async t => {
   t.regex(output, /CPU utilization:/);
   timeSeries.forEach(data => {
     t.regex(output, new RegExp(data.metric.labels.instance_name));
-    t.regex(output, /  Now: 0\.\d+/);
-    t.regex(output, /  10 min ago: 0\.\d+/);
+    t.regex(output, / Now: 0\.\d+/);
+    t.regex(output, / 10 min ago: 0\.\d+/);
   });
 });
 
