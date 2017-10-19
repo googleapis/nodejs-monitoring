@@ -17,7 +17,7 @@
 
 // [START monitoring_quickstart]
 // Imports the Google Cloud client library
-const monitoring = require('@google-cloud/monitoring').v3;
+const monitoring = require('@google-cloud/monitoring');
 
 // Your Google Cloud Platform project ID
 const projectId = 'YOUR_PROJECT_ID';

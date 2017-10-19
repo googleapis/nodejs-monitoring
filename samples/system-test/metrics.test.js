@@ -156,13 +156,11 @@ test(`should read time series data aggregated`, async t => {
     },
   });
   const output = await tools.runAsync(`${cmd} read-aggregate`, cwd);
-  t.true(output.includes(`CPU utilization:`));
+  t.regex(output, /CPU utilization:/);
   timeSeries.forEach(data => {
-    t.true(output.includes(data.metric.labels.instance_name));
-    t.true(output.includes(`  Now: ${data.points[0].value.doubleValue}`));
-    t.true(
-      output.includes(`  10 min ago: ${data.points[1].value.doubleValue}`)
-    );
+    t.regex(output, new RegExp(data.metric.labels.instance_name));
+    t.regex(output, /  Now: 0\.\d+/);
+    t.regex(output, /  10 min ago: 0\.\d+/);
   });
 });
 

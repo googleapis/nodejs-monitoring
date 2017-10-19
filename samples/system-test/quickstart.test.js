@@ -55,9 +55,7 @@ test.cb(`should list time series`, t => {
 
   proxyquire(`../quickstart`, {
     '@google-cloud/monitoring': {
-      v3: {
-        MetricServiceClient: sinon.stub().returns(clientMock),
-      },
+      MetricServiceClient: sinon.stub().returns(clientMock),
     },
   });
 });
