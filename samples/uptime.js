@@ -278,10 +278,7 @@ require(`yargs`)
       type: 'string',
     },
   })
-  .example(
-    `node $0 create mydomain.com`,
-    'Create an uptime check.'
-  )
+  .example(`node $0 create mydomain.com`, 'Create an uptime check.')
   .example(`node $0 list`, 'List all uptime check configs.')
   .example(
     `node $0 list "resource.type = gce_instance AND resource.label.instance_id = mongodb"`,

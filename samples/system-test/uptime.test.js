@@ -33,10 +33,7 @@ test(`should list uptime-check ips`, async t => {
 let id;
 
 test.serial(`should create an uptime check`, async t => {
-  const results = await tools.runAsyncWithIO(
-    `${cmd} create ${hostname}`,
-    cwd
-  );
+  const results = await tools.runAsyncWithIO(`${cmd} create ${hostname}`, cwd);
   const output = results.stdout + results.stderr;
   const matches = output.match(
     new RegExp(`ID: projects/${projectId}/uptimeCheckConfigs/(.+)`)
@@ -66,9 +63,7 @@ test.serial(`should list uptime checks`, async t => {
       const results = await tools.runAsyncWithIO(`${cmd} list`, cwd);
       const output = results.stdout + results.stderr;
       assert(/"type":"uptime_url"/.test(output));
-      assert(
-        new RegExp(`"labels":{"host":"${hostname}"}`).test(output)
-      );
+      assert(new RegExp(`"labels":{"host":"${hostname}"}`).test(output));
       assert(/Display Name: My Uptime Check/.test(output));
     })
     .start();
