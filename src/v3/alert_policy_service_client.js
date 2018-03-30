@@ -104,6 +104,21 @@ class AlertPolicyServiceClient {
       )
     );
 
+    // This API contains "path templates"; forward-slash-separated
+    // identifiers to uniquely identify resources within the API.
+    // Create useful helper objects for these.
+    this._pathTemplates = {
+      projectPathTemplate: new gax.PathTemplate(
+        'projects/{project}'
+      ),
+      alertPolicyPathTemplate: new gax.PathTemplate(
+        'projects/{project}/alertPolicies/{alert_policy}'
+      ),
+      alertPolicyConditionPathTemplate: new gax.PathTemplate(
+        'projects/{project}/alertPolicies/{alert_policy}/conditions/{condition}'
+      ),
+    };
+
     // Some of the methods on this service return "paged" results,
     // (e.g. 50 results at a time, with tokens to get subsequent
     // pages). Denote the keys used for pagination and results.
@@ -388,7 +403,7 @@ class AlertPolicyServiceClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Gets a single alerting policy.
@@ -621,6 +636,131 @@ class AlertPolicyServiceClient {
 
     return this._innerApiCalls.updateAlertPolicy(request, options, callback);
   }
+
+  // --------------------
+  // -- Path templates --
+  // --------------------
+
+  /**
+   * Return a fully-qualified project resource name string.
+   *
+   * @param {String} project
+   * @returns {String}
+   */
+  projectPath(project) {
+    return this._pathTemplates.projectPathTemplate.render({
+      project: project,
+    });
+  }
+
+  /**
+   * Return a fully-qualified alert_policy resource name string.
+   *
+   * @param {String} project
+   * @param {String} alertPolicy
+   * @returns {String}
+   */
+  alertPolicyPath(project, alertPolicy) {
+    return this._pathTemplates.alertPolicyPathTemplate.render({
+      project: project,
+      alert_policy: alertPolicy,
+    });
+  }
+
+  /**
+   * Return a fully-qualified alert_policy_condition resource name string.
+   *
+   * @param {String} project
+   * @param {String} alertPolicy
+   * @param {String} condition
+   * @returns {String}
+   */
+  alertPolicyConditionPath(project, alertPolicy, condition) {
+    return this._pathTemplates.alertPolicyConditionPathTemplate.render({
+      project: project,
+      alert_policy: alertPolicy,
+      condition: condition,
+    });
+  }
+
+  /**
+   * Parse the projectName from a project resource.
+   *
+   * @param {String} projectName
+   *   A fully-qualified path representing a project resources.
+   * @returns {String} - A string representing the project.
+   */
+  matchProjectFromProjectName(projectName) {
+    return this._pathTemplates.projectPathTemplate
+      .match(projectName)
+      .project;
+  }
+
+  /**
+   * Parse the alertPolicyName from a alert_policy resource.
+   *
+   * @param {String} alertPolicyName
+   *   A fully-qualified path representing a alert_policy resources.
+   * @returns {String} - A string representing the project.
+   */
+  matchProjectFromAlertPolicyName(alertPolicyName) {
+    return this._pathTemplates.alertPolicyPathTemplate
+      .match(alertPolicyName)
+      .project;
+  }
+
+  /**
+   * Parse the alertPolicyName from a alert_policy resource.
+   *
+   * @param {String} alertPolicyName
+   *   A fully-qualified path representing a alert_policy resources.
+   * @returns {String} - A string representing the alert_policy.
+   */
+  matchAlertPolicyFromAlertPolicyName(alertPolicyName) {
+    return this._pathTemplates.alertPolicyPathTemplate
+      .match(alertPolicyName)
+      .alert_policy;
+  }
+
+  /**
+   * Parse the alertPolicyConditionName from a alert_policy_condition resource.
+   *
+   * @param {String} alertPolicyConditionName
+   *   A fully-qualified path representing a alert_policy_condition resources.
+   * @returns {String} - A string representing the project.
+   */
+  matchProjectFromAlertPolicyConditionName(alertPolicyConditionName) {
+    return this._pathTemplates.alertPolicyConditionPathTemplate
+      .match(alertPolicyConditionName)
+      .project;
+  }
+
+  /**
+   * Parse the alertPolicyConditionName from a alert_policy_condition resource.
+   *
+   * @param {String} alertPolicyConditionName
+   *   A fully-qualified path representing a alert_policy_condition resources.
+   * @returns {String} - A string representing the alert_policy.
+   */
+  matchAlertPolicyFromAlertPolicyConditionName(alertPolicyConditionName) {
+    return this._pathTemplates.alertPolicyConditionPathTemplate
+      .match(alertPolicyConditionName)
+      .alert_policy;
+  }
+
+  /**
+   * Parse the alertPolicyConditionName from a alert_policy_condition resource.
+   *
+   * @param {String} alertPolicyConditionName
+   *   A fully-qualified path representing a alert_policy_condition resources.
+   * @returns {String} - A string representing the condition.
+   */
+  matchConditionFromAlertPolicyConditionName(alertPolicyConditionName) {
+    return this._pathTemplates.alertPolicyConditionPathTemplate
+      .match(alertPolicyConditionName)
+      .condition;
+  }
 }
+
 
 module.exports = AlertPolicyServiceClient;

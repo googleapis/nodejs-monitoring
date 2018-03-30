@@ -107,7 +107,9 @@ class UptimeCheckServiceClient {
     // identifiers to uniquely identify resources within the API.
     // Create useful helper objects for these.
     this._pathTemplates = {
-      projectPathTemplate: new gax.PathTemplate('projects/{project}'),
+      projectPathTemplate: new gax.PathTemplate(
+        'projects/{project}'
+      ),
       uptimeCheckConfigPathTemplate: new gax.PathTemplate(
         'projects/{project}/uptimeCheckConfigs/{uptime_check_config}'
       ),
@@ -308,11 +310,7 @@ class UptimeCheckServiceClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.listUptimeCheckConfigs(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.listUptimeCheckConfigs(request, options, callback);
   }
 
   /**
@@ -370,7 +368,7 @@ class UptimeCheckServiceClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Gets a single uptime check configuration.
@@ -474,11 +472,7 @@ class UptimeCheckServiceClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.createUptimeCheckConfig(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.createUptimeCheckConfig(request, options, callback);
   }
 
   /**
@@ -542,11 +536,7 @@ class UptimeCheckServiceClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.updateUptimeCheckConfig(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.updateUptimeCheckConfig(request, options, callback);
   }
 
   /**
@@ -588,11 +578,7 @@ class UptimeCheckServiceClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.deleteUptimeCheckConfig(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.deleteUptimeCheckConfig(request, options, callback);
   }
 
   /**
@@ -734,7 +720,7 @@ class UptimeCheckServiceClient {
       request,
       options
     );
-  }
+  };
 
   // --------------------
   // -- Path templates --
@@ -774,7 +760,9 @@ class UptimeCheckServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectName(projectName) {
-    return this._pathTemplates.projectPathTemplate.match(projectName).project;
+    return this._pathTemplates.projectPathTemplate
+      .match(projectName)
+      .project;
   }
 
   /**
@@ -785,9 +773,9 @@ class UptimeCheckServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromUptimeCheckConfigName(uptimeCheckConfigName) {
-    return this._pathTemplates.uptimeCheckConfigPathTemplate.match(
-      uptimeCheckConfigName
-    ).project;
+    return this._pathTemplates.uptimeCheckConfigPathTemplate
+      .match(uptimeCheckConfigName)
+      .project;
   }
 
   /**
@@ -798,10 +786,11 @@ class UptimeCheckServiceClient {
    * @returns {String} - A string representing the uptime_check_config.
    */
   matchUptimeCheckConfigFromUptimeCheckConfigName(uptimeCheckConfigName) {
-    return this._pathTemplates.uptimeCheckConfigPathTemplate.match(
-      uptimeCheckConfigName
-    ).uptime_check_config;
+    return this._pathTemplates.uptimeCheckConfigPathTemplate
+      .match(uptimeCheckConfigName)
+      .uptime_check_config;
   }
 }
+
 
 module.exports = UptimeCheckServiceClient;

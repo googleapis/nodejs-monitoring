@@ -101,7 +101,9 @@ class MetricServiceClient {
     // identifiers to uniquely identify resources within the API.
     // Create useful helper objects for these.
     this._pathTemplates = {
-      projectPathTemplate: new gax.PathTemplate('projects/{project}'),
+      projectPathTemplate: new gax.PathTemplate(
+        'projects/{project}'
+      ),
       metricDescriptorPathTemplate: new gax.PathTemplate(
         'projects/{project}/metricDescriptors/{metric_descriptor=**}'
       ),
@@ -318,11 +320,7 @@ class MetricServiceClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.listMonitoredResourceDescriptors(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.listMonitoredResourceDescriptors(request, options, callback);
   }
 
   /**
@@ -387,7 +385,7 @@ class MetricServiceClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Gets a single monitored resource descriptor. This method does not require a Stackdriver account.
@@ -435,11 +433,7 @@ class MetricServiceClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.getMonitoredResourceDescriptor(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.getMonitoredResourceDescriptor(request, options, callback);
   }
 
   /**
@@ -543,11 +537,7 @@ class MetricServiceClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.listMetricDescriptors(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.listMetricDescriptors(request, options, callback);
   }
 
   /**
@@ -613,7 +603,7 @@ class MetricServiceClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Gets a single metric descriptor. This method does not require a Stackdriver account.
@@ -720,11 +710,7 @@ class MetricServiceClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.createMetricDescriptor(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.createMetricDescriptor(request, options, callback);
   }
 
   /**
@@ -766,11 +752,7 @@ class MetricServiceClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.deleteMetricDescriptor(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.deleteMetricDescriptor(request, options, callback);
   }
 
   /**
@@ -1005,7 +987,7 @@ class MetricServiceClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Creates or adds data to one or more time series.
@@ -1114,7 +1096,9 @@ class MetricServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectName(projectName) {
-    return this._pathTemplates.projectPathTemplate.match(projectName).project;
+    return this._pathTemplates.projectPathTemplate
+      .match(projectName)
+      .project;
   }
 
   /**
@@ -1125,9 +1109,9 @@ class MetricServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromMetricDescriptorName(metricDescriptorName) {
-    return this._pathTemplates.metricDescriptorPathTemplate.match(
-      metricDescriptorName
-    ).project;
+    return this._pathTemplates.metricDescriptorPathTemplate
+      .match(metricDescriptorName)
+      .project;
   }
 
   /**
@@ -1138,9 +1122,9 @@ class MetricServiceClient {
    * @returns {String} - A string representing the metric_descriptor.
    */
   matchMetricDescriptorFromMetricDescriptorName(metricDescriptorName) {
-    return this._pathTemplates.metricDescriptorPathTemplate.match(
-      metricDescriptorName
-    ).metric_descriptor;
+    return this._pathTemplates.metricDescriptorPathTemplate
+      .match(metricDescriptorName)
+      .metric_descriptor;
   }
 
   /**
@@ -1150,12 +1134,10 @@ class MetricServiceClient {
    *   A fully-qualified path representing a monitored_resource_descriptor resources.
    * @returns {String} - A string representing the project.
    */
-  matchProjectFromMonitoredResourceDescriptorName(
-    monitoredResourceDescriptorName
-  ) {
-    return this._pathTemplates.monitoredResourceDescriptorPathTemplate.match(
-      monitoredResourceDescriptorName
-    ).project;
+  matchProjectFromMonitoredResourceDescriptorName(monitoredResourceDescriptorName) {
+    return this._pathTemplates.monitoredResourceDescriptorPathTemplate
+      .match(monitoredResourceDescriptorName)
+      .project;
   }
 
   /**
@@ -1165,13 +1147,12 @@ class MetricServiceClient {
    *   A fully-qualified path representing a monitored_resource_descriptor resources.
    * @returns {String} - A string representing the monitored_resource_descriptor.
    */
-  matchMonitoredResourceDescriptorFromMonitoredResourceDescriptorName(
-    monitoredResourceDescriptorName
-  ) {
-    return this._pathTemplates.monitoredResourceDescriptorPathTemplate.match(
-      monitoredResourceDescriptorName
-    ).monitored_resource_descriptor;
+  matchMonitoredResourceDescriptorFromMonitoredResourceDescriptorName(monitoredResourceDescriptorName) {
+    return this._pathTemplates.monitoredResourceDescriptorPathTemplate
+      .match(monitoredResourceDescriptorName)
+      .monitored_resource_descriptor;
   }
 }
+
 
 module.exports = MetricServiceClient;
