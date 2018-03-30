@@ -101,9 +101,7 @@ class NotificationChannelServiceClient {
     // identifiers to uniquely identify resources within the API.
     // Create useful helper objects for these.
     this._pathTemplates = {
-      projectPathTemplate: new gax.PathTemplate(
-        'projects/{project}'
-      ),
+      projectPathTemplate: new gax.PathTemplate('projects/{project}'),
       notificationChannelPathTemplate: new gax.PathTemplate(
         'projects/{project}/notificationChannels/{notification_channel}'
       ),
@@ -314,7 +312,11 @@ class NotificationChannelServiceClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.listNotificationChannelDescriptors(request, options, callback);
+    return this._innerApiCalls.listNotificationChannelDescriptors(
+      request,
+      options,
+      callback
+    );
   }
 
   /**
@@ -378,7 +380,7 @@ class NotificationChannelServiceClient {
       request,
       options
     );
-  };
+  }
 
   /**
    * Gets a single channel descriptor. The descriptor indicates which fields
@@ -425,7 +427,11 @@ class NotificationChannelServiceClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.getNotificationChannelDescriptor(request, options, callback);
+    return this._innerApiCalls.getNotificationChannelDescriptor(
+      request,
+      options,
+      callback
+    );
   }
 
   /**
@@ -537,7 +543,11 @@ class NotificationChannelServiceClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.listNotificationChannels(request, options, callback);
+    return this._innerApiCalls.listNotificationChannels(
+      request,
+      options,
+      callback
+    );
   }
 
   /**
@@ -611,7 +621,7 @@ class NotificationChannelServiceClient {
       request,
       options
     );
-  };
+  }
 
   /**
    * Gets a single notification channel. The channel includes the relevant
@@ -661,7 +671,11 @@ class NotificationChannelServiceClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.getNotificationChannel(request, options, callback);
+    return this._innerApiCalls.getNotificationChannel(
+      request,
+      options,
+      callback
+    );
   }
 
   /**
@@ -724,7 +738,11 @@ class NotificationChannelServiceClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.createNotificationChannel(request, options, callback);
+    return this._innerApiCalls.createNotificationChannel(
+      request,
+      options,
+      callback
+    );
   }
 
   /**
@@ -780,7 +798,11 @@ class NotificationChannelServiceClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.updateNotificationChannel(request, options, callback);
+    return this._innerApiCalls.updateNotificationChannel(
+      request,
+      options,
+      callback
+    );
   }
 
   /**
@@ -824,7 +846,11 @@ class NotificationChannelServiceClient {
     }
     options = options || {};
 
-    return this._innerApiCalls.deleteNotificationChannel(request, options, callback);
+    return this._innerApiCalls.deleteNotificationChannel(
+      request,
+      options,
+      callback
+    );
   }
 
   // --------------------
@@ -865,10 +891,12 @@ class NotificationChannelServiceClient {
    * @returns {String}
    */
   notificationChannelDescriptorPath(project, channelDescriptor) {
-    return this._pathTemplates.notificationChannelDescriptorPathTemplate.render({
-      project: project,
-      channel_descriptor: channelDescriptor,
-    });
+    return this._pathTemplates.notificationChannelDescriptorPathTemplate.render(
+      {
+        project: project,
+        channel_descriptor: channelDescriptor,
+      }
+    );
   }
 
   /**
@@ -879,9 +907,7 @@ class NotificationChannelServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectName(projectName) {
-    return this._pathTemplates.projectPathTemplate
-      .match(projectName)
-      .project;
+    return this._pathTemplates.projectPathTemplate.match(projectName).project;
   }
 
   /**
@@ -892,9 +918,9 @@ class NotificationChannelServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromNotificationChannelName(notificationChannelName) {
-    return this._pathTemplates.notificationChannelPathTemplate
-      .match(notificationChannelName)
-      .project;
+    return this._pathTemplates.notificationChannelPathTemplate.match(
+      notificationChannelName
+    ).project;
   }
 
   /**
@@ -905,9 +931,9 @@ class NotificationChannelServiceClient {
    * @returns {String} - A string representing the notification_channel.
    */
   matchNotificationChannelFromNotificationChannelName(notificationChannelName) {
-    return this._pathTemplates.notificationChannelPathTemplate
-      .match(notificationChannelName)
-      .notification_channel;
+    return this._pathTemplates.notificationChannelPathTemplate.match(
+      notificationChannelName
+    ).notification_channel;
   }
 
   /**
@@ -917,10 +943,12 @@ class NotificationChannelServiceClient {
    *   A fully-qualified path representing a notification_channel_descriptor resources.
    * @returns {String} - A string representing the project.
    */
-  matchProjectFromNotificationChannelDescriptorName(notificationChannelDescriptorName) {
-    return this._pathTemplates.notificationChannelDescriptorPathTemplate
-      .match(notificationChannelDescriptorName)
-      .project;
+  matchProjectFromNotificationChannelDescriptorName(
+    notificationChannelDescriptorName
+  ) {
+    return this._pathTemplates.notificationChannelDescriptorPathTemplate.match(
+      notificationChannelDescriptorName
+    ).project;
   }
 
   /**
@@ -930,12 +958,13 @@ class NotificationChannelServiceClient {
    *   A fully-qualified path representing a notification_channel_descriptor resources.
    * @returns {String} - A string representing the channel_descriptor.
    */
-  matchChannelDescriptorFromNotificationChannelDescriptorName(notificationChannelDescriptorName) {
-    return this._pathTemplates.notificationChannelDescriptorPathTemplate
-      .match(notificationChannelDescriptorName)
-      .channel_descriptor;
+  matchChannelDescriptorFromNotificationChannelDescriptorName(
+    notificationChannelDescriptorName
+  ) {
+    return this._pathTemplates.notificationChannelDescriptorPathTemplate.match(
+      notificationChannelDescriptorName
+    ).channel_descriptor;
   }
 }
-
 
 module.exports = NotificationChannelServiceClient;

@@ -111,9 +111,7 @@ class GroupServiceClient {
     // identifiers to uniquely identify resources within the API.
     // Create useful helper objects for these.
     this._pathTemplates = {
-      projectPathTemplate: new gax.PathTemplate(
-        'projects/{project}'
-      ),
+      projectPathTemplate: new gax.PathTemplate('projects/{project}'),
       groupPathTemplate: new gax.PathTemplate(
         'projects/{project}/groups/{group}'
       ),
@@ -123,11 +121,7 @@ class GroupServiceClient {
     // (e.g. 50 results at a time, with tokens to get subsequent
     // pages). Denote the keys used for pagination and results.
     this._descriptors.page = {
-      listGroups: new gax.PageDescriptor(
-        'pageToken',
-        'nextPageToken',
-        'group'
-      ),
+      listGroups: new gax.PageDescriptor('pageToken', 'nextPageToken', 'group'),
       listGroupMembers: new gax.PageDescriptor(
         'pageToken',
         'nextPageToken',
@@ -399,7 +393,7 @@ class GroupServiceClient {
       request,
       options
     );
-  };
+  }
 
   /**
    * Gets a single group.
@@ -777,7 +771,7 @@ class GroupServiceClient {
       request,
       options
     );
-  };
+  }
 
   // --------------------
   // -- Path templates --
@@ -817,9 +811,7 @@ class GroupServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectName(projectName) {
-    return this._pathTemplates.projectPathTemplate
-      .match(projectName)
-      .project;
+    return this._pathTemplates.projectPathTemplate.match(projectName).project;
   }
 
   /**
@@ -830,9 +822,7 @@ class GroupServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromGroupName(groupName) {
-    return this._pathTemplates.groupPathTemplate
-      .match(groupName)
-      .project;
+    return this._pathTemplates.groupPathTemplate.match(groupName).project;
   }
 
   /**
@@ -843,11 +833,8 @@ class GroupServiceClient {
    * @returns {String} - A string representing the group.
    */
   matchGroupFromGroupName(groupName) {
-    return this._pathTemplates.groupPathTemplate
-      .match(groupName)
-      .group;
+    return this._pathTemplates.groupPathTemplate.match(groupName).group;
   }
 }
-
 
 module.exports = GroupServiceClient;

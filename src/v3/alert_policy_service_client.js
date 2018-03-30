@@ -108,9 +108,7 @@ class AlertPolicyServiceClient {
     // identifiers to uniquely identify resources within the API.
     // Create useful helper objects for these.
     this._pathTemplates = {
-      projectPathTemplate: new gax.PathTemplate(
-        'projects/{project}'
-      ),
+      projectPathTemplate: new gax.PathTemplate('projects/{project}'),
       alertPolicyPathTemplate: new gax.PathTemplate(
         'projects/{project}/alertPolicies/{alert_policy}'
       ),
@@ -403,7 +401,7 @@ class AlertPolicyServiceClient {
       request,
       options
     );
-  };
+  }
 
   /**
    * Gets a single alerting policy.
@@ -691,9 +689,7 @@ class AlertPolicyServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectName(projectName) {
-    return this._pathTemplates.projectPathTemplate
-      .match(projectName)
-      .project;
+    return this._pathTemplates.projectPathTemplate.match(projectName).project;
   }
 
   /**
@@ -704,8 +700,7 @@ class AlertPolicyServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromAlertPolicyName(alertPolicyName) {
-    return this._pathTemplates.alertPolicyPathTemplate
-      .match(alertPolicyName)
+    return this._pathTemplates.alertPolicyPathTemplate.match(alertPolicyName)
       .project;
   }
 
@@ -717,8 +712,7 @@ class AlertPolicyServiceClient {
    * @returns {String} - A string representing the alert_policy.
    */
   matchAlertPolicyFromAlertPolicyName(alertPolicyName) {
-    return this._pathTemplates.alertPolicyPathTemplate
-      .match(alertPolicyName)
+    return this._pathTemplates.alertPolicyPathTemplate.match(alertPolicyName)
       .alert_policy;
   }
 
@@ -730,9 +724,9 @@ class AlertPolicyServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromAlertPolicyConditionName(alertPolicyConditionName) {
-    return this._pathTemplates.alertPolicyConditionPathTemplate
-      .match(alertPolicyConditionName)
-      .project;
+    return this._pathTemplates.alertPolicyConditionPathTemplate.match(
+      alertPolicyConditionName
+    ).project;
   }
 
   /**
@@ -743,9 +737,9 @@ class AlertPolicyServiceClient {
    * @returns {String} - A string representing the alert_policy.
    */
   matchAlertPolicyFromAlertPolicyConditionName(alertPolicyConditionName) {
-    return this._pathTemplates.alertPolicyConditionPathTemplate
-      .match(alertPolicyConditionName)
-      .alert_policy;
+    return this._pathTemplates.alertPolicyConditionPathTemplate.match(
+      alertPolicyConditionName
+    ).alert_policy;
   }
 
   /**
@@ -756,11 +750,10 @@ class AlertPolicyServiceClient {
    * @returns {String} - A string representing the condition.
    */
   matchConditionFromAlertPolicyConditionName(alertPolicyConditionName) {
-    return this._pathTemplates.alertPolicyConditionPathTemplate
-      .match(alertPolicyConditionName)
-      .condition;
+    return this._pathTemplates.alertPolicyConditionPathTemplate.match(
+      alertPolicyConditionName
+    ).condition;
   }
 }
-
 
 module.exports = AlertPolicyServiceClient;
