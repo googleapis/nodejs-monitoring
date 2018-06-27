@@ -8,25 +8,22 @@ logging.basicConfig(level=logging.DEBUG)
 
 gapic = gcp.GAPICGenerator()
 
-versions = ['v3']
+version = 'v3'
 
-for version in versions:
-    library = gapic.node_library(
-        'monitoring', version,
-        config_path="/google/monitoring/"
-                    "artman_monitoring.yaml")
+library = gapic.node_library(
+    'monitoring', version,
+    config_path="/google/monitoring/"
+                "artman_monitoring.yaml")
 
-    # skip index, protos, package.json, and README.md
-    s.copy(
-        library,
-        excludes=['package.json', 'README.md', 'src/index.js'],
-    )
+# skip index, protos, package.json, and README.md
+s.copy(
+    library,
+    excludes=['package.json', 'README.md', 'src/index.js'],
+)
 
 #
 # Node.js specific cleanup
 #
 subprocess.run(['npm', 'install'])
-
-# # prettify and lint
 subprocess.run(['npm', 'run', 'prettier'])
 subprocess.run(['npm', 'run', 'lint'])
