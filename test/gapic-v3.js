@@ -46,11 +46,7 @@ describe('AlertPolicyServiceClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.listAlertPolicies = (
-        actualRequest,
-        options,
-        callback
-      ) => {
+      client._innerApiCalls.listAlertPolicies = (actualRequest, options, callback) => {
         assert.deepStrictEqual(actualRequest, request);
         callback(null, expectedResponse.alertPolicies);
       };
@@ -328,6 +324,7 @@ describe('AlertPolicyServiceClient', () => {
       });
     });
   });
+
 });
 describe('GroupServiceClient', () => {
   describe('listGroups', () => {
@@ -675,11 +672,7 @@ describe('GroupServiceClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.listGroupMembers = (
-        actualRequest,
-        options,
-        callback
-      ) => {
+      client._innerApiCalls.listGroupMembers = (actualRequest, options, callback) => {
         assert.deepStrictEqual(actualRequest, request);
         callback(null, expectedResponse.members);
       };
@@ -718,6 +711,7 @@ describe('GroupServiceClient', () => {
       });
     });
   });
+
 });
 describe('MetricServiceClient', () => {
   describe('listMonitoredResourceDescriptors', () => {
@@ -743,11 +737,7 @@ describe('MetricServiceClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.listMonitoredResourceDescriptors = (
-        actualRequest,
-        options,
-        callback
-      ) => {
+      client._innerApiCalls.listMonitoredResourceDescriptors = (actualRequest, options, callback) => {
         assert.deepStrictEqual(actualRequest, request);
         callback(null, expectedResponse.resourceDescriptors);
       };
@@ -795,10 +785,7 @@ describe('MetricServiceClient', () => {
       });
 
       // Mock request
-      var formattedName = client.monitoredResourceDescriptorPath(
-        '[PROJECT]',
-        '[MONITORED_RESOURCE_DESCRIPTOR]'
-      );
+      var formattedName = client.monitoredResourceDescriptorPath('[PROJECT]', '[MONITORED_RESOURCE_DESCRIPTOR]');
       var request = {
         name: formattedName,
       };
@@ -835,10 +822,7 @@ describe('MetricServiceClient', () => {
       });
 
       // Mock request
-      var formattedName = client.monitoredResourceDescriptorPath(
-        '[PROJECT]',
-        '[MONITORED_RESOURCE_DESCRIPTOR]'
-      );
+      var formattedName = client.monitoredResourceDescriptorPath('[PROJECT]', '[MONITORED_RESOURCE_DESCRIPTOR]');
       var request = {
         name: formattedName,
       };
@@ -882,11 +866,7 @@ describe('MetricServiceClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.listMetricDescriptors = (
-        actualRequest,
-        options,
-        callback
-      ) => {
+      client._innerApiCalls.listMetricDescriptors = (actualRequest, options, callback) => {
         assert.deepStrictEqual(actualRequest, request);
         callback(null, expectedResponse.metricDescriptors);
       };
@@ -934,10 +914,7 @@ describe('MetricServiceClient', () => {
       });
 
       // Mock request
-      var formattedName = client.metricDescriptorPath(
-        '[PROJECT]',
-        '[METRIC_DESCRIPTOR]'
-      );
+      var formattedName = client.metricDescriptorPath('[PROJECT]', '[METRIC_DESCRIPTOR]');
       var request = {
         name: formattedName,
       };
@@ -976,10 +953,7 @@ describe('MetricServiceClient', () => {
       });
 
       // Mock request
-      var formattedName = client.metricDescriptorPath(
-        '[PROJECT]',
-        '[METRIC_DESCRIPTOR]'
-      );
+      var formattedName = client.metricDescriptorPath('[PROJECT]', '[METRIC_DESCRIPTOR]');
       var request = {
         name: formattedName,
       };
@@ -1080,18 +1054,13 @@ describe('MetricServiceClient', () => {
       });
 
       // Mock request
-      var formattedName = client.metricDescriptorPath(
-        '[PROJECT]',
-        '[METRIC_DESCRIPTOR]'
-      );
+      var formattedName = client.metricDescriptorPath('[PROJECT]', '[METRIC_DESCRIPTOR]');
       var request = {
         name: formattedName,
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.deleteMetricDescriptor = mockSimpleGrpcMethod(
-        request
-      );
+      client._innerApiCalls.deleteMetricDescriptor = mockSimpleGrpcMethod(request);
 
       client.deleteMetricDescriptor(request, err => {
         assert.ifError(err);
@@ -1106,10 +1075,7 @@ describe('MetricServiceClient', () => {
       });
 
       // Mock request
-      var formattedName = client.metricDescriptorPath(
-        '[PROJECT]',
-        '[METRIC_DESCRIPTOR]'
-      );
+      var formattedName = client.metricDescriptorPath('[PROJECT]', '[METRIC_DESCRIPTOR]');
       var request = {
         name: formattedName,
       };
@@ -1158,11 +1124,7 @@ describe('MetricServiceClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.listTimeSeries = (
-        actualRequest,
-        options,
-        callback
-      ) => {
+      client._innerApiCalls.listTimeSeries = (actualRequest, options, callback) => {
         assert.deepStrictEqual(actualRequest, request);
         callback(null, expectedResponse.timeSeries);
       };
@@ -1260,6 +1222,7 @@ describe('MetricServiceClient', () => {
       });
     });
   });
+
 });
 describe('NotificationChannelServiceClient', () => {
   describe('listNotificationChannelDescriptors', () => {
@@ -1285,11 +1248,7 @@ describe('NotificationChannelServiceClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.listNotificationChannelDescriptors = (
-        actualRequest,
-        options,
-        callback
-      ) => {
+      client._innerApiCalls.listNotificationChannelDescriptors = (actualRequest, options, callback) => {
         assert.deepStrictEqual(actualRequest, request);
         callback(null, expectedResponse.channelDescriptors);
       };
@@ -1337,10 +1296,7 @@ describe('NotificationChannelServiceClient', () => {
       });
 
       // Mock request
-      var formattedName = client.notificationChannelDescriptorPath(
-        '[PROJECT]',
-        '[CHANNEL_DESCRIPTOR]'
-      );
+      var formattedName = client.notificationChannelDescriptorPath('[PROJECT]', '[CHANNEL_DESCRIPTOR]');
       var request = {
         name: formattedName,
       };
@@ -1377,10 +1333,7 @@ describe('NotificationChannelServiceClient', () => {
       });
 
       // Mock request
-      var formattedName = client.notificationChannelDescriptorPath(
-        '[PROJECT]',
-        '[CHANNEL_DESCRIPTOR]'
-      );
+      var formattedName = client.notificationChannelDescriptorPath('[PROJECT]', '[CHANNEL_DESCRIPTOR]');
       var request = {
         name: formattedName,
       };
@@ -1424,11 +1377,7 @@ describe('NotificationChannelServiceClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.listNotificationChannels = (
-        actualRequest,
-        options,
-        callback
-      ) => {
+      client._innerApiCalls.listNotificationChannels = (actualRequest, options, callback) => {
         assert.deepStrictEqual(actualRequest, request);
         callback(null, expectedResponse.notificationChannels);
       };
@@ -1476,10 +1425,7 @@ describe('NotificationChannelServiceClient', () => {
       });
 
       // Mock request
-      var formattedName = client.notificationChannelPath(
-        '[PROJECT]',
-        '[NOTIFICATION_CHANNEL]'
-      );
+      var formattedName = client.notificationChannelPath('[PROJECT]', '[NOTIFICATION_CHANNEL]');
       var request = {
         name: formattedName,
       };
@@ -1516,10 +1462,7 @@ describe('NotificationChannelServiceClient', () => {
       });
 
       // Mock request
-      var formattedName = client.notificationChannelPath(
-        '[PROJECT]',
-        '[NOTIFICATION_CHANNEL]'
-      );
+      var formattedName = client.notificationChannelPath('[PROJECT]', '[NOTIFICATION_CHANNEL]');
       var request = {
         name: formattedName,
       };
@@ -1684,18 +1627,13 @@ describe('NotificationChannelServiceClient', () => {
       });
 
       // Mock request
-      var formattedName = client.notificationChannelPath(
-        '[PROJECT]',
-        '[NOTIFICATION_CHANNEL]'
-      );
+      var formattedName = client.notificationChannelPath('[PROJECT]', '[NOTIFICATION_CHANNEL]');
       var request = {
         name: formattedName,
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.deleteNotificationChannel = mockSimpleGrpcMethod(
-        request
-      );
+      client._innerApiCalls.deleteNotificationChannel = mockSimpleGrpcMethod(request);
 
       client.deleteNotificationChannel(request, err => {
         assert.ifError(err);
@@ -1710,10 +1648,7 @@ describe('NotificationChannelServiceClient', () => {
       });
 
       // Mock request
-      var formattedName = client.notificationChannelPath(
-        '[PROJECT]',
-        '[NOTIFICATION_CHANNEL]'
-      );
+      var formattedName = client.notificationChannelPath('[PROJECT]', '[NOTIFICATION_CHANNEL]');
       var request = {
         name: formattedName,
       };
@@ -1732,6 +1667,7 @@ describe('NotificationChannelServiceClient', () => {
       });
     });
   });
+
 });
 describe('UptimeCheckServiceClient', () => {
   describe('listUptimeCheckConfigs', () => {
@@ -1757,11 +1693,7 @@ describe('UptimeCheckServiceClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.listUptimeCheckConfigs = (
-        actualRequest,
-        options,
-        callback
-      ) => {
+      client._innerApiCalls.listUptimeCheckConfigs = (actualRequest, options, callback) => {
         assert.deepStrictEqual(actualRequest, request);
         callback(null, expectedResponse.uptimeCheckConfigs);
       };
@@ -1809,10 +1741,7 @@ describe('UptimeCheckServiceClient', () => {
       });
 
       // Mock request
-      var formattedName = client.uptimeCheckConfigPath(
-        '[PROJECT]',
-        '[UPTIME_CHECK_CONFIG]'
-      );
+      var formattedName = client.uptimeCheckConfigPath('[PROJECT]', '[UPTIME_CHECK_CONFIG]');
       var request = {
         name: formattedName,
       };
@@ -1845,10 +1774,7 @@ describe('UptimeCheckServiceClient', () => {
       });
 
       // Mock request
-      var formattedName = client.uptimeCheckConfigPath(
-        '[PROJECT]',
-        '[UPTIME_CHECK_CONFIG]'
-      );
+      var formattedName = client.uptimeCheckConfigPath('[PROJECT]', '[UPTIME_CHECK_CONFIG]');
       var request = {
         name: formattedName,
       };
@@ -2005,18 +1931,13 @@ describe('UptimeCheckServiceClient', () => {
       });
 
       // Mock request
-      var formattedName = client.uptimeCheckConfigPath(
-        '[PROJECT]',
-        '[UPTIME_CHECK_CONFIG]'
-      );
+      var formattedName = client.uptimeCheckConfigPath('[PROJECT]', '[UPTIME_CHECK_CONFIG]');
       var request = {
         name: formattedName,
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.deleteUptimeCheckConfig = mockSimpleGrpcMethod(
-        request
-      );
+      client._innerApiCalls.deleteUptimeCheckConfig = mockSimpleGrpcMethod(request);
 
       client.deleteUptimeCheckConfig(request, err => {
         assert.ifError(err);
@@ -2031,10 +1952,7 @@ describe('UptimeCheckServiceClient', () => {
       });
 
       // Mock request
-      var formattedName = client.uptimeCheckConfigPath(
-        '[PROJECT]',
-        '[UPTIME_CHECK_CONFIG]'
-      );
+      var formattedName = client.uptimeCheckConfigPath('[PROJECT]', '[UPTIME_CHECK_CONFIG]');
       var request = {
         name: formattedName,
       };
@@ -2074,11 +1992,7 @@ describe('UptimeCheckServiceClient', () => {
       };
 
       // Mock Grpc layer
-      client._innerApiCalls.listUptimeCheckIps = (
-        actualRequest,
-        options,
-        callback
-      ) => {
+      client._innerApiCalls.listUptimeCheckIps = (actualRequest, options, callback) => {
         assert.deepStrictEqual(actualRequest, request);
         callback(null, expectedResponse.uptimeCheckIps);
       };
@@ -2114,6 +2028,7 @@ describe('UptimeCheckServiceClient', () => {
       });
     });
   });
+
 });
 
 function mockSimpleGrpcMethod(expectedRequest, response, error) {
