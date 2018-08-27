@@ -18,7 +18,9 @@ const fs = require('fs');
 
 describe('MetricServiceSmokeTest', () => {
   if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
-    throw new Error('Usage: GOOGLE_APPLICATION_CREDENTIALS=<path to JSON key> node #{$0}');
+    throw new Error(
+      'Usage: GOOGLE_APPLICATION_CREDENTIALS=<path to JSON key> node #{$0}'
+    );
   }
   const keyFile = process.env.GOOGLE_APPLICATION_CREDENTIALS;
   const keyFileContents = fs.readFileSync(keyFile).toString();
