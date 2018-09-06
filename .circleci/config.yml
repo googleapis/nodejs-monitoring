@@ -131,6 +131,8 @@ jobs:
               chmod +x "$repo_tools"
             fi
             npm link
+          environment:
+            NPM_CONFIG_PREFIX: /home/node/.npm-global
       - run:
           name: Link the module being tested to the samples.
           command: |
@@ -138,9 +140,13 @@ jobs:
             npm link ../
             npm install
             cd ..
+          environment:
+            NPM_CONFIG_PREFIX: /home/node/.npm-global
       - run:
           name: Run linting.
           command: npm run lint
+          environment:
+            NPM_CONFIG_PREFIX: /home/node/.npm-global
   docs:
     docker:
       - image: 'node:8'
