@@ -43,7 +43,7 @@ workflows:
             - docs
           filters:
             branches:
-              only: master
+              only: v0.5.x
             tags:
               only: '/^v[\d.]+$/'
       - sample_tests:
@@ -52,7 +52,7 @@ workflows:
             - docs
           filters:
             branches:
-              only: master
+              only: v0.5.x
             tags:
               only: '/^v[\d.]+$/'
       - publish_npm:
@@ -237,4 +237,4 @@ jobs:
           command: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
       - run:
           name: Publish the module to npm.
-          command: npm publish
+          command: npm publish --access=public --tag=prev
