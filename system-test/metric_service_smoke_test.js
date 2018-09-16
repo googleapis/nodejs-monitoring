@@ -14,11 +14,18 @@
 
 'use strict';
 
+const fs = require('fs');
+
 describe('MetricServiceSmokeTest', () => {
-  if (!process.env.GCLOUD_PROJECT) {
-    throw new Error('Usage: GCLOUD_PROJECT=<project_id> node #{$0}');
+  if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+    throw new Error(
+      'Usage: GOOGLE_APPLICATION_CREDENTIALS=<path to JSON key> node #{$0}'
+    );
   }
-  var projectId = process.env.GCLOUD_PROJECT;
+  const keyFile = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+  const keyFileContents = fs.readFileSync(keyFile).toString();
+  const keyFileJson = JSON.parse(keyFileContents);
+  const projectId = keyFileJson.project_id;
 
   it('successfully makes a call to the service using promises', done => {
     const monitoring = require('../src');
