@@ -186,9 +186,8 @@ async function enablePolicies(projectId, enabled, filter) {
           },
         };
       })
-      .map(
-        async updateAlertPolicyRequest =>
-          await client.updateAlertPolicy(updateAlertPolicyRequest)
+      .map(updateAlertPolicyRequest =>
+        client.updateAlertPolicy(updateAlertPolicyRequest)
       )
   );
   tasks.forEach(response => {
