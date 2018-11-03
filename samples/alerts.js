@@ -41,18 +41,15 @@ async function backupPolicies(projectId) {
     name: client.projectPath(projectId),
   };
 
-  try {
-    const [policies] = await client.listAlertPolicies(listAlertPoliciesRequest);
-    fs.writeFileSync(
-      './policies_backup.json',
-      JSON.stringify(policies, null, 2),
-      'utf-8'
-    );
-    console.log('Saved policies to ./policies_backup.json');
-  } catch (err) {
-    console.error('ERROR:', err);
-  }
+  const [policies] = await client.listAlertPolicies(listAlertPoliciesRequest);
 
+  fs.writeFileSync(
+    './policies_backup.json',
+    JSON.stringify(policies, null, 2),
+    'utf-8'
+  );
+
+  console.log('Saved policies to ./policies_backup.json');
   // [END monitoring_alert_backup_policies]
 }
 
@@ -78,31 +75,30 @@ async function restorePolicies(projectId) {
   const fileContent = fs.readFileSync('./policies_backup.json', 'utf-8');
   const policies = JSON.parse(fileContent);
 
-  policies.forEach(async policy => {
+  for (const index in policies) {
     // Restore each policy one at a time
-    let response;
-    const exists = await doesAlertPolicyExist(policy.name);
-    if (exists) {
-      response = await client.updateAlertPolicy({alertPolicy: policy});
+    let policy = policies[index];
+    if (await doesAlertPolicyExist(policy.name)) {
+      policy = await client.updateAlertPolicy({alertPolicy: policy});
+    } else {
+      // Clear away output-only fields
+      delete policy.name;
+      delete policy.creationRecord;
+      delete policy.mutationRecord;
+      policy.conditions.forEach(condition => delete condition.name);
+
+      policy = await client.createAlertPolicy({
+        name: client.projectPath(projectId),
+        alertPolicy: policy,
+      });
     }
 
-    // Clear away output-only fields
-    delete policy.name;
-    delete policy.creationRecord;
-    delete policy.mutationRecord;
-    policy.conditions.forEach(condition => delete condition.name);
-
-    response = await client.createAlertPolicy({
-      name: client.projectPath(projectId),
-      alertPolicy: policy,
-    });
-    console.log(`Restored ${response[0].name}.`);
-  });
-
+    console.log(`Restored ${policy[0].name}.`);
+  }
   async function doesAlertPolicyExist(name) {
     try {
-      await client.getAlertPolicy({name});
-      return true;
+      const [policy] = await client.getAlertPolicy({name});
+      return policy ? true : false;
     } catch (err) {
       if (err && err.code === 5) {
         // Error code 5 comes from the google.rpc.code.NOT_FOUND protobuf
