@@ -848,7 +848,11 @@ class MetricServiceClient {
    * // Iterate over all elements.
    * const formattedName = client.projectPath('[PROJECT]');
    * const filter = '';
-   * const interval = {};
+   * // Use an interval of the last 60 seconds
+   * const interval ={
+   *     startTime: { seconds: Date.now() / 1000 - 60,},
+   *     endTime: { seconds: Date.now() / 1000,},
+   * }
    * const view = 'FULL';
    * const request = {
    *   name: formattedName,
@@ -871,7 +875,11 @@ class MetricServiceClient {
    * // Or obtain the paged response.
    * const formattedName = client.projectPath('[PROJECT]');
    * const filter = '';
-   * const interval = {};
+   * // Use an interval of the last 60 seconds
+   * const interval ={
+   *     startTime: { seconds: Date.now() / 1000 - 60,},
+   *     endTime: { seconds: Date.now() / 1000,},
+   * }
    * const view = 'FULL';
    * const request = {
    *   name: formattedName,
@@ -980,7 +988,11 @@ class MetricServiceClient {
    *
    * const formattedName = client.projectPath('[PROJECT]');
    * const filter = '';
-   * const interval = {};
+   * // Use an interval of the last 60 seconds
+   * const interval ={
+   *     startTime: { seconds: Date.now() / 1000 - 60,},
+   *     endTime: { seconds: Date.now() / 1000,},
+   * }
    * const view = 'FULL';
    * const request = {
    *   name: formattedName,
