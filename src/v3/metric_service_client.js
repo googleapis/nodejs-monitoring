@@ -849,7 +849,7 @@ class MetricServiceClient {
    * const formattedName = client.projectPath('[PROJECT]');
    * const filter = '';
    * // Use an interval of the last 60 seconds
-   * const interval ={
+   * const interval = {
    *     startTime: { seconds: Date.now() / 1000 - 60,},
    *     endTime: { seconds: Date.now() / 1000,},
    * }
@@ -876,7 +876,7 @@ class MetricServiceClient {
    * const formattedName = client.projectPath('[PROJECT]');
    * const filter = '';
    * // Use an interval of the last 60 seconds
-   * const interval ={
+   * const interval = {
    *     startTime: { seconds: Date.now() / 1000 - 60,},
    *     endTime: { seconds: Date.now() / 1000,},
    * }
@@ -989,7 +989,7 @@ class MetricServiceClient {
    * const formattedName = client.projectPath('[PROJECT]');
    * const filter = '';
    * // Use an interval of the last 60 seconds
-   * const interval ={
+   * const interval = {
    *     startTime: { seconds: Date.now() / 1000 - 60,},
    *     endTime: { seconds: Date.now() / 1000,},
    * }
