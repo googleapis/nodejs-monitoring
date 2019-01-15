@@ -41,5 +41,10 @@ s.replace('**/doc/google/protobuf/doc_timestamp.js',
         'toISOString)')
 # [END fix-dead-link]
 
+s.replace('src/**/doc/google/api/doc_distribution.js',
+        r"Sum\[i=1\.\.n\]\(https:\/\/cloud\.google\.com\(x_i - mean\)\^2\)",
+        "Sum\[i=1..n](x_1 - mean)^2")
+
+
 subprocess.run(["npm", "install"])
 subprocess.run(["npm", "run", "fix"])
