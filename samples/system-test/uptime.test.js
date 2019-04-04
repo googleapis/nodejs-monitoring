@@ -79,9 +79,7 @@ describe('uptime', () => {
   it('should update an uptime check', async () => {
     const newDisplayName = 'My New Display';
     const path = '/';
-    const output = execSync(
-      `${cmd} update ${id} "${newDisplayName}" ${path}`
-    );
+    const output = execSync(`${cmd} update ${id} "${newDisplayName}" ${path}`);
     assert.match(
       output,
       new RegExp(
