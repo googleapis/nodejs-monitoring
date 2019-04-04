@@ -17,10 +17,9 @@
 
 const monitoring = require('@google-cloud/monitoring');
 const {assert} = require('chai');
-const execa = require('execa');
+const {execSync} = require('child_process');
 const retry = require('p-retry');
 
-const exec = async cmd => (await execa.shell(cmd)).stdout;
 const client = new monitoring.MetricServiceClient();
 const cmd = `node metrics.js`;
 const customMetricId = `custom.googleapis.com/stores/daily_sales`;
@@ -31,7 +30,7 @@ const resourceId = `cloudsql_database`;
 
 describe('metrics', () => {
   it('should create a metric descriptors', async () => {
-    const output = await exec(`${cmd} create`);
+    const output = execSync(`${cmd} create`);
     assert.match(output, /Created custom Metric/);
     assert.match(output, new RegExp(`Type: ${customMetricId}`));
   });
@@ -42,7 +41,7 @@ describe('metrics', () => {
     // https://github.com/googleapis/nodejs-monitoring/issues/190
     await retry(
       async () => {
-        const output = await exec(`${cmd} list`);
+        const output = execSync(`${cmd} list`);
         assert.match(output, new RegExp(customMetricId));
         assert.match(output, new RegExp(computeMetricId));
       },
@@ -54,22 +53,22 @@ describe('metrics', () => {
   });
 
   it('should get a metric descriptor', async () => {
-    const output = await exec(`${cmd} get ${customMetricId}`);
+    const output = execSync(`${cmd} get ${customMetricId}`);
     assert.match(output, new RegExp(`Type: ${customMetricId}`));
   });
 
   it('should write time series data', async () => {
-    const output = await exec(`${cmd} write`);
+    const output = execSync(`${cmd} write`);
     assert.match(output, /Done writing time series data./);
   });
 
   it('should delete a metric descriptor', async () => {
-    const output = await exec(`${cmd} delete ${customMetricId}`);
+    const output = execSync(`${cmd} delete ${customMetricId}`);
     assert.match(output, new RegExp(`Deleted ${customMetricId}`));
   });
 
   it('should list monitored resource descriptors', async () => {
-    const output = await exec(`${cmd} list-resources`);
+    const output = execSync(`${cmd} list-resources`);
     assert.match(
       output,
       new RegExp(
@@ -79,7 +78,7 @@ describe('metrics', () => {
   });
 
   it('should get a monitored resource descriptor', async () => {
-    const output = await exec(`${cmd} get-resource ${resourceId}`);
+    const output = execSync(`${cmd} get-resource ${resourceId}`);
     assert.match(output, new RegExp(`Type: ${resourceId}`));
   });
 
@@ -97,7 +96,7 @@ describe('metrics', () => {
         },
       },
     });
-    const output = await exec(`${cmd} read '${filter}'`);
+    const output = execSync(`${cmd} read '${filter}'`);
     //t.true(true); // Do not fail if there is simply no data to return.
     timeSeries.forEach(data => {
       assert.match(output, new RegExp(`${data.metric.labels.instance_name}:`));
@@ -124,7 +123,7 @@ describe('metrics', () => {
       // the metrics that match the filter
       view: `HEADERS`,
     });
-    const output = await exec(`${cmd} read-fields`);
+    const output = execSync(`${cmd} read-fields`);
     assert.match(output, /Found data points for the following instances/);
     timeSeries.forEach(data => {
       assert.match(output, new RegExp(data.metric.labels.instance_name));
@@ -152,7 +151,7 @@ describe('metrics', () => {
         perSeriesAligner: `ALIGN_MEAN`,
       },
     });
-    const output = await exec(`${cmd} read-aggregate`);
+    const output = execSync(`${cmd} read-aggregate`);
     assert.match(output, /CPU utilization:/);
     timeSeries.forEach(data => {
       assert.match(output, new RegExp(data.metric.labels.instance_name));
@@ -183,7 +182,7 @@ describe('metrics', () => {
         perSeriesAligner: `ALIGN_MEAN`,
       },
     });
-    const output = await exec(`${cmd} read-reduce`);
+    const output = execSync(`${cmd} read-reduce`);
     // Special case: No output.
     if (output === 'No data') {
       assert.match(output, /No data/);

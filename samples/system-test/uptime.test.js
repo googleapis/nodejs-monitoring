@@ -16,12 +16,11 @@
 'use strict';
 
 const {assert} = require('chai');
-const execa = require('execa');
+const {execSync} = require('child_process');
 
 const cmd = 'node uptime.js';
 const projectId = process.env.GCLOUD_PROJECT;
 const hostname = 'mydomain.com';
-const exec = async cmd => (await execa.shell(cmd)).stdout;
 
 function getResourceObjects(output) {
   const regex = new RegExp(/^\s*Resource: (.*)$/gm);
@@ -35,14 +34,14 @@ function getResourceObjects(output) {
 
 describe('uptime', () => {
   it('should list uptime-check ips', async () => {
-    const output = await exec(`${cmd} list-ips`);
+    const output = execSync(`${cmd} list-ips`);
     assert.match(output, /USA/);
   });
 
   let id;
 
   it('should create an uptime check', async () => {
-    const output = await exec(`${cmd} create ${hostname}`);
+    const output = execSync(`${cmd} create ${hostname}`);
     const matches = output.match(
       new RegExp(`ID: projects/${projectId}/uptimeCheckConfigs/(.+)`)
     );
@@ -55,7 +54,7 @@ describe('uptime', () => {
   });
 
   it('should get an uptime check', async () => {
-    const output = await exec(`${cmd} get ${id}`);
+    const output = execSync(`${cmd} get ${id}`);
     assert.match(
       output,
       new RegExp(`Retrieving projects/${projectId}/uptimeCheckConfigs/${id}`)
@@ -66,7 +65,7 @@ describe('uptime', () => {
   });
 
   it('should list uptime checks', async () => {
-    const output = await exec(`${cmd} list`);
+    const output = execSync(`${cmd} list`);
     const resources = getResourceObjects(output);
     const resourceCount = resources.filter(
       resource =>
@@ -80,7 +79,7 @@ describe('uptime', () => {
   it('should update an uptime check', async () => {
     const newDisplayName = 'My New Display';
     const path = '/';
-    const output = await exec(
+    const output = execSync(
       `${cmd} update ${id} "${newDisplayName}" ${path}`
     );
     assert.match(
@@ -98,7 +97,7 @@ describe('uptime', () => {
   });
 
   it('should delete an uptime check', async () => {
-    const output = await exec(`${cmd} delete ${id}`);
+    const output = execSync(`${cmd} delete ${id}`);
     assert.match(
       output,
       new RegExp(`Deleting projects/${projectId}/uptimeCheckConfigs/${id}`)

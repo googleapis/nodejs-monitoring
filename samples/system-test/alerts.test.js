@@ -17,7 +17,7 @@
 
 const monitoring = require('@google-cloud/monitoring');
 const {assert} = require('chai');
-const execa = require('execa');
+const {execSync} = require('child_process');
 const uuid = require('uuid');
 const path = require('path');
 const fs = require('fs');
@@ -26,7 +26,6 @@ const client = new monitoring.AlertPolicyServiceClient();
 const channelClient = new monitoring.NotificationChannelServiceClient();
 const projectId = process.env.GCLOUD_PROJECT;
 const cmd = 'node alerts';
-const exec = async cmd => (await execa.shell(cmd)).stdout;
 
 let policyOneName, policyTwoName, channelName;
 const testPrefix = `gcloud-test-${uuid.v4().split('-')[0]}`;
@@ -162,13 +161,13 @@ describe('alerts', () => {
   });
 
   it('should replace notification channels', async () => {
-    const stdout = await exec(`${cmd} replace ${policyOneName} ${channelName}`);
+    const stdout = execSync(`${cmd} replace ${policyOneName} ${channelName}`);
     assert.match(stdout, /Updated projects/);
     assert.match(stdout, new RegExp(policyOneName));
   });
 
   it('should disable policies', async () => {
-    const stdout = await exec(
+    const stdout = execSync(
       `${cmd} disable ${projectId} 'display_name.size < 28'`
     );
     assert.match(stdout, /Disabled projects/);
@@ -177,7 +176,7 @@ describe('alerts', () => {
   });
 
   it('should enable policies', async () => {
-    const stdout = await exec(
+    const stdout = execSync(
       `${cmd} enable ${projectId} 'display_name.size < 28'`
     );
     assert.match(stdout, /Enabled projects/);
@@ -186,7 +185,7 @@ describe('alerts', () => {
   });
 
   it('should list policies', async () => {
-    const stdout = await exec(`${cmd} list ${projectId}`);
+    const stdout = execSync(`${cmd} list ${projectId}`);
     assert.match(stdout, /Policies:/);
     assert.match(stdout, /first-policy/);
     assert.match(stdout, /Test/);
@@ -194,14 +193,14 @@ describe('alerts', () => {
   });
 
   it('should backup all policies', async () => {
-    const output = await exec(`${cmd} backup ${projectId}`);
+    const output = execSync(`${cmd} backup ${projectId}`);
     assert.match(output, /Saved policies to .\/policies_backup.json/);
     assert.ok(fs.existsSync(path.join(__dirname, '../policies_backup.json')));
     await client.deleteAlertPolicy({name: policyOneName});
   });
 
   it('should restore policies', async () => {
-    const output = await exec(`${cmd} restore ${projectId}`);
+    const output = execSync(`${cmd} restore ${projectId}`);
     assert.match(output, /Loading policies from .\/policies_backup.json/);
     const matches = output.match(
       /projects\/[A-Za-z0-9-]+\/alertPolicies\/([\d]+)/gi
