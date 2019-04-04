@@ -16,8 +16,10 @@
 'use strict';
 
 const {assert} = require('chai');
-const {execSync} = require('child_process');
+const cp = require('child_process');
 const retry = require('p-retry');
+
+const execSync = (cmd) => cp.execSync(cmd, {encoding: 'utf-8'});
 
 describe('quickstart', () => {
   it('should run the quickstart', async () => {

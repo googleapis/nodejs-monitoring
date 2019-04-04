@@ -17,10 +17,12 @@
 
 const monitoring = require('@google-cloud/monitoring');
 const {assert} = require('chai');
-const {execSync} = require('child_process');
+const cp = require('child_process');
 const uuid = require('uuid');
 const path = require('path');
 const fs = require('fs');
+
+const execSync = (cmd) => cp.execSync(cmd, {encoding: 'utf-8'});
 
 const client = new monitoring.AlertPolicyServiceClient();
 const channelClient = new monitoring.NotificationChannelServiceClient();
