@@ -20,7 +20,7 @@ const {assert} = require('chai');
 const cp = require('child_process');
 const retry = require('p-retry');
 
-const execSync = (cmd) => cp.execSync(cmd, {encoding: 'utf-8'});
+const execSync = cmd => cp.execSync(cmd, {encoding: 'utf-8'});
 
 const client = new monitoring.MetricServiceClient();
 const cmd = `node metrics.js`;
