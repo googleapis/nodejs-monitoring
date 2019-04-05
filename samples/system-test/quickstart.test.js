@@ -28,8 +28,8 @@ describe('quickstart', () => {
     // https://github.com/googleapis/nodejs-monitoring/issues/191
     await retry(
       async () => {
-        const result = await execa.shell('node quickstart');
-        assert.match(result.stdout, /Done writing time series data/);
+        const result = execSync('node quickstart');
+        assert.match(result, /Done writing time series data/);
       },
       {
         retries: 10,
