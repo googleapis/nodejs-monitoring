@@ -162,48 +162,48 @@ describe('alerts', () => {
     await deleteChannels();
   });
 
-  it('should replace notification channels', async () => {
+  it('should replace notification channels', () => {
     const stdout = execSync(`${cmd} replace ${policyOneName} ${channelName}`);
-    assert.match(stdout, /Updated projects/);
-    assert.match(stdout, new RegExp(policyOneName));
+    assert.include(stdout, 'Updated projects');
+    assert.include(stdout, policyOneName);
   });
 
-  it('should disable policies', async () => {
+  it('should disable policies', () => {
     const stdout = execSync(
       `${cmd} disable ${projectId} 'display_name.size < 28'`
     );
-    assert.match(stdout, /Disabled projects/);
-    assert.notMatch(stdout, new RegExp(policyOneName));
-    assert.match(stdout, new RegExp(policyTwoName));
+    assert.include(stdout, 'Disabled projects');
+    assert.notInclude(stdout, policyOneName);
+    assert.include(stdout, policyTwoName);
   });
 
-  it('should enable policies', async () => {
+  it('should enable policies', () => {
     const stdout = execSync(
       `${cmd} enable ${projectId} 'display_name.size < 28'`
     );
-    assert.match(stdout, /Enabled projects/);
-    assert.notMatch(stdout, new RegExp(policyOneName));
-    assert.match(stdout, new RegExp(policyTwoName));
+    assert.include(stdout, 'Enabled projects');
+    assert.notInclude(stdout, policyOneName);
+    assert.include(stdout, policyTwoName);
   });
 
-  it('should list policies', async () => {
+  it('should list policies', () => {
     const stdout = execSync(`${cmd} list ${projectId}`);
-    assert.match(stdout, /Policies:/);
-    assert.match(stdout, /first-policy/);
-    assert.match(stdout, /Test/);
-    assert.match(stdout, /second/);
+    assert.include(stdout, 'Policies:');
+    assert.include(stdout, 'first-policy');
+    assert.include(stdout, 'Test');
+    assert.include(stdout, 'second');
   });
 
   it('should backup all policies', async () => {
     const output = execSync(`${cmd} backup ${projectId}`);
-    assert.match(output, /Saved policies to .\/policies_backup.json/);
+    assert.include(output, 'Saved policies to ./policies_backup.json');
     assert.ok(fs.existsSync(path.join(__dirname, '../policies_backup.json')));
     await client.deleteAlertPolicy({name: policyOneName});
   });
 
-  it('should restore policies', async () => {
+  it('should restore policies', () => {
     const output = execSync(`${cmd} restore ${projectId}`);
-    assert.match(output, /Loading policies from .\/policies_backup.json/);
+    assert.include(output, 'Loading policies from ./policies_backup.json');
     const matches = output.match(
       /projects\/[A-Za-z0-9-]+\/alertPolicies\/([\d]+)/gi
     );

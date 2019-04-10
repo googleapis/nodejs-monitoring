@@ -50,8 +50,8 @@ describe('uptime', () => {
     id = matches[1];
     assert.match(output, /Uptime check created:/);
     const resources = getResourceObjects(output);
-    assert.strictEqual(resources[0]['type'], 'uptime_url');
-    assert.strictEqual(resources[0]['labels']['host'], hostname);
+    assert.include(resources[0]['type'], 'uptime_url');
+    assert.include(resources[0]['labels']['host'], hostname);
     assert.match(output, /Display Name: My Uptime Check/);
   });
 
@@ -62,8 +62,8 @@ describe('uptime', () => {
       new RegExp(`Retrieving projects/${projectId}/uptimeCheckConfigs/${id}`)
     );
     const resources = getResourceObjects(output);
-    assert.strictEqual(resources[0]['type'], 'uptime_url');
-    assert.strictEqual(resources[0]['labels']['host'], hostname);
+    assert.include(resources[0]['type'], 'uptime_url');
+    assert.include(resources[0]['labels']['host'], hostname);
   });
 
   it('should list uptime checks', async () => {
@@ -82,29 +82,25 @@ describe('uptime', () => {
     const newDisplayName = 'My New Display';
     const path = '/';
     const output = execSync(`${cmd} update ${id} "${newDisplayName}" ${path}`);
-    assert.match(
+    assert.include(
       output,
-      new RegExp(
-        `Updating projects/${projectId}/uptimeCheckConfigs/${id} to ${newDisplayName}`
-      )
+      `Updating projects/${projectId}/uptimeCheckConfigs/${id} to ${newDisplayName}`
     );
-    assert.match(
+    assert.include(
       output,
-      new RegExp(
-        `projects/${projectId}/uptimeCheckConfigs/${id} config updated.`
-      )
+      `projects/${projectId}/uptimeCheckConfigs/${id} config updated.`
     );
   });
 
   it('should delete an uptime check', async () => {
     const output = execSync(`${cmd} delete ${id}`);
-    assert.match(
+    assert.include(
       output,
-      new RegExp(`Deleting projects/${projectId}/uptimeCheckConfigs/${id}`)
+      `Deleting projects/${projectId}/uptimeCheckConfigs/${id}`
     );
-    assert.match(
+    assert.include(
       output,
-      new RegExp(`projects/${projectId}/uptimeCheckConfigs/${id} deleted.`)
+      `projects/${projectId}/uptimeCheckConfigs/${id} deleted.`
     );
   });
 });
