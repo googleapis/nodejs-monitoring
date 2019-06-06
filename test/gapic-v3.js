@@ -41,6 +41,11 @@ describe('AlertPolicyServiceClient', () => {
     assert(typeof port === 'number');
   });
 
+  it('should create a client with no options', () => {
+    const client = new monitoringModule.v3.AlertPolicyServiceClient();
+    assert(client);
+  });
+
   describe('listAlertPolicies', () => {
     it('invokes listAlertPolicies without error', done => {
       const client = new monitoringModule.v3.AlertPolicyServiceClient({
@@ -374,6 +379,11 @@ describe('GroupServiceClient', () => {
     const port = monitoringModule.v3.GroupServiceClient.port;
     assert(port);
     assert(typeof port === 'number');
+  });
+
+  it('should create a client with no options', () => {
+    const client = new monitoringModule.v3.GroupServiceClient();
+    assert(client);
   });
 
   describe('listGroups', () => {
@@ -780,6 +790,11 @@ describe('MetricServiceClient', () => {
     const port = monitoringModule.v3.MetricServiceClient.port;
     assert(port);
     assert(typeof port === 'number');
+  });
+
+  it('should create a client with no options', () => {
+    const client = new monitoringModule.v3.MetricServiceClient();
+    assert(client);
   });
 
   describe('listMonitoredResourceDescriptors', () => {
@@ -1342,6 +1357,11 @@ describe('NotificationChannelServiceClient', () => {
     assert(typeof port === 'number');
   });
 
+  it('should create a client with no options', () => {
+    const client = new monitoringModule.v3.NotificationChannelServiceClient();
+    assert(client);
+  });
+
   describe('listNotificationChannelDescriptors', () => {
     it('invokes listNotificationChannelDescriptors without error', done => {
       const client = new monitoringModule.v3.NotificationChannelServiceClient({
@@ -1830,6 +1850,11 @@ describe('UptimeCheckServiceClient', () => {
     const port = monitoringModule.v3.UptimeCheckServiceClient.port;
     assert(port);
     assert(typeof port === 'number');
+  });
+
+  it('should create a client with no options', () => {
+    const client = new monitoringModule.v3.UptimeCheckServiceClient();
+    assert(client);
   });
 
   describe('listUptimeCheckConfigs', () => {
