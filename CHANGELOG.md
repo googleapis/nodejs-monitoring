@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@google-cloud/monitoring?activeTab=versions
 
+### [1.2.4](https://www.github.com/googleapis/nodejs-monitoring/compare/v1.2.3...v1.2.4) (2019-09-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency yargs to v14 ([68a0867](https://www.github.com/googleapis/nodejs-monitoring/commit/68a0867))
+* include the correct version of node in a header ([#286](https://www.github.com/googleapis/nodejs-monitoring/issues/286)) ([0c758f9](https://www.github.com/googleapis/nodejs-monitoring/commit/0c758f9))
+
 ### [1.2.3](https://www.github.com/googleapis/nodejs-monitoring/compare/v1.2.2...v1.2.3) (2019-08-03)
 
 
