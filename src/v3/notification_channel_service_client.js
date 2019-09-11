@@ -130,7 +130,7 @@ class NotificationChannelServiceClient {
         'projects/{project}/notificationChannels/{notification_channel}'
       ),
       notificationChannelDescriptorPathTemplate: new gaxModule.PathTemplate(
-        'projects/{project}/notificationChannelDescriptors/{channel_descriptor}'
+        'projects/{project}/notificationChannelDescriptors/{notification_channel_descriptor}'
       ),
       projectPathTemplate: new gaxModule.PathTemplate('projects/{project}'),
     };
@@ -460,7 +460,7 @@ class NotificationChannelServiceClient {
    *   // optional auth parameters.
    * });
    *
-   * const formattedName = client.notificationChannelDescriptorPath('[PROJECT]', '[CHANNEL_DESCRIPTOR]');
+   * const formattedName = client.notificationChannelDescriptorPath('[PROJECT]', '[NOTIFICATION_CHANNEL_DESCRIPTOR]');
    * client.getNotificationChannelDescriptor({name: formattedName})
    *   .then(responses => {
    *     const response = responses[0];
@@ -1191,14 +1191,14 @@ class NotificationChannelServiceClient {
    * Return a fully-qualified notification_channel_descriptor resource name string.
    *
    * @param {String} project
-   * @param {String} channelDescriptor
+   * @param {String} notificationChannelDescriptor
    * @returns {String}
    */
-  notificationChannelDescriptorPath(project, channelDescriptor) {
+  notificationChannelDescriptorPath(project, notificationChannelDescriptor) {
     return this._pathTemplates.notificationChannelDescriptorPathTemplate.render(
       {
         project: project,
-        channel_descriptor: channelDescriptor,
+        notification_channel_descriptor: notificationChannelDescriptor,
       }
     );
   }
@@ -1261,14 +1261,14 @@ class NotificationChannelServiceClient {
    *
    * @param {String} notificationChannelDescriptorName
    *   A fully-qualified path representing a notification_channel_descriptor resources.
-   * @returns {String} - A string representing the channel_descriptor.
+   * @returns {String} - A string representing the notification_channel_descriptor.
    */
-  matchChannelDescriptorFromNotificationChannelDescriptorName(
+  matchNotificationChannelDescriptorFromNotificationChannelDescriptorName(
     notificationChannelDescriptorName
   ) {
     return this._pathTemplates.notificationChannelDescriptorPathTemplate.match(
       notificationChannelDescriptorName
-    ).channel_descriptor;
+    ).notification_channel_descriptor;
   }
 
   /**
