@@ -39,10 +39,13 @@
     "test": "npm run cover",
     "fix": "eslint '**/*.js' --fix",
     "docs-test": "linkinator docs",
-    "predocs-test": "npm run docs"
+    "predocs-test": "npm run docs",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
-    "google-gax": "^1.6.3"
+    "google-gax": "^1.6.3",
+    "snyk": "^1.230.4"
   },
   "devDependencies": {
     "@google-cloud/nodejs-repo-tools": "^3.0.0",
@@ -59,5 +62,6 @@
     "power-assert": "^1.4.4",
     "prettier": "^1.7.4",
     "linkinator": "^1.5.0"
-  }
+  },
+  "snyk": true
 }
