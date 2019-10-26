@@ -76,7 +76,9 @@ class UptimeCheckServiceClient {
     const gaxModule = !global.isBrowser && opts.fallback ? gax.fallback : gax;
 
     const servicePath =
-      opts.servicePath || opts.apiEndpoint || this.constructor.servicePath;
+      opts.servicePath ||
+      opts.apiEndpoint ||
+      this.constructor.servicePath;
 
     // Ensure that options include the service address and port.
     opts = Object.assign(
@@ -117,22 +119,20 @@ class UptimeCheckServiceClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
+    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
     const protos = gaxGrpc.loadProto(
-      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
+      opts.fallback ?
+        require("../../protos/protos.json") :
+        nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
     // identifiers to uniquely identify resources within the API.
     // Create useful helper objects for these.
     this._pathTemplates = {
-      projectPathTemplate: new gaxModule.PathTemplate('projects/{project}'),
+      projectPathTemplate: new gaxModule.PathTemplate(
+        'projects/{project}'
+      ),
       uptimeCheckConfigPathTemplate: new gaxModule.PathTemplate(
         'projects/{project}/uptimeCheckConfigs/{uptime_check_config}'
       ),
@@ -170,9 +170,9 @@ class UptimeCheckServiceClient {
     // Put together the "service stub" for
     // google.monitoring.v3.UptimeCheckService.
     const uptimeCheckServiceStub = gaxGrpc.createStub(
-      opts.fallback
-        ? protos.lookupService('google.monitoring.v3.UptimeCheckService')
-        : protos.google.monitoring.v3.UptimeCheckService,
+      opts.fallback ?
+        protos.lookupService('google.monitoring.v3.UptimeCheckService') :
+        protos.google.monitoring.v3.UptimeCheckService,
       opts
     );
 
@@ -346,17 +346,12 @@ class UptimeCheckServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
-    return this._innerApiCalls.listUptimeCheckConfigs(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.listUptimeCheckConfigs(request, options, callback);
   }
 
   /**
@@ -413,7 +408,7 @@ class UptimeCheckServiceClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Gets a single Uptime check configuration.
@@ -461,11 +456,10 @@ class UptimeCheckServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.getUptimeCheckConfig(request, options, callback);
   }
@@ -525,17 +519,12 @@ class UptimeCheckServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'parent': request.parent
+      });
 
-    return this._innerApiCalls.createUptimeCheckConfig(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.createUptimeCheckConfig(request, options, callback);
   }
 
   /**
@@ -605,17 +594,12 @@ class UptimeCheckServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      'uptime_check_config.name': request.uptimeCheckConfig.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'uptime_check_config.name': request.uptimeCheckConfig.name
+      });
 
-    return this._innerApiCalls.updateUptimeCheckConfig(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.updateUptimeCheckConfig(request, options, callback);
   }
 
   /**
@@ -658,17 +642,12 @@ class UptimeCheckServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
-    return this._innerApiCalls.deleteUptimeCheckConfig(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.deleteUptimeCheckConfig(request, options, callback);
   }
 
   /**
@@ -811,7 +790,7 @@ class UptimeCheckServiceClient {
       request,
       options
     );
-  }
+  };
 
   // --------------------
   // -- Path templates --
@@ -851,7 +830,9 @@ class UptimeCheckServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectName(projectName) {
-    return this._pathTemplates.projectPathTemplate.match(projectName).project;
+    return this._pathTemplates.projectPathTemplate
+      .match(projectName)
+      .project;
   }
 
   /**
@@ -862,9 +843,9 @@ class UptimeCheckServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromUptimeCheckConfigName(uptimeCheckConfigName) {
-    return this._pathTemplates.uptimeCheckConfigPathTemplate.match(
-      uptimeCheckConfigName
-    ).project;
+    return this._pathTemplates.uptimeCheckConfigPathTemplate
+      .match(uptimeCheckConfigName)
+      .project;
   }
 
   /**
@@ -875,10 +856,11 @@ class UptimeCheckServiceClient {
    * @returns {String} - A string representing the uptime_check_config.
    */
   matchUptimeCheckConfigFromUptimeCheckConfigName(uptimeCheckConfigName) {
-    return this._pathTemplates.uptimeCheckConfigPathTemplate.match(
-      uptimeCheckConfigName
-    ).uptime_check_config;
+    return this._pathTemplates.uptimeCheckConfigPathTemplate
+      .match(uptimeCheckConfigName)
+      .uptime_check_config;
   }
 }
+
 
 module.exports = UptimeCheckServiceClient;
