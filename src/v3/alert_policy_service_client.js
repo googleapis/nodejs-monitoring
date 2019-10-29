@@ -77,7 +77,9 @@ class AlertPolicyServiceClient {
     const gaxModule = !global.isBrowser && opts.fallback ? gax.fallback : gax;
 
     const servicePath =
-      opts.servicePath || opts.apiEndpoint || this.constructor.servicePath;
+      opts.servicePath ||
+      opts.apiEndpoint ||
+      this.constructor.servicePath;
 
     // Ensure that options include the service address and port.
     opts = Object.assign(
@@ -118,15 +120,11 @@ class AlertPolicyServiceClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
+    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
     const protos = gaxGrpc.loadProto(
-      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
+      opts.fallback ?
+        require("../../protos/protos.json") :
+        nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -139,7 +137,9 @@ class AlertPolicyServiceClient {
       alertPolicyConditionPathTemplate: new gaxModule.PathTemplate(
         'projects/{project}/alertPolicies/{alert_policy}/conditions/{condition}'
       ),
-      projectPathTemplate: new gaxModule.PathTemplate('projects/{project}'),
+      projectPathTemplate: new gaxModule.PathTemplate(
+        'projects/{project}'
+      ),
     };
 
     // Some of the methods on this service return "paged" results,
@@ -169,9 +169,9 @@ class AlertPolicyServiceClient {
     // Put together the "service stub" for
     // google.monitoring.v3.AlertPolicyService.
     const alertPolicyServiceStub = gaxGrpc.createStub(
-      opts.fallback
-        ? protos.lookupService('google.monitoring.v3.AlertPolicyService')
-        : protos.google.monitoring.v3.AlertPolicyService,
+      opts.fallback ?
+        protos.lookupService('google.monitoring.v3.AlertPolicyService') :
+        protos.google.monitoring.v3.AlertPolicyService,
       opts
     );
 
@@ -363,11 +363,10 @@ class AlertPolicyServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.listAlertPolicies(request, options, callback);
   }
@@ -446,7 +445,7 @@ class AlertPolicyServiceClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Gets a single alerting policy.
@@ -495,11 +494,10 @@ class AlertPolicyServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.getAlertPolicy(request, options, callback);
   }
@@ -567,11 +565,10 @@ class AlertPolicyServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.createAlertPolicy(request, options, callback);
   }
@@ -617,11 +614,10 @@ class AlertPolicyServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.deleteAlertPolicy(request, options, callback);
   }
@@ -703,11 +699,10 @@ class AlertPolicyServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      'alert_policy.name': request.alertPolicy.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'alert_policy.name': request.alertPolicy.name
+      });
 
     return this._innerApiCalls.updateAlertPolicy(request, options, callback);
   }
@@ -766,7 +761,8 @@ class AlertPolicyServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromAlertPolicyName(alertPolicyName) {
-    return this._pathTemplates.alertPolicyPathTemplate.match(alertPolicyName)
+    return this._pathTemplates.alertPolicyPathTemplate
+      .match(alertPolicyName)
       .project;
   }
 
@@ -778,7 +774,8 @@ class AlertPolicyServiceClient {
    * @returns {String} - A string representing the alert_policy.
    */
   matchAlertPolicyFromAlertPolicyName(alertPolicyName) {
-    return this._pathTemplates.alertPolicyPathTemplate.match(alertPolicyName)
+    return this._pathTemplates.alertPolicyPathTemplate
+      .match(alertPolicyName)
       .alert_policy;
   }
 
@@ -790,9 +787,9 @@ class AlertPolicyServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromAlertPolicyConditionName(alertPolicyConditionName) {
-    return this._pathTemplates.alertPolicyConditionPathTemplate.match(
-      alertPolicyConditionName
-    ).project;
+    return this._pathTemplates.alertPolicyConditionPathTemplate
+      .match(alertPolicyConditionName)
+      .project;
   }
 
   /**
@@ -803,9 +800,9 @@ class AlertPolicyServiceClient {
    * @returns {String} - A string representing the alert_policy.
    */
   matchAlertPolicyFromAlertPolicyConditionName(alertPolicyConditionName) {
-    return this._pathTemplates.alertPolicyConditionPathTemplate.match(
-      alertPolicyConditionName
-    ).alert_policy;
+    return this._pathTemplates.alertPolicyConditionPathTemplate
+      .match(alertPolicyConditionName)
+      .alert_policy;
   }
 
   /**
@@ -816,9 +813,9 @@ class AlertPolicyServiceClient {
    * @returns {String} - A string representing the condition.
    */
   matchConditionFromAlertPolicyConditionName(alertPolicyConditionName) {
-    return this._pathTemplates.alertPolicyConditionPathTemplate.match(
-      alertPolicyConditionName
-    ).condition;
+    return this._pathTemplates.alertPolicyConditionPathTemplate
+      .match(alertPolicyConditionName)
+      .condition;
   }
 
   /**
@@ -829,8 +826,11 @@ class AlertPolicyServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectName(projectName) {
-    return this._pathTemplates.projectPathTemplate.match(projectName).project;
+    return this._pathTemplates.projectPathTemplate
+      .match(projectName)
+      .project;
   }
 }
+
 
 module.exports = AlertPolicyServiceClient;

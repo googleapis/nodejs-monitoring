@@ -70,7 +70,9 @@ class NotificationChannelServiceClient {
     const gaxModule = !global.isBrowser && opts.fallback ? gax.fallback : gax;
 
     const servicePath =
-      opts.servicePath || opts.apiEndpoint || this.constructor.servicePath;
+      opts.servicePath ||
+      opts.apiEndpoint ||
+      this.constructor.servicePath;
 
     // Ensure that options include the service address and port.
     opts = Object.assign(
@@ -111,15 +113,11 @@ class NotificationChannelServiceClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
+    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
     const protos = gaxGrpc.loadProto(
-      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
+      opts.fallback ?
+        require("../../protos/protos.json") :
+        nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -132,7 +130,9 @@ class NotificationChannelServiceClient {
       notificationChannelDescriptorPathTemplate: new gaxModule.PathTemplate(
         'projects/{project}/notificationChannelDescriptors/{channel_descriptor}'
       ),
-      projectPathTemplate: new gaxModule.PathTemplate('projects/{project}'),
+      projectPathTemplate: new gaxModule.PathTemplate(
+        'projects/{project}'
+      ),
     };
 
     // Some of the methods on this service return "paged" results,
@@ -167,11 +167,9 @@ class NotificationChannelServiceClient {
     // Put together the "service stub" for
     // google.monitoring.v3.NotificationChannelService.
     const notificationChannelServiceStub = gaxGrpc.createStub(
-      opts.fallback
-        ? protos.lookupService(
-            'google.monitoring.v3.NotificationChannelService'
-          )
-        : protos.google.monitoring.v3.NotificationChannelService,
+      opts.fallback ?
+        protos.lookupService('google.monitoring.v3.NotificationChannelService') :
+        protos.google.monitoring.v3.NotificationChannelService,
       opts
     );
 
@@ -356,17 +354,12 @@ class NotificationChannelServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
-    return this._innerApiCalls.listNotificationChannelDescriptors(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.listNotificationChannelDescriptors(request, options, callback);
   }
 
   /**
@@ -430,7 +423,7 @@ class NotificationChannelServiceClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Gets a single channel descriptor. The descriptor indicates which fields
@@ -479,17 +472,12 @@ class NotificationChannelServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
-    return this._innerApiCalls.getNotificationChannelDescriptor(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.getNotificationChannelDescriptor(request, options, callback);
   }
 
   /**
@@ -604,17 +592,12 @@ class NotificationChannelServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
-    return this._innerApiCalls.listNotificationChannels(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.listNotificationChannels(request, options, callback);
   }
 
   /**
@@ -689,7 +672,7 @@ class NotificationChannelServiceClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Gets a single notification channel. The channel includes the relevant
@@ -741,17 +724,12 @@ class NotificationChannelServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
-    return this._innerApiCalls.getNotificationChannel(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.getNotificationChannel(request, options, callback);
   }
 
   /**
@@ -816,17 +794,12 @@ class NotificationChannelServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
-    return this._innerApiCalls.createNotificationChannel(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.createNotificationChannel(request, options, callback);
   }
 
   /**
@@ -884,17 +857,12 @@ class NotificationChannelServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      'notification_channel.name': request.notificationChannel.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'notification_channel.name': request.notificationChannel.name
+      });
 
-    return this._innerApiCalls.updateNotificationChannel(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.updateNotificationChannel(request, options, callback);
   }
 
   /**
@@ -940,17 +908,12 @@ class NotificationChannelServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
-    return this._innerApiCalls.deleteNotificationChannel(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.deleteNotificationChannel(request, options, callback);
   }
 
   /**
@@ -991,17 +954,12 @@ class NotificationChannelServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
-    return this._innerApiCalls.sendNotificationChannelVerificationCode(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.sendNotificationChannelVerificationCode(request, options, callback);
   }
 
   /**
@@ -1083,17 +1041,12 @@ class NotificationChannelServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
-    return this._innerApiCalls.getNotificationChannelVerificationCode(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.getNotificationChannelVerificationCode(request, options, callback);
   }
 
   /**
@@ -1156,17 +1109,12 @@ class NotificationChannelServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
-    return this._innerApiCalls.verifyNotificationChannel(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.verifyNotificationChannel(request, options, callback);
   }
 
   // --------------------
@@ -1195,12 +1143,10 @@ class NotificationChannelServiceClient {
    * @returns {String}
    */
   notificationChannelDescriptorPath(project, channelDescriptor) {
-    return this._pathTemplates.notificationChannelDescriptorPathTemplate.render(
-      {
-        project: project,
-        channel_descriptor: channelDescriptor,
-      }
-    );
+    return this._pathTemplates.notificationChannelDescriptorPathTemplate.render({
+      project: project,
+      channel_descriptor: channelDescriptor,
+    });
   }
 
   /**
@@ -1223,9 +1169,9 @@ class NotificationChannelServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromNotificationChannelName(notificationChannelName) {
-    return this._pathTemplates.notificationChannelPathTemplate.match(
-      notificationChannelName
-    ).project;
+    return this._pathTemplates.notificationChannelPathTemplate
+      .match(notificationChannelName)
+      .project;
   }
 
   /**
@@ -1236,9 +1182,9 @@ class NotificationChannelServiceClient {
    * @returns {String} - A string representing the notification_channel.
    */
   matchNotificationChannelFromNotificationChannelName(notificationChannelName) {
-    return this._pathTemplates.notificationChannelPathTemplate.match(
-      notificationChannelName
-    ).notification_channel;
+    return this._pathTemplates.notificationChannelPathTemplate
+      .match(notificationChannelName)
+      .notification_channel;
   }
 
   /**
@@ -1248,12 +1194,10 @@ class NotificationChannelServiceClient {
    *   A fully-qualified path representing a notification_channel_descriptor resources.
    * @returns {String} - A string representing the project.
    */
-  matchProjectFromNotificationChannelDescriptorName(
-    notificationChannelDescriptorName
-  ) {
-    return this._pathTemplates.notificationChannelDescriptorPathTemplate.match(
-      notificationChannelDescriptorName
-    ).project;
+  matchProjectFromNotificationChannelDescriptorName(notificationChannelDescriptorName) {
+    return this._pathTemplates.notificationChannelDescriptorPathTemplate
+      .match(notificationChannelDescriptorName)
+      .project;
   }
 
   /**
@@ -1263,12 +1207,10 @@ class NotificationChannelServiceClient {
    *   A fully-qualified path representing a notification_channel_descriptor resources.
    * @returns {String} - A string representing the channel_descriptor.
    */
-  matchChannelDescriptorFromNotificationChannelDescriptorName(
-    notificationChannelDescriptorName
-  ) {
-    return this._pathTemplates.notificationChannelDescriptorPathTemplate.match(
-      notificationChannelDescriptorName
-    ).channel_descriptor;
+  matchChannelDescriptorFromNotificationChannelDescriptorName(notificationChannelDescriptorName) {
+    return this._pathTemplates.notificationChannelDescriptorPathTemplate
+      .match(notificationChannelDescriptorName)
+      .channel_descriptor;
   }
 
   /**
@@ -1279,8 +1221,11 @@ class NotificationChannelServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectName(projectName) {
-    return this._pathTemplates.projectPathTemplate.match(projectName).project;
+    return this._pathTemplates.projectPathTemplate
+      .match(projectName)
+      .project;
   }
 }
+
 
 module.exports = NotificationChannelServiceClient;
