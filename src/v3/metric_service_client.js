@@ -70,7 +70,9 @@ class MetricServiceClient {
     const gaxModule = !global.isBrowser && opts.fallback ? gax.fallback : gax;
 
     const servicePath =
-      opts.servicePath || opts.apiEndpoint || this.constructor.servicePath;
+      opts.servicePath ||
+      opts.apiEndpoint ||
+      this.constructor.servicePath;
 
     // Ensure that options include the service address and port.
     opts = Object.assign(
@@ -111,15 +113,11 @@ class MetricServiceClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
+    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
     const protos = gaxGrpc.loadProto(
-      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
+      opts.fallback ?
+        require("../../protos/protos.json") :
+        nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -132,7 +130,9 @@ class MetricServiceClient {
       monitoredResourceDescriptorPathTemplate: new gaxModule.PathTemplate(
         'projects/{project}/monitoredResourceDescriptors/{monitored_resource_descriptor}'
       ),
-      projectPathTemplate: new gaxModule.PathTemplate('projects/{project}'),
+      projectPathTemplate: new gaxModule.PathTemplate(
+        'projects/{project}'
+      ),
     };
 
     // Some of the methods on this service return "paged" results,
@@ -172,9 +172,9 @@ class MetricServiceClient {
     // Put together the "service stub" for
     // google.monitoring.v3.MetricService.
     const metricServiceStub = gaxGrpc.createStub(
-      opts.fallback
-        ? protos.lookupService('google.monitoring.v3.MetricService')
-        : protos.google.monitoring.v3.MetricService,
+      opts.fallback ?
+        protos.lookupService('google.monitoring.v3.MetricService') :
+        protos.google.monitoring.v3.MetricService,
       opts
     );
 
@@ -357,17 +357,12 @@ class MetricServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
-    return this._innerApiCalls.listMonitoredResourceDescriptors(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.listMonitoredResourceDescriptors(request, options, callback);
   }
 
   /**
@@ -432,7 +427,7 @@ class MetricServiceClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Gets a single monitored resource descriptor. This method does not require a Stackdriver account.
@@ -482,17 +477,12 @@ class MetricServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
-    return this._innerApiCalls.getMonitoredResourceDescriptor(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.getMonitoredResourceDescriptor(request, options, callback);
   }
 
   /**
@@ -598,17 +588,12 @@ class MetricServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
-    return this._innerApiCalls.listMetricDescriptors(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.listMetricDescriptors(request, options, callback);
   }
 
   /**
@@ -674,7 +659,7 @@ class MetricServiceClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Gets a single metric descriptor. This method does not require a Stackdriver account.
@@ -724,11 +709,10 @@ class MetricServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.getMetricDescriptor(request, options, callback);
   }
@@ -791,17 +775,12 @@ class MetricServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
-    return this._innerApiCalls.createMetricDescriptor(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.createMetricDescriptor(request, options, callback);
   }
 
   /**
@@ -845,17 +824,12 @@ class MetricServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
-    return this._innerApiCalls.deleteMetricDescriptor(
-      request,
-      options,
-      callback
-    );
+    return this._innerApiCalls.deleteMetricDescriptor(request, options, callback);
   }
 
   /**
@@ -997,11 +971,10 @@ class MetricServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.listTimeSeries(request, options, callback);
   }
@@ -1096,7 +1069,7 @@ class MetricServiceClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Creates or adds data to one or more time series.
@@ -1154,11 +1127,10 @@ class MetricServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.createTimeSeries(request, options, callback);
   }
@@ -1215,9 +1187,9 @@ class MetricServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromMetricDescriptorName(metricDescriptorName) {
-    return this._pathTemplates.metricDescriptorPathTemplate.match(
-      metricDescriptorName
-    ).project;
+    return this._pathTemplates.metricDescriptorPathTemplate
+      .match(metricDescriptorName)
+      .project;
   }
 
   /**
@@ -1228,9 +1200,9 @@ class MetricServiceClient {
    * @returns {String} - A string representing the metric_descriptor.
    */
   matchMetricDescriptorFromMetricDescriptorName(metricDescriptorName) {
-    return this._pathTemplates.metricDescriptorPathTemplate.match(
-      metricDescriptorName
-    ).metric_descriptor;
+    return this._pathTemplates.metricDescriptorPathTemplate
+      .match(metricDescriptorName)
+      .metric_descriptor;
   }
 
   /**
@@ -1240,12 +1212,10 @@ class MetricServiceClient {
    *   A fully-qualified path representing a monitored_resource_descriptor resources.
    * @returns {String} - A string representing the project.
    */
-  matchProjectFromMonitoredResourceDescriptorName(
-    monitoredResourceDescriptorName
-  ) {
-    return this._pathTemplates.monitoredResourceDescriptorPathTemplate.match(
-      monitoredResourceDescriptorName
-    ).project;
+  matchProjectFromMonitoredResourceDescriptorName(monitoredResourceDescriptorName) {
+    return this._pathTemplates.monitoredResourceDescriptorPathTemplate
+      .match(monitoredResourceDescriptorName)
+      .project;
   }
 
   /**
@@ -1255,12 +1225,10 @@ class MetricServiceClient {
    *   A fully-qualified path representing a monitored_resource_descriptor resources.
    * @returns {String} - A string representing the monitored_resource_descriptor.
    */
-  matchMonitoredResourceDescriptorFromMonitoredResourceDescriptorName(
-    monitoredResourceDescriptorName
-  ) {
-    return this._pathTemplates.monitoredResourceDescriptorPathTemplate.match(
-      monitoredResourceDescriptorName
-    ).monitored_resource_descriptor;
+  matchMonitoredResourceDescriptorFromMonitoredResourceDescriptorName(monitoredResourceDescriptorName) {
+    return this._pathTemplates.monitoredResourceDescriptorPathTemplate
+      .match(monitoredResourceDescriptorName)
+      .monitored_resource_descriptor;
   }
 
   /**
@@ -1271,8 +1239,11 @@ class MetricServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectName(projectName) {
-    return this._pathTemplates.projectPathTemplate.match(projectName).project;
+    return this._pathTemplates.projectPathTemplate
+      .match(projectName)
+      .project;
   }
 }
+
 
 module.exports = MetricServiceClient;
