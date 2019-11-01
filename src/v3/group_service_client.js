@@ -80,7 +80,9 @@ class GroupServiceClient {
     const gaxModule = !global.isBrowser && opts.fallback ? gax.fallback : gax;
 
     const servicePath =
-      opts.servicePath || opts.apiEndpoint || this.constructor.servicePath;
+      opts.servicePath ||
+      opts.apiEndpoint ||
+      this.constructor.servicePath;
 
     // Ensure that options include the service address and port.
     opts = Object.assign(
@@ -121,15 +123,11 @@ class GroupServiceClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
+    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
     const protos = gaxGrpc.loadProto(
-      opts.fallback ? require('../../protos/protos.json') : nodejsProtoPath
+      opts.fallback ?
+        require("../../protos/protos.json") :
+        nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -139,7 +137,9 @@ class GroupServiceClient {
       groupPathTemplate: new gaxModule.PathTemplate(
         'projects/{project}/groups/{group}'
       ),
-      projectPathTemplate: new gaxModule.PathTemplate('projects/{project}'),
+      projectPathTemplate: new gaxModule.PathTemplate(
+        'projects/{project}'
+      ),
     };
 
     // Some of the methods on this service return "paged" results,
@@ -174,9 +174,9 @@ class GroupServiceClient {
     // Put together the "service stub" for
     // google.monitoring.v3.GroupService.
     const groupServiceStub = gaxGrpc.createStub(
-      opts.fallback
-        ? protos.lookupService('google.monitoring.v3.GroupService')
-        : protos.google.monitoring.v3.GroupService,
+      opts.fallback ?
+        protos.lookupService('google.monitoring.v3.GroupService') :
+        protos.google.monitoring.v3.GroupService,
       opts
     );
 
@@ -364,11 +364,10 @@ class GroupServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.listGroups(request, options, callback);
   }
@@ -442,7 +441,7 @@ class GroupServiceClient {
       request,
       options
     );
-  }
+  };
 
   /**
    * Gets a single group.
@@ -490,11 +489,10 @@ class GroupServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.getGroup(request, options, callback);
   }
@@ -557,11 +555,10 @@ class GroupServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.createGroup(request, options, callback);
   }
@@ -617,11 +614,10 @@ class GroupServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      'group.name': request.group.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'group.name': request.group.name
+      });
 
     return this._innerApiCalls.updateGroup(request, options, callback);
   }
@@ -668,11 +664,10 @@ class GroupServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.deleteGroup(request, options, callback);
   }
@@ -786,11 +781,10 @@ class GroupServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name,
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'name': request.name
+      });
 
     return this._innerApiCalls.listGroupMembers(request, options, callback);
   }
@@ -864,7 +858,7 @@ class GroupServiceClient {
       request,
       options
     );
-  }
+  };
 
   // --------------------
   // -- Path templates --
@@ -904,7 +898,9 @@ class GroupServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromGroupName(groupName) {
-    return this._pathTemplates.groupPathTemplate.match(groupName).project;
+    return this._pathTemplates.groupPathTemplate
+      .match(groupName)
+      .project;
   }
 
   /**
@@ -915,7 +911,9 @@ class GroupServiceClient {
    * @returns {String} - A string representing the group.
    */
   matchGroupFromGroupName(groupName) {
-    return this._pathTemplates.groupPathTemplate.match(groupName).group;
+    return this._pathTemplates.groupPathTemplate
+      .match(groupName)
+      .group;
   }
 
   /**
@@ -926,8 +924,11 @@ class GroupServiceClient {
    * @returns {String} - A string representing the project.
    */
   matchProjectFromProjectName(projectName) {
-    return this._pathTemplates.projectPathTemplate.match(projectName).project;
+    return this._pathTemplates.projectPathTemplate
+      .match(projectName)
+      .project;
   }
 }
+
 
 module.exports = GroupServiceClient;

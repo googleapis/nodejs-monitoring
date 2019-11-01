@@ -16,7 +16,7 @@
 
 describe('MetricServiceSmokeTest', () => {
   if (!process.env.GCLOUD_PROJECT) {
-    throw new Error('Usage: GCLOUD_PROJECT=<project_id> node #{$0}');
+    throw new Error("Usage: GCLOUD_PROJECT=<project_id> node #{$0}");
   }
   const projectId = process.env.GCLOUD_PROJECT;
 
@@ -30,8 +30,7 @@ describe('MetricServiceSmokeTest', () => {
     // Iterate over all elements.
     const formattedName = client.projectPath(projectId);
 
-    client
-      .listMonitoredResourceDescriptors({name: formattedName})
+    client.listMonitoredResourceDescriptors({name: formattedName})
       .then(responses => {
         const resources = responses[0];
         for (const resource of resources) {
@@ -52,6 +51,7 @@ describe('MetricServiceSmokeTest', () => {
     // Or obtain the paged response.
     const formattedName = client.projectPath(projectId);
 
+
     const options = {autoPaginate: false};
     const callback = responses => {
       // The actual resources in a response.
@@ -65,13 +65,10 @@ describe('MetricServiceSmokeTest', () => {
       }
       if (nextRequest) {
         // Fetch the next page.
-        return client
-          .listMonitoredResourceDescriptors(nextRequest, options)
-          .then(callback);
+        return client.listMonitoredResourceDescriptors(nextRequest, options).then(callback);
       }
-    };
-    client
-      .listMonitoredResourceDescriptors({name: formattedName}, options)
+    }
+    client.listMonitoredResourceDescriptors({name: formattedName}, options)
       .then(callback)
       .then(done)
       .catch(done);
@@ -85,8 +82,7 @@ describe('MetricServiceSmokeTest', () => {
     });
 
     const formattedName = client.projectPath(projectId);
-    client
-      .listMonitoredResourceDescriptorsStream({name: formattedName})
+    client.listMonitoredResourceDescriptorsStream({name: formattedName})
       .on('data', element => {
         console.log(element);
       })
