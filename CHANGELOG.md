@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@google-cloud/monitoring?activeTab=versions
 
+### [1.5.1](https://www.github.com/googleapis/nodejs-monitoring/compare/v1.5.0...v1.5.1) (2019-11-15)
+
+
+### Bug Fixes
+
+* **docs:** snippets are now replaced in jsdoc comments ([#324](https://www.github.com/googleapis/nodejs-monitoring/issues/324)) ([6d81605](https://www.github.com/googleapis/nodejs-monitoring/commit/6d8160596340a0c3ee9f4540e505d3e329a532eb))
+
 ## [1.5.0](https://www.github.com/googleapis/nodejs-monitoring/compare/v1.4.0...v1.5.0) (2019-10-22)
 
 
