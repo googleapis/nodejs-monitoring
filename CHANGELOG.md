@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@google-cloud/monitoring?activeTab=versions
 
+### [1.7.1](https://www.github.com/googleapis/nodejs-monitoring/compare/v1.7.0...v1.7.1) (2020-02-10)
+
+
+### Bug Fixes
+
+* updated proto files with new proto annotations ([cf8cc77](https://www.github.com/googleapis/nodejs-monitoring/commit/cf8cc770ec5fa17874fd67df1469ffa3b2724628))
+
 ## [1.7.0](https://www.github.com/googleapis/nodejs-monitoring/compare/v1.6.1...v1.7.0) (2019-12-31)
 
 
