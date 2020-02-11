@@ -44,11 +44,20 @@ async function createUptimeCheckConfig(projectId, hostname) {
       monitoredResource: {
         // See the Uptime Check docs for supported MonitoredResource types
         type: 'uptime_url',
-        labels: {host: hostname},
+        labels: {
+          host: hostname
+        },
       },
-      httpCheck: {path: '/', port: 80},
-      timeout: {seconds: 10},
-      period: {seconds: 300},
+      httpCheck: {
+        path: '/',
+        port: 80
+      },
+      timeout: {
+        seconds: 10
+      },
+      period: {
+        seconds: 300
+      },
     },
   };
 
@@ -154,7 +163,7 @@ async function getUptimeCheckConfig(projectId, uptimeCheckConfigId) {
 
   const request = {
     // i.e. name: 'projects/my-project-id/uptimeCheckConfigs/My-Uptime-Check
-    name: client.uptimeCheckConfigPath(projectId, uptimeCheckConfigId),
+    name: client.projectUptimeCheckConfigPath(projectId, uptimeCheckConfigId),
   };
 
   console.log(`Retrieving ${request.name}`);
@@ -197,7 +206,7 @@ async function deleteUptimeCheckConfig(projectId, uptimeCheckConfigId) {
 
   const request = {
     // i.e. name: 'projects/my-project-id/uptimeCheckConfigs/My-Uptime-Check
-    name: client.uptimeCheckConfigPath(projectId, uptimeCheckConfigId),
+    name: client.projectUptimeCheckConfigPath(projectId, uptimeCheckConfigId),
   };
 
   console.log(`Deleting ${request.name}`);
@@ -232,7 +241,7 @@ async function updateUptimeCheckConfigDisplayName(
 
   const request = {
     // i.e. name: 'projects/my-project-id/uptimeCheckConfigs/My-Uptime-Check
-    name: client.uptimeCheckConfigPath(projectId, uptimeCheckConfigId),
+    name: client.projectUptimeCheckConfigPath(projectId, uptimeCheckConfigId),
   };
 
   console.log(`Updating ${request.name} to ${displayName}`);
@@ -241,10 +250,14 @@ async function updateUptimeCheckConfigDisplayName(
   request.uptimeCheckConfig = {
     name: request.name,
     displayName: displayName,
-    httpCheck: {path: path},
+    httpCheck: {
+      path: path
+    },
   };
 
-  request.updateMask = {paths: ['display_name', 'http_check.path']};
+  request.updateMask = {
+    paths: ['display_name', 'http_check.path']
+  };
 
   const [response] = await client.updateUptimeCheckConfig(request);
   console.log(`${response.name} config updated.`);
@@ -256,8 +269,7 @@ require(`yargs`)
   .demand(1)
   .command(
     `create <hostname> [projectId]`,
-    `Creates an uptime check config.`,
-    {},
+    `Creates an uptime check config.`, {},
     opts => createUptimeCheckConfig(opts.projectId, '' + opts.hostname)
   )
   .command(`list [projectId]`, `Lists uptime check configs.`, {}, opts =>
@@ -268,27 +280,24 @@ require(`yargs`)
   )
   .command(
     `get <uptimeCheckConfigId> [projectId]`,
-    `Gets an uptime check config.`,
-    {},
+    `Gets an uptime check config.`, {},
     opts => getUptimeCheckConfig(opts.projectId, opts.uptimeCheckConfigId)
   )
   .command(
     `delete <uptimeCheckConfigId> [projectId]`,
-    `Deletes an uptime check config.`,
-    {},
+    `Deletes an uptime check config.`, {},
     opts => deleteUptimeCheckConfig(opts.projectId, opts.uptimeCheckConfigId)
   )
   .command(
     `update <uptimeCheckConfigId> <displayName> <path> [projectId]`,
-    `Update the display name of an uptime check config.`,
-    {},
+    `Update the display name of an uptime check config.`, {},
     opts =>
-      updateUptimeCheckConfigDisplayName(
-        opts.projectId,
-        opts.uptimeCheckConfigId,
-        opts.displayName,
-        opts.path
-      )
+    updateUptimeCheckConfigDisplayName(
+      opts.projectId,
+      opts.uptimeCheckConfigId,
+      opts.displayName,
+      opts.path
+    )
   )
   .options({
     projectId: {
