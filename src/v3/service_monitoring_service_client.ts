@@ -150,6 +150,9 @@ export class ServiceMonitoringServiceClient {
       folderAlertPolicyPathTemplate: new gaxModule.PathTemplate(
         'folders/{folder}/alertPolicies/{alert_policy}'
       ),
+      folderAlertPolicyConditionPathTemplate: new gaxModule.PathTemplate(
+        'folders/{folder}/alertPolicies/{alert_policy}/conditions/{condition}'
+      ),
       folderChannelDescriptorPathTemplate: new gaxModule.PathTemplate(
         'folders/{folder}/notificationChannelDescriptors/{channel_descriptor}'
       ),
@@ -170,6 +173,9 @@ export class ServiceMonitoringServiceClient {
       ),
       organizationAlertPolicyPathTemplate: new gaxModule.PathTemplate(
         'organizations/{organization}/alertPolicies/{alert_policy}'
+      ),
+      organizationAlertPolicyConditionPathTemplate: new gaxModule.PathTemplate(
+        'organizations/{organization}/alertPolicies/{alert_policy}/conditions/{condition}'
       ),
       organizationChannelDescriptorPathTemplate: new gaxModule.PathTemplate(
         'organizations/{organization}/notificationChannelDescriptors/{channel_descriptor}'
@@ -192,6 +198,9 @@ export class ServiceMonitoringServiceClient {
       projectPathTemplate: new gaxModule.PathTemplate('projects/{project}'),
       projectAlertPolicyPathTemplate: new gaxModule.PathTemplate(
         'projects/{project}/alertPolicies/{alert_policy}'
+      ),
+      projectAlertPolicyConditionPathTemplate: new gaxModule.PathTemplate(
+        'projects/{project}/alertPolicies/{alert_policy}/conditions/{condition}'
       ),
       projectChannelDescriptorPathTemplate: new gaxModule.PathTemplate(
         'projects/{project}/notificationChannelDescriptors/{channel_descriptor}'
@@ -1386,6 +1395,71 @@ export class ServiceMonitoringServiceClient {
   }
 
   /**
+   * Return a fully-qualified folderAlertPolicyCondition resource name string.
+   *
+   * @param {string} folder
+   * @param {string} alert_policy
+   * @param {string} condition
+   * @returns {string} Resource name string.
+   */
+  folderAlertPolicyConditionPath(
+    folder: string,
+    alertPolicy: string,
+    condition: string
+  ) {
+    return this._pathTemplates.folderAlertPolicyConditionPathTemplate.render({
+      folder,
+      alert_policy: alertPolicy,
+      condition,
+    });
+  }
+
+  /**
+   * Parse the folder from FolderAlertPolicyCondition resource.
+   *
+   * @param {string} folderAlertPolicyConditionName
+   *   A fully-qualified path representing folder_alert_policy_condition resource.
+   * @returns {string} A string representing the folder.
+   */
+  matchFolderFromFolderAlertPolicyConditionName(
+    folderAlertPolicyConditionName: string
+  ) {
+    return this._pathTemplates.folderAlertPolicyConditionPathTemplate.match(
+      folderAlertPolicyConditionName
+    ).folder;
+  }
+
+  /**
+   * Parse the alert_policy from FolderAlertPolicyCondition resource.
+   *
+   * @param {string} folderAlertPolicyConditionName
+   *   A fully-qualified path representing folder_alert_policy_condition resource.
+   * @returns {string} A string representing the alert_policy.
+   */
+  matchAlertPolicyFromFolderAlertPolicyConditionName(
+    folderAlertPolicyConditionName: string
+  ) {
+    return this._pathTemplates.folderAlertPolicyConditionPathTemplate.match(
+      folderAlertPolicyConditionName
+    ).alert_policy;
+  }
+
+  /**
+   * Parse the condition from FolderAlertPolicyCondition resource.
+   *
+   * @param {string} folderAlertPolicyConditionName
+   *   A fully-qualified path representing folder_alert_policy_condition resource.
+   * @returns {string} A string representing the condition.
+   */
+  matchConditionFromFolderAlertPolicyConditionName(
+    folderAlertPolicyConditionName: string
+  ) {
+    return this._pathTemplates.folderAlertPolicyConditionPathTemplate.match(
+      folderAlertPolicyConditionName
+    ).condition;
+  }
+
+  /**
    * Return a fully-qualified folderChannelDescriptor resource name string.
    *
    * @param {string} folder
@@ -1704,6 +1778,73 @@ export class ServiceMonitoringServiceClient {
     return this._pathTemplates.organizationAlertPolicyPathTemplate.match(
       organizationAlertPolicyName
     ).alert_policy;
+  }
+
+  /**
+   * Return a fully-qualified organizationAlertPolicyCondition resource name string.
+   *
+   * @param {string} organization
+   * @param {string} alert_policy
+   * @param {string} condition
+   * @returns {string} Resource name string.
+   */
+  organizationAlertPolicyConditionPath(
+    organization: string,
+    alertPolicy: string,
+    condition: string
+  ) {
+    return this._pathTemplates.organizationAlertPolicyConditionPathTemplate.render(
+      {
+        organization,
+        alert_policy: alertPolicy,
+        condition,
+      }
+    );
+  }
+
+  /**
+   * Parse the organization from OrganizationAlertPolicyCondition resource.
+   *
+   * @param {string} organizationAlertPolicyConditionName
+   *   A fully-qualified path representing organization_alert_policy_condition resource.
+   * @returns {string} A string representing the organization.
+   */
+  matchOrganizationFromOrganizationAlertPolicyConditionName(
+    organizationAlertPolicyConditionName: string
+  ) {
+    return this._pathTemplates.organizationAlertPolicyConditionPathTemplate.match(
+      organizationAlertPolicyConditionName
+    ).organization;
+  }
+
+  /**
+   * Parse the alert_policy from OrganizationAlertPolicyCondition resource.
+   *
+   * @param {string} organizationAlertPolicyConditionName
+   *   A fully-qualified path representing organization_alert_policy_condition resource.
+   * @returns {string} A string representing the alert_policy.
+   */
+  matchAlertPolicyFromOrganizationAlertPolicyConditionName(
+    organizationAlertPolicyConditionName: string
+  ) {
+    return this._pathTemplates.organizationAlertPolicyConditionPathTemplate.match(
+      organizationAlertPolicyConditionName
+    ).alert_policy;
+  }
+
+  /**
+   * Parse the condition from OrganizationAlertPolicyCondition resource.
+   *
+   * @param {string} organizationAlertPolicyConditionName
+   *   A fully-qualified path representing organization_alert_policy_condition resource.
+   * @returns {string} A string representing the condition.
+   */
+  matchConditionFromOrganizationAlertPolicyConditionName(
+    organizationAlertPolicyConditionName: string
+  ) {
+    return this._pathTemplates.organizationAlertPolicyConditionPathTemplate.match(
+      organizationAlertPolicyConditionName
+    ).condition;
   }
 
   /**
@@ -2063,6 +2204,71 @@ export class ServiceMonitoringServiceClient {
     return this._pathTemplates.projectAlertPolicyPathTemplate.match(
       projectAlertPolicyName
     ).alert_policy;
+  }
+
+  /**
+   * Return a fully-qualified projectAlertPolicyCondition resource name string.
+   *
+   * @param {string} project
+   * @param {string} alert_policy
+   * @param {string} condition
+   * @returns {string} Resource name string.
+   */
+  projectAlertPolicyConditionPath(
+    project: string,
+    alertPolicy: string,
+    condition: string
+  ) {
+    return this._pathTemplates.projectAlertPolicyConditionPathTemplate.render({
+      project,
+      alert_policy: alertPolicy,
+      condition,
+    });
+  }
+
+  /**
+   * Parse the project from ProjectAlertPolicyCondition resource.
+   *
+   * @param {string} projectAlertPolicyConditionName
+   *   A fully-qualified path representing project_alert_policy_condition resource.
+   * @returns {string} A string representing the project.
+   */
+  matchProjectFromProjectAlertPolicyConditionName(
+    projectAlertPolicyConditionName: string
+  ) {
+    return this._pathTemplates.projectAlertPolicyConditionPathTemplate.match(
+      projectAlertPolicyConditionName
+    ).project;
+  }
+
+  /**
+   * Parse the alert_policy from ProjectAlertPolicyCondition resource.
+   *
+   * @param {string} projectAlertPolicyConditionName
+   *   A fully-qualified path representing project_alert_policy_condition resource.
+   * @returns {string} A string representing the alert_policy.
+   */
+  matchAlertPolicyFromProjectAlertPolicyConditionName(
+    projectAlertPolicyConditionName: string
+  ) {
+    return this._pathTemplates.projectAlertPolicyConditionPathTemplate.match(
+      projectAlertPolicyConditionName
+    ).alert_policy;
+  }
+
+  /**
+   * Parse the condition from ProjectAlertPolicyCondition resource.
+   *
+   * @param {string} projectAlertPolicyConditionName
+   *   A fully-qualified path representing project_alert_policy_condition resource.
+   * @returns {string} A string representing the condition.
+   */
+  matchConditionFromProjectAlertPolicyConditionName(
+    projectAlertPolicyConditionName: string
+  ) {
+    return this._pathTemplates.projectAlertPolicyConditionPathTemplate.match(
+      projectAlertPolicyConditionName
+    ).condition;
   }
 
   /**
