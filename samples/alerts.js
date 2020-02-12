@@ -83,7 +83,9 @@ async function restorePolicies(projectId) {
     // Restore each policy one at a time
     let policy = policies[index];
     if (await doesAlertPolicyExist(policy.name)) {
-      policy = await client.updateAlertPolicy({alertPolicy: policy});
+      policy = await client.updateAlertPolicy({
+        alertPolicy: policy
+      });
     } else {
       // Clear away output-only fields
       delete policy.name;
@@ -101,7 +103,9 @@ async function restorePolicies(projectId) {
   }
   async function doesAlertPolicyExist(name) {
     try {
-      const [policy] = await client.getAlertPolicy({name});
+      const [policy] = await client.getAlertPolicy({
+        name
+      });
       return policy ? true : false;
     } catch (err) {
       if (err && err.code === 5) {
@@ -131,7 +135,10 @@ async function deleteChannels(projectId, filter) {
   // const projectId = 'YOUR_PROJECT_ID';
   // const filter = 'A filter for selecting policies, e.g. description:"cloud"';
 
-  const request = {name: client.projectPath(projectId), filter};
+  const request = {
+    name: client.projectPath(projectId),
+    filter
+  };
   const channels = await client.listNotificationChannels(request);
   console.log(channels);
   for (const channel of channels[0]) {
@@ -173,15 +180,19 @@ async function replaceChannels(projectId, alertPolicyId, channelIds) {
   // ];
 
   const notificationChannels = channelIds.map(id =>
-    notificationClient.notificationChannelPath(projectId, id)
+    notificationClient.projectNotificationChannelPath(projectId, id)
   );
 
   for (const channel of notificationChannels) {
     const updateChannelRequest = {
-      updateMask: {paths: ['enabled']},
+      updateMask: {
+        paths: ['enabled']
+      },
       notificationChannel: {
         name: channel,
-        enabled: {value: true},
+        enabled: {
+          value: true
+        },
       },
     };
     try {
@@ -190,7 +201,9 @@ async function replaceChannels(projectId, alertPolicyId, channelIds) {
       const createChannelRequest = {
         notificationChannel: {
           name: channel,
-          notificationChannel: {type: 'email'},
+          notificationChannel: {
+            type: 'email'
+          },
         },
       };
       const newChannel = await notificationClient.createNotificationChannel(
@@ -201,7 +214,9 @@ async function replaceChannels(projectId, alertPolicyId, channelIds) {
   }
 
   const updateAlertPolicyRequest = {
-    updateMask: {paths: ['notification_channels']},
+    updateMask: {
+      paths: ['notification_channels']
+    },
     alertPolicy: {
       name: alertClient.alertPolicyPath(projectId, alertPolicyId),
       notificationChannels: notificationChannels,
@@ -241,18 +256,22 @@ async function enablePolicies(projectId, enabled, filter) {
   const [policies] = await client.listAlertPolicies(listAlertPoliciesRequest);
   const tasks = await Promise.all(
     policies
-      .map(policy => {
-        return {
-          updateMask: {paths: ['enabled']},
-          alertPolicy: {
-            name: policy.name,
-            enabled: {value: enabled},
+    .map(policy => {
+      return {
+        updateMask: {
+          paths: ['enabled']
+        },
+        alertPolicy: {
+          name: policy.name,
+          enabled: {
+            value: enabled
           },
-        };
-      })
-      .map(updateAlertPolicyRequest =>
-        client.updateAlertPolicy(updateAlertPolicyRequest)
-      )
+        },
+      };
+    })
+    .map(updateAlertPolicyRequest =>
+      client.updateAlertPolicy(updateAlertPolicyRequest)
+    )
   );
   tasks.forEach(response => {
     const alertPolicy = response[0];
@@ -293,20 +312,17 @@ require(`yargs`)
   .demand(1)
   .command(
     `backup <projectId>`,
-    `Save alert policies to a ./policies_backup.json file.`,
-    {},
+    `Save alert policies to a ./policies_backup.json file.`, {},
     opts => backupPolicies(opts.projectId, opts.filter || '')
   )
   .command(
     `restore <projectId>`,
-    `Restore alert policies from a ./policies_backup.json file.`,
-    {},
+    `Restore alert policies from a ./policies_backup.json file.`, {},
     opts => restorePolicies(opts.projectId, opts.filter || '')
   )
   .command(
     `replace <alertPolicyName> <channelNames..>`,
-    `Replace the notification channels of the specified alert policy.`,
-    {},
+    `Replace the notification channels of the specified alert policy.`, {},
     opts => {
       const parts = opts.alertPolicyName.split('/');
       const channelIds = opts.channelNames.map(name => name.split('/')[3]);
@@ -315,26 +331,22 @@ require(`yargs`)
   )
   .command(
     `disable <projectId> [filter]`,
-    `Disables policies that match the given filter.`,
-    {},
+    `Disables policies that match the given filter.`, {},
     opts => enablePolicies(opts.projectId, false, opts.filter || ``)
   )
   .command(
     `enable <projectId> [filter]`,
-    `Enables policies that match the given filter.`,
-    {},
+    `Enables policies that match the given filter.`, {},
     opts => enablePolicies(opts.projectId, true, opts.filter || ``)
   )
   .command(
     `list <projectId>`,
-    `Lists alert policies in the specified project.`,
-    {},
+    `Lists alert policies in the specified project.`, {},
     opts => listPolicies(opts.projectId)
   )
   .command(
     `deleteChannels <projectId> [filter]`,
-    `Lists and deletes all channels in the specified project.`,
-    {},
+    `Lists and deletes all channels in the specified project.`, {},
     opts => deleteChannels(opts.projectId, opts.filter || ``)
   )
   .options({
