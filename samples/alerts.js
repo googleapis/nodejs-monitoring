@@ -218,7 +218,7 @@ async function replaceChannels(projectId, alertPolicyId, channelIds) {
       paths: ['notification_channels']
     },
     alertPolicy: {
-      name: alertClient.alertPolicyPath(projectId, alertPolicyId),
+      name: alertClient.projectAlertPolicyPath(projectId, alertPolicyId),
       notificationChannels: notificationChannels,
     },
   };
