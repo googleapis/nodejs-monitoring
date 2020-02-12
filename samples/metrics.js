@@ -44,11 +44,13 @@ async function createMetricDescriptor(projectId) {
       metricKind: 'GAUGE',
       valueType: 'DOUBLE',
       unit: '{USD}',
-      labels: [{
-        key: 'store_id',
-        valueType: 'STRING',
-        description: 'The ID of the store.',
-      }, ],
+      labels: [
+        {
+          key: 'store_id',
+          valueType: 'STRING',
+          description: 'The ID of the store.',
+        },
+      ],
     },
   };
 
@@ -430,7 +432,10 @@ async function getMonitoredResourceDescriptor(projectId, resourceType) {
   // const resourceType = 'some_resource_type, e.g. cloudsql_database';
 
   const request = {
-    name: client.projectMonitoredResourceDescriptorPath(projectId, resourceType),
+    name: client.projectMonitoredResourceDescriptorPath(
+      projectId,
+      resourceType
+    ),
   };
 
   // Lists monitored resource descriptors
@@ -450,7 +455,8 @@ const cli = require(`yargs`)
   .demand(1)
   .command(
     `create [projectId]`,
-    `Creates an example 'custom.googleapis.com/stores/daily_sales' custom metric descriptor.`, {},
+    `Creates an example 'custom.googleapis.com/stores/daily_sales' custom metric descriptor.`,
+    {},
     opts => createMetricDescriptor(opts.projectId)
   )
   .command(`list [projectId]`, `Lists metric descriptors.`, {}, opts =>
@@ -461,42 +467,50 @@ const cli = require(`yargs`)
   )
   .command(
     `delete <metricId> [projectId]`,
-    `Deletes a custom metric descriptor.`, {},
+    `Deletes a custom metric descriptor.`,
+    {},
     opts => deleteMetricDescriptor(opts.projectId, opts.metricId)
   )
   .command(
     `write [projectId]`,
-    `Writes example time series data to 'custom.googleapis.com/stores/daily_sales'.`, {},
+    `Writes example time series data to 'custom.googleapis.com/stores/daily_sales'.`,
+    {},
     opts => writeTimeSeriesData(opts.projectId)
   )
   .command(
     `read <filter> [projectId]`,
-    `Reads time series data that matches the given filter.`, {},
+    `Reads time series data that matches the given filter.`,
+    {},
     opts => readTimeSeriesData(opts.projectId, opts.filter)
   )
   .command(
     `read-fields [projectId]`,
-    `Reads headers of time series data that matches 'compute.googleapis.com/instance/cpu/utilization'.`, {},
+    `Reads headers of time series data that matches 'compute.googleapis.com/instance/cpu/utilization'.`,
+    {},
     opts => readTimeSeriesFields(opts.projectId)
   )
   .command(
     `read-aggregate [projectId]`,
-    `Aggregates time series data that matches 'compute.googleapis.com/instance/cpu/utilization'.`, {},
+    `Aggregates time series data that matches 'compute.googleapis.com/instance/cpu/utilization'.`,
+    {},
     opts => readTimeSeriesAggregate(opts.projectId)
   )
   .command(
     `read-reduce [projectId]`,
-    `Reduces time series data that matches 'compute.googleapis.com/instance/cpu/utilization'.`, {},
+    `Reduces time series data that matches 'compute.googleapis.com/instance/cpu/utilization'.`,
+    {},
     opts => readTimeSeriesReduce(opts.projectId)
   )
   .command(
     `list-resources [projectId]`,
-    `Lists monitored resource descriptors.`, {},
+    `Lists monitored resource descriptors.`,
+    {},
     opts => listMonitoredResourceDescriptors(opts.projectId)
   )
   .command(
     `get-resource <resourceType> [projectId]`,
-    `Get a monitored resource descriptor.`, {},
+    `Get a monitored resource descriptor.`,
+    {},
     opts => getMonitoredResourceDescriptor(opts.projectId, opts.resourceType)
   )
   .options({

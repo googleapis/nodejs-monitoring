@@ -45,18 +45,18 @@ async function createUptimeCheckConfig(projectId, hostname) {
         // See the Uptime Check docs for supported MonitoredResource types
         type: 'uptime_url',
         labels: {
-          host: hostname
+          host: hostname,
         },
       },
       httpCheck: {
         path: '/',
-        port: 80
+        port: 80,
       },
       timeout: {
-        seconds: 10
+        seconds: 10,
       },
       period: {
-        seconds: 300
+        seconds: 300,
       },
     },
   };
@@ -251,12 +251,12 @@ async function updateUptimeCheckConfigDisplayName(
     name: request.name,
     displayName: displayName,
     httpCheck: {
-      path: path
+      path: path,
     },
   };
 
   request.updateMask = {
-    paths: ['display_name', 'http_check.path']
+    paths: ['display_name', 'http_check.path'],
   };
 
   const [response] = await client.updateUptimeCheckConfig(request);
@@ -269,7 +269,8 @@ require(`yargs`)
   .demand(1)
   .command(
     `create <hostname> [projectId]`,
-    `Creates an uptime check config.`, {},
+    `Creates an uptime check config.`,
+    {},
     opts => createUptimeCheckConfig(opts.projectId, '' + opts.hostname)
   )
   .command(`list [projectId]`, `Lists uptime check configs.`, {}, opts =>
@@ -280,24 +281,27 @@ require(`yargs`)
   )
   .command(
     `get <uptimeCheckConfigId> [projectId]`,
-    `Gets an uptime check config.`, {},
+    `Gets an uptime check config.`,
+    {},
     opts => getUptimeCheckConfig(opts.projectId, opts.uptimeCheckConfigId)
   )
   .command(
     `delete <uptimeCheckConfigId> [projectId]`,
-    `Deletes an uptime check config.`, {},
+    `Deletes an uptime check config.`,
+    {},
     opts => deleteUptimeCheckConfig(opts.projectId, opts.uptimeCheckConfigId)
   )
   .command(
     `update <uptimeCheckConfigId> <displayName> <path> [projectId]`,
-    `Update the display name of an uptime check config.`, {},
+    `Update the display name of an uptime check config.`,
+    {},
     opts =>
-    updateUptimeCheckConfigDisplayName(
-      opts.projectId,
-      opts.uptimeCheckConfigId,
-      opts.displayName,
-      opts.path
-    )
+      updateUptimeCheckConfigDisplayName(
+        opts.projectId,
+        opts.uptimeCheckConfigId,
+        opts.displayName,
+        opts.path
+      )
   )
   .options({
     projectId: {

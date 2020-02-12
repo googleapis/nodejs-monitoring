@@ -84,7 +84,7 @@ async function restorePolicies(projectId) {
     let policy = policies[index];
     if (await doesAlertPolicyExist(policy.name)) {
       policy = await client.updateAlertPolicy({
-        alertPolicy: policy
+        alertPolicy: policy,
       });
     } else {
       // Clear away output-only fields
@@ -104,7 +104,7 @@ async function restorePolicies(projectId) {
   async function doesAlertPolicyExist(name) {
     try {
       const [policy] = await client.getAlertPolicy({
-        name
+        name,
       });
       return policy ? true : false;
     } catch (err) {
@@ -137,7 +137,7 @@ async function deleteChannels(projectId, filter) {
 
   const request = {
     name: client.projectPath(projectId),
-    filter
+    filter,
   };
   const channels = await client.listNotificationChannels(request);
   console.log(channels);
@@ -186,12 +186,12 @@ async function replaceChannels(projectId, alertPolicyId, channelIds) {
   for (const channel of notificationChannels) {
     const updateChannelRequest = {
       updateMask: {
-        paths: ['enabled']
+        paths: ['enabled'],
       },
       notificationChannel: {
         name: channel,
         enabled: {
-          value: true
+          value: true,
         },
       },
     };
@@ -202,7 +202,7 @@ async function replaceChannels(projectId, alertPolicyId, channelIds) {
         notificationChannel: {
           name: channel,
           notificationChannel: {
-            type: 'email'
+            type: 'email',
           },
         },
       };
@@ -215,7 +215,7 @@ async function replaceChannels(projectId, alertPolicyId, channelIds) {
 
   const updateAlertPolicyRequest = {
     updateMask: {
-      paths: ['notification_channels']
+      paths: ['notification_channels'],
     },
     alertPolicy: {
       name: alertClient.projectAlertPolicyPath(projectId, alertPolicyId),
@@ -256,22 +256,22 @@ async function enablePolicies(projectId, enabled, filter) {
   const [policies] = await client.listAlertPolicies(listAlertPoliciesRequest);
   const tasks = await Promise.all(
     policies
-    .map(policy => {
-      return {
-        updateMask: {
-          paths: ['enabled']
-        },
-        alertPolicy: {
-          name: policy.name,
-          enabled: {
-            value: enabled
+      .map(policy => {
+        return {
+          updateMask: {
+            paths: ['enabled'],
           },
-        },
-      };
-    })
-    .map(updateAlertPolicyRequest =>
-      client.updateAlertPolicy(updateAlertPolicyRequest)
-    )
+          alertPolicy: {
+            name: policy.name,
+            enabled: {
+              value: enabled,
+            },
+          },
+        };
+      })
+      .map(updateAlertPolicyRequest =>
+        client.updateAlertPolicy(updateAlertPolicyRequest)
+      )
   );
   tasks.forEach(response => {
     const alertPolicy = response[0];
@@ -312,17 +312,20 @@ require(`yargs`)
   .demand(1)
   .command(
     `backup <projectId>`,
-    `Save alert policies to a ./policies_backup.json file.`, {},
+    `Save alert policies to a ./policies_backup.json file.`,
+    {},
     opts => backupPolicies(opts.projectId, opts.filter || '')
   )
   .command(
     `restore <projectId>`,
-    `Restore alert policies from a ./policies_backup.json file.`, {},
+    `Restore alert policies from a ./policies_backup.json file.`,
+    {},
     opts => restorePolicies(opts.projectId, opts.filter || '')
   )
   .command(
     `replace <alertPolicyName> <channelNames..>`,
-    `Replace the notification channels of the specified alert policy.`, {},
+    `Replace the notification channels of the specified alert policy.`,
+    {},
     opts => {
       const parts = opts.alertPolicyName.split('/');
       const channelIds = opts.channelNames.map(name => name.split('/')[3]);
@@ -331,22 +334,26 @@ require(`yargs`)
   )
   .command(
     `disable <projectId> [filter]`,
-    `Disables policies that match the given filter.`, {},
+    `Disables policies that match the given filter.`,
+    {},
     opts => enablePolicies(opts.projectId, false, opts.filter || ``)
   )
   .command(
     `enable <projectId> [filter]`,
-    `Enables policies that match the given filter.`, {},
+    `Enables policies that match the given filter.`,
+    {},
     opts => enablePolicies(opts.projectId, true, opts.filter || ``)
   )
   .command(
     `list <projectId>`,
-    `Lists alert policies in the specified project.`, {},
+    `Lists alert policies in the specified project.`,
+    {},
     opts => listPolicies(opts.projectId)
   )
   .command(
     `deleteChannels <projectId> [filter]`,
-    `Lists and deletes all channels in the specified project.`, {},
+    `Lists and deletes all channels in the specified project.`,
+    {},
     opts => deleteChannels(opts.projectId, opts.filter || ``)
   )
   .options({
