@@ -32,16 +32,10 @@
     "samples-test": "cd samples/ && npm link ../ && npm install && npm test && cd ../",
     "system-test": "mocha build/system-test",
     "test": "c8 mocha build/test",
-<<<<<<< HEAD
     "fix": "gts fix && eslint 'samples/**/*.js' --fix",
     "docs-test": "linkinator docs",
     "predocs-test": "npm run docs",
     "prelint": "cd samples; npm link ../; npm i",
-=======
-    "fix": "gts fix",
-    "docs-test": "linkinator docs",
-    "predocs-test": "npm run docs",
->>>>>>> 8047a580f020c8f97aa72503de9f66a9633e9f3e
     "clean": "gts clean",
     "compile": "tsc -p . && cp -r protos build/",
     "compile-protos": "compileProtos src",
