@@ -40,23 +40,6 @@ common_templates = gcp.CommonTemplates()
 templates = common_templates.node_library(source_location='build/src')
 s.copy(templates)
 
-s.replace('src/v3/*.ts',
-          '/monitoring/api/learn_more',
-          'https://cloud.google.com/monitoring/api/learn_more')
-
-s.replace('src/v3/*.ts',
-          '/monitoring/custom-metrics',
-          'https://cloud.google.com/monitoring/custom-metrics')
-
-s.replace('src/v3/*.ts',
-          '/monitoring/api/v3/sorting-and-filtering',
-          'https://cloud.google.com/monitoring/api/v3/sorting-and-filtering')
-
-s.replace('src/v3/*.ts',
-          '/monitoring/api/v3/filters',
-          'https://cloud.google.com/monitoring/api/v3/filters')
-
-
 subprocess.run(["npm", "install"])
 subprocess.run(["npm", "run", "fix"])
 subprocess.run(['npx', 'compileProtos', 'src'])

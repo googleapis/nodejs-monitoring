@@ -390,8 +390,9 @@ export class GroupServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The group to retrieve. The format is
-   *   `"projects/{project_id_or_number}/groups/{group_id}"`.
+   *   Required. The group to retrieve. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -462,8 +463,9 @@ export class GroupServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project in which to create the group. The format is
-   *   `"projects/{project_id_or_number}"`.
+   *   Required. The project in which to create the group. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
    * @param {google.monitoring.v3.Group} request.group
    *   Required. A group definition. It is an error to define the `name` field because
    *   the system assigns the name.
@@ -614,8 +616,9 @@ export class GroupServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The group to delete. The format is
-   *   `"projects/{project_id_or_number}/groups/{group_id}"`.
+   *   Required. The group to delete. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
    * @param {boolean} request.recursive
    *   If this field is true, then the request means to delete a group with all
    *   its descendants. Otherwise, the request means to delete a group only when
@@ -691,27 +694,37 @@ export class GroupServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project whose groups are to be listed. The format is
-   *   `"projects/{project_id_or_number}"`.
+   *   Required. The project whose groups are to be listed. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
    * @param {string} request.childrenOfGroup
-   *   A group name: `"projects/{project_id_or_number}/groups/{group_id}"`.
-   *   Returns groups whose `parentName` field contains the group
+   *   A group name. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+   *
+   *   Returns groups whose `parent_name` field contains the group
    *   name.  If no groups have this parent, the results are empty.
    * @param {string} request.ancestorsOfGroup
-   *   A group name: `"projects/{project_id_or_number}/groups/{group_id}"`.
+   *   A group name. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+   *
    *   Returns groups that are ancestors of the specified group.
    *   The groups are returned in order, starting with the immediate parent and
    *   ending with the most distant ancestor.  If the specified group has no
    *   immediate parent, the results are empty.
    * @param {string} request.descendantsOfGroup
-   *   A group name: `"projects/{project_id_or_number}/groups/{group_id}"`.
+   *   A group name. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+   *
    *   Returns the descendants of the specified group.  This is a superset of
-   *   the results returned by the `childrenOfGroup` filter, and includes
+   *   the results returned by the `children_of_group` filter, and includes
    *   children-of-children, and so forth.
    * @param {number} request.pageSize
    *   A positive number that is the maximum number of results to return.
    * @param {string} request.pageToken
-   *   If this field is not empty then it must contain the `nextPageToken` value
+   *   If this field is not empty then it must contain the `next_page_token` value
    *   returned by a previous call to this method.  Using this field causes the
    *   method to return additional results from the previous method call.
    * @param {object} [options]
@@ -788,27 +801,37 @@ export class GroupServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project whose groups are to be listed. The format is
-   *   `"projects/{project_id_or_number}"`.
+   *   Required. The project whose groups are to be listed. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
    * @param {string} request.childrenOfGroup
-   *   A group name: `"projects/{project_id_or_number}/groups/{group_id}"`.
-   *   Returns groups whose `parentName` field contains the group
+   *   A group name. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+   *
+   *   Returns groups whose `parent_name` field contains the group
    *   name.  If no groups have this parent, the results are empty.
    * @param {string} request.ancestorsOfGroup
-   *   A group name: `"projects/{project_id_or_number}/groups/{group_id}"`.
+   *   A group name. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+   *
    *   Returns groups that are ancestors of the specified group.
    *   The groups are returned in order, starting with the immediate parent and
    *   ending with the most distant ancestor.  If the specified group has no
    *   immediate parent, the results are empty.
    * @param {string} request.descendantsOfGroup
-   *   A group name: `"projects/{project_id_or_number}/groups/{group_id}"`.
+   *   A group name. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+   *
    *   Returns the descendants of the specified group.  This is a superset of
-   *   the results returned by the `childrenOfGroup` filter, and includes
+   *   the results returned by the `children_of_group` filter, and includes
    *   children-of-children, and so forth.
    * @param {number} request.pageSize
    *   A positive number that is the maximum number of results to return.
    * @param {string} request.pageToken
-   *   If this field is not empty then it must contain the `nextPageToken` value
+   *   If this field is not empty then it must contain the `next_page_token` value
    *   returned by a previous call to this method.  Using this field causes the
    *   method to return additional results from the previous method call.
    * @param {object} [options]
@@ -861,22 +884,24 @@ export class GroupServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The group whose members are listed. The format is
-   *   `"projects/{project_id_or_number}/groups/{group_id}"`.
+   *   Required. The group whose members are listed. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
    * @param {number} request.pageSize
    *   A positive number that is the maximum number of results to return.
    * @param {string} request.pageToken
-   *   If this field is not empty then it must contain the `nextPageToken` value
+   *   If this field is not empty then it must contain the `next_page_token` value
    *   returned by a previous call to this method.  Using this field causes the
    *   method to return additional results from the previous method call.
    * @param {string} request.filter
-   *   An optional [list filter](https://cloud.google.com/monitoring/api/learn_more#filtering) describing
-   *   the members to be returned.  The filter may reference the type, labels, and
-   *   metadata of monitored resources that comprise the group.
-   *   For example, to return only resources representing Compute Engine VM
-   *   instances, use this filter:
+   *   An optional [list
+   *   filter](https://cloud.google.com/monitoring/api/learn_more#filtering)
+   *   describing the members to be returned.  The filter may reference the type,
+   *   labels, and metadata of monitored resources that comprise the group. For
+   *   example, to return only resources representing Compute Engine VM instances,
+   *   use this filter:
    *
-   *       resource.type = "gce_instance"
+   *       `resource.type = "gce_instance"`
    * @param {google.monitoring.v3.TimeInterval} request.interval
    *   An optional time interval for which results should be returned. Only
    *   members that were part of the group during the specified interval are
@@ -956,22 +981,24 @@ export class GroupServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The group whose members are listed. The format is
-   *   `"projects/{project_id_or_number}/groups/{group_id}"`.
+   *   Required. The group whose members are listed. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
    * @param {number} request.pageSize
    *   A positive number that is the maximum number of results to return.
    * @param {string} request.pageToken
-   *   If this field is not empty then it must contain the `nextPageToken` value
+   *   If this field is not empty then it must contain the `next_page_token` value
    *   returned by a previous call to this method.  Using this field causes the
    *   method to return additional results from the previous method call.
    * @param {string} request.filter
-   *   An optional [list filter](https://cloud.google.com/monitoring/api/learn_more#filtering) describing
-   *   the members to be returned.  The filter may reference the type, labels, and
-   *   metadata of monitored resources that comprise the group.
-   *   For example, to return only resources representing Compute Engine VM
-   *   instances, use this filter:
+   *   An optional [list
+   *   filter](https://cloud.google.com/monitoring/api/learn_more#filtering)
+   *   describing the members to be returned.  The filter may reference the type,
+   *   labels, and metadata of monitored resources that comprise the group. For
+   *   example, to return only resources representing Compute Engine VM instances,
+   *   use this filter:
    *
-   *       resource.type = "gce_instance"
+   *       `resource.type = "gce_instance"`
    * @param {google.monitoring.v3.TimeInterval} request.interval
    *   An optional time interval for which results should be returned. Only
    *   members that were part of the group during the specified interval are

@@ -391,8 +391,9 @@ export class NotificationChannelServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The channel type for which to execute the request. The format is
-   *   `projects/[PROJECT_ID]/notificationChannelDescriptors/{channel_type}`.
+   *   Required. The channel type for which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/notificationChannelDescriptors/[CHANNEL_TYPE]
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -480,8 +481,9 @@ export class NotificationChannelServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The channel for which to execute the request. The format is
-   *   `projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]`.
+   *   Required. The channel for which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -568,10 +570,10 @@ export class NotificationChannelServiceClient {
    * @param {string} request.name
    *   Required. The project on which to execute the request. The format is:
    *
-   *       projects/[PROJECT_ID]
+   *       projects/[PROJECT_ID_OR_NUMBER]
    *
-   *   Note that this names the container into which the channel will be
-   *   written. This does not name the newly created channel. The resulting
+   *   This names the container into which the channel will be
+   *   written, this does not name the newly created channel. The resulting
    *   channel's name will have a normalized version of this field as a prefix,
    *   but will add `/notificationChannels/[CHANNEL_ID]` to identify the channel.
    * @param {google.monitoring.v3.NotificationChannel} request.notificationChannel
@@ -749,8 +751,9 @@ export class NotificationChannelServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The channel for which to execute the request. The format is
-   *   `projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]`.
+   *   Required. The channel for which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
    * @param {boolean} request.force
    *   If true, the notification channel will be deleted regardless of its
    *   use in alert policies (the policies will be updated to remove the
@@ -1135,7 +1138,7 @@ export class NotificationChannelServiceClient {
    *   Required. The REST resource name of the parent from which to retrieve
    *   the notification channel descriptors. The expected syntax is:
    *
-   *       projects/[PROJECT_ID]
+   *       projects/[PROJECT_ID_OR_NUMBER]
    *
    *   Note that this names the parent container in which to look for the
    *   descriptors; to retrieve a single descriptor by name, use the
@@ -1230,7 +1233,7 @@ export class NotificationChannelServiceClient {
    *   Required. The REST resource name of the parent from which to retrieve
    *   the notification channel descriptors. The expected syntax is:
    *
-   *       projects/[PROJECT_ID]
+   *       projects/[PROJECT_ID_OR_NUMBER]
    *
    *   Note that this names the parent container in which to look for the
    *   descriptors; to retrieve a single descriptor by name, use the
@@ -1294,8 +1297,11 @@ export class NotificationChannelServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project on which to execute the request. The format is
-   *   `projects/[PROJECT_ID]`. That is, this names the container
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
+   *
+   *   This names the container
    *   in which to look for the notification channels; it does not name a
    *   specific channel. To query a specific channel by REST resource name, use
    *   the
@@ -1400,8 +1406,11 @@ export class NotificationChannelServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project on which to execute the request. The format is
-   *   `projects/[PROJECT_ID]`. That is, this names the container
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
+   *
+   *   This names the container
    *   in which to look for the notification channels; it does not name a
    *   specific channel. To query a specific channel by REST resource name, use
    *   the
