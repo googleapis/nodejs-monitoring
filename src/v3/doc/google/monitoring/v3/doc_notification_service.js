@@ -22,7 +22,7 @@
  *   Required. The REST resource name of the parent from which to retrieve
  *   the notification channel descriptors. The expected syntax is:
  *
- *       projects/[PROJECT_ID]
+ *       projects/[PROJECT_ID_OR_NUMBER]
  *
  *   Note that this names the parent container in which to look for the
  *   descriptors; to retrieve a single descriptor by name, use the
@@ -74,8 +74,9 @@ const ListNotificationChannelDescriptorsResponse = {
  * The `GetNotificationChannelDescriptor` response.
  *
  * @property {string} name
- *   Required. The channel type for which to execute the request. The format is
- *   `projects/[PROJECT_ID]/notificationChannelDescriptors/{channel_type}`.
+ *   Required. The channel type for which to execute the request. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]/notificationChannelDescriptors/[CHANNEL_TYPE]
  *
  * @typedef GetNotificationChannelDescriptorRequest
  * @memberof google.monitoring.v3
@@ -91,10 +92,10 @@ const GetNotificationChannelDescriptorRequest = {
  * @property {string} name
  *   Required. The project on which to execute the request. The format is:
  *
- *       projects/[PROJECT_ID]
+ *       projects/[PROJECT_ID_OR_NUMBER]
  *
- *   Note that this names the container into which the channel will be
- *   written. This does not name the newly created channel. The resulting
+ *   This names the container into which the channel will be
+ *   written, this does not name the newly created channel. The resulting
  *   channel's name will have a normalized version of this field as a prefix,
  *   but will add `/notificationChannels/[CHANNEL_ID]` to identify the channel.
  *
@@ -115,8 +116,11 @@ const CreateNotificationChannelRequest = {
  * The `ListNotificationChannels` request.
  *
  * @property {string} name
- *   Required. The project on which to execute the request. The format is
- *   `projects/[PROJECT_ID]`. That is, this names the container
+ *   Required. The project on which to execute the request. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]
+ *
+ *   This names the container
  *   in which to look for the notification channels; it does not name a
  *   specific channel. To query a specific channel by REST resource name, use
  *   the
@@ -182,8 +186,9 @@ const ListNotificationChannelsResponse = {
  * The `GetNotificationChannel` request.
  *
  * @property {string} name
- *   Required. The channel for which to execute the request. The format is
- *   `projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]`.
+ *   Required. The channel for which to execute the request. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
  *
  * @typedef GetNotificationChannelRequest
  * @memberof google.monitoring.v3
@@ -221,8 +226,9 @@ const UpdateNotificationChannelRequest = {
  * The `DeleteNotificationChannel` request.
  *
  * @property {string} name
- *   Required. The channel for which to execute the request. The format is
- *   `projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]`.
+ *   Required. The channel for which to execute the request. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
  *
  * @property {boolean} force
  *   If true, the notification channel will be deleted regardless of its

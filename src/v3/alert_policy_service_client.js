@@ -255,9 +255,9 @@ class AlertPolicyServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project whose alert policies are to be listed. The format is
+   *   Required. The project whose alert policies are to be listed. The format is:
    *
-   *       projects/[PROJECT_ID]
+   *       projects/[PROJECT_ID_OR_NUMBER]
    *
    *   Note that this field names the parent container in which the alerting
    *   policies to be listed are stored. To retrieve a single alerting policy
@@ -388,9 +388,9 @@ class AlertPolicyServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project whose alert policies are to be listed. The format is
+   *   Required. The project whose alert policies are to be listed. The format is:
    *
-   *       projects/[PROJECT_ID]
+   *       projects/[PROJECT_ID_OR_NUMBER]
    *
    *   Note that this field names the parent container in which the alerting
    *   policies to be listed are stored. To retrieve a single alerting policy
@@ -454,9 +454,9 @@ class AlertPolicyServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The alerting policy to retrieve. The format is
+   *   Required. The alerting policy to retrieve. The format is:
    *
-   *       projects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]
+   *       projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
    * @param {Object} [options]
    *   Optional parameters. You can override the default settings for this call, e.g, timeout,
    *   retries, paginations, etc. See [gax.CallOptions]{@link https://googleapis.github.io/gax-nodejs/interfaces/CallOptions.html} for the details.
@@ -510,18 +510,20 @@ class AlertPolicyServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project in which to create the alerting policy. The format is
-   *   `projects/[PROJECT_ID]`.
+   *   Required. The project in which to create the alerting policy. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
    *
    *   Note that this field names the parent container in which the alerting
    *   policy will be written, not the name of the created policy. The alerting
    *   policy that is returned will have a name that contains a normalized
    *   representation of this name as a prefix but adds a suffix of the form
-   *   `/alertPolicies/[POLICY_ID]`, identifying the policy in the container.
+   *   `/alertPolicies/[ALERT_POLICY_ID]`, identifying the policy in the
+   *   container.
    * @param {Object} request.alertPolicy
    *   Required. The requested alerting policy. You should omit the `name` field in this
    *   policy. The name will be returned in the new policy, including
-   *   a new [ALERT_POLICY_ID] value.
+   *   a new `[ALERT_POLICY_ID]` value.
    *
    *   This object should have the same structure as [AlertPolicy]{@link google.monitoring.v3.AlertPolicy}
    * @param {Object} [options]
@@ -584,7 +586,7 @@ class AlertPolicyServiceClient {
    * @param {string} request.name
    *   Required. The alerting policy to delete. The format is:
    *
-   *       projects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]
+   *       projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
    *
    *   For more information, see AlertPolicy.
    * @param {Object} [options]

@@ -261,22 +261,32 @@ class GroupServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project whose groups are to be listed. The format is
-   *   `"projects/{project_id_or_number}"`.
+   *   Required. The project whose groups are to be listed. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
    * @param {string} [request.childrenOfGroup]
-   *   A group name: `"projects/{project_id_or_number}/groups/{group_id}"`.
-   *   Returns groups whose `parentName` field contains the group
+   *   A group name. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+   *
+   *   Returns groups whose `parent_name` field contains the group
    *   name.  If no groups have this parent, the results are empty.
    * @param {string} [request.ancestorsOfGroup]
-   *   A group name: `"projects/{project_id_or_number}/groups/{group_id}"`.
+   *   A group name. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+   *
    *   Returns groups that are ancestors of the specified group.
    *   The groups are returned in order, starting with the immediate parent and
    *   ending with the most distant ancestor.  If the specified group has no
    *   immediate parent, the results are empty.
    * @param {string} [request.descendantsOfGroup]
-   *   A group name: `"projects/{project_id_or_number}/groups/{group_id}"`.
+   *   A group name. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+   *
    *   Returns the descendants of the specified group.  This is a superset of
-   *   the results returned by the `childrenOfGroup` filter, and includes
+   *   the results returned by the `children_of_group` filter, and includes
    *   children-of-children, and so forth.
    * @param {number} [request.pageSize]
    *   The maximum number of resources contained in the underlying API
@@ -389,22 +399,32 @@ class GroupServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project whose groups are to be listed. The format is
-   *   `"projects/{project_id_or_number}"`.
+   *   Required. The project whose groups are to be listed. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
    * @param {string} [request.childrenOfGroup]
-   *   A group name: `"projects/{project_id_or_number}/groups/{group_id}"`.
-   *   Returns groups whose `parentName` field contains the group
+   *   A group name. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+   *
+   *   Returns groups whose `parent_name` field contains the group
    *   name.  If no groups have this parent, the results are empty.
    * @param {string} [request.ancestorsOfGroup]
-   *   A group name: `"projects/{project_id_or_number}/groups/{group_id}"`.
+   *   A group name. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+   *
    *   Returns groups that are ancestors of the specified group.
    *   The groups are returned in order, starting with the immediate parent and
    *   ending with the most distant ancestor.  If the specified group has no
    *   immediate parent, the results are empty.
    * @param {string} [request.descendantsOfGroup]
-   *   A group name: `"projects/{project_id_or_number}/groups/{group_id}"`.
+   *   A group name. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+   *
    *   Returns the descendants of the specified group.  This is a superset of
-   *   the results returned by the `childrenOfGroup` filter, and includes
+   *   the results returned by the `children_of_group` filter, and includes
    *   children-of-children, and so forth.
    * @param {number} [request.pageSize]
    *   The maximum number of resources contained in the underlying API
@@ -450,8 +470,9 @@ class GroupServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The group to retrieve. The format is
-   *   `"projects/{project_id_or_number}/groups/{group_id}"`.
+   *   Required. The group to retrieve. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
    * @param {Object} [options]
    *   Optional parameters. You can override the default settings for this call, e.g, timeout,
    *   retries, paginations, etc. See [gax.CallOptions]{@link https://googleapis.github.io/gax-nodejs/interfaces/CallOptions.html} for the details.
@@ -505,8 +526,9 @@ class GroupServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project in which to create the group. The format is
-   *   `"projects/{project_id_or_number}"`.
+   *   Required. The project in which to create the group. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
    * @param {Object} request.group
    *   Required. A group definition. It is an error to define the `name` field because
    *   the system assigns the name.
@@ -632,8 +654,9 @@ class GroupServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The group to delete. The format is
-   *   `"projects/{project_id_or_number}/groups/{group_id}"`.
+   *   Required. The group to delete. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
    * @param {boolean} [request.recursive]
    *   If this field is true, then the request means to delete a group with all
    *   its descendants. Otherwise, the request means to delete a group only when
@@ -683,8 +706,9 @@ class GroupServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The group whose members are listed. The format is
-   *   `"projects/{project_id_or_number}/groups/{group_id}"`.
+   *   Required. The group whose members are listed. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
    * @param {number} [request.pageSize]
    *   The maximum number of resources contained in the underlying API
    *   response. If page streaming is performed per-resource, this
@@ -692,13 +716,14 @@ class GroupServiceClient {
    *   performed per-page, this determines the maximum number of
    *   resources in a page.
    * @param {string} [request.filter]
-   *   An optional [list filter](https://cloud.google.com/monitoring/api/learn_more#filtering) describing
-   *   the members to be returned.  The filter may reference the type, labels, and
-   *   metadata of monitored resources that comprise the group.
-   *   For example, to return only resources representing Compute Engine VM
-   *   instances, use this filter:
+   *   An optional [list
+   *   filter](https://cloud.google.com/monitoring/api/learn_more#filtering)
+   *   describing the members to be returned.  The filter may reference the type,
+   *   labels, and metadata of monitored resources that comprise the group. For
+   *   example, to return only resources representing Compute Engine VM instances,
+   *   use this filter:
    *
-   *       resource.type = "gce_instance"
+   *       `resource.type = "gce_instance"`
    * @param {Object} [request.interval]
    *   An optional time interval for which results should be returned. Only
    *   members that were part of the group during the specified interval are
@@ -811,8 +836,9 @@ class GroupServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The group whose members are listed. The format is
-   *   `"projects/{project_id_or_number}/groups/{group_id}"`.
+   *   Required. The group whose members are listed. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
    * @param {number} [request.pageSize]
    *   The maximum number of resources contained in the underlying API
    *   response. If page streaming is performed per-resource, this
@@ -820,13 +846,14 @@ class GroupServiceClient {
    *   performed per-page, this determines the maximum number of
    *   resources in a page.
    * @param {string} [request.filter]
-   *   An optional [list filter](https://cloud.google.com/monitoring/api/learn_more#filtering) describing
-   *   the members to be returned.  The filter may reference the type, labels, and
-   *   metadata of monitored resources that comprise the group.
-   *   For example, to return only resources representing Compute Engine VM
-   *   instances, use this filter:
+   *   An optional [list
+   *   filter](https://cloud.google.com/monitoring/api/learn_more#filtering)
+   *   describing the members to be returned.  The filter may reference the type,
+   *   labels, and metadata of monitored resources that comprise the group. For
+   *   example, to return only resources representing Compute Engine VM instances,
+   *   use this filter:
    *
-   *       resource.type = "gce_instance"
+   *       `resource.type = "gce_instance"`
    * @param {Object} [request.interval]
    *   An optional time interval for which results should be returned. Only
    *   members that were part of the group during the specified interval are

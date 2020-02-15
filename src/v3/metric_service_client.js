@@ -261,14 +261,14 @@ class MetricServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project on which to execute the request. The format is
-   *   `"projects/{project_id_or_number}"`.
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
    * @param {string} [request.filter]
-   *   An optional [filter](https://cloud.google.com/monitoring/api/v3/filters) describing
-   *   the descriptors to be returned.  The filter can reference
-   *   the descriptor's type and labels. For example, the
-   *   following filter returns only Google Compute Engine descriptors
-   *   that have an `id` label:
+   *   An optional [filter](https://cloud.google.com/monitoring/api/v3/filters)
+   *   describing the descriptors to be returned.  The filter can reference the
+   *   descriptor's type and labels. For example, the following filter returns
+   *   only Google Compute Engine descriptors that have an `id` label:
    *
    *       resource.type = starts_with("gce_") AND resource.label:id
    * @param {number} [request.pageSize]
@@ -386,14 +386,14 @@ class MetricServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project on which to execute the request. The format is
-   *   `"projects/{project_id_or_number}"`.
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
    * @param {string} [request.filter]
-   *   An optional [filter](https://cloud.google.com/monitoring/api/v3/filters) describing
-   *   the descriptors to be returned.  The filter can reference
-   *   the descriptor's type and labels. For example, the
-   *   following filter returns only Google Compute Engine descriptors
-   *   that have an `id` label:
+   *   An optional [filter](https://cloud.google.com/monitoring/api/v3/filters)
+   *   describing the descriptors to be returned.  The filter can reference the
+   *   descriptor's type and labels. For example, the following filter returns
+   *   only Google Compute Engine descriptors that have an `id` label:
    *
    *       resource.type = starts_with("gce_") AND resource.label:id
    * @param {number} [request.pageSize]
@@ -440,9 +440,11 @@ class MetricServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The monitored resource descriptor to get.  The format is
-   *   `"projects/{project_id_or_number}/monitoredResourceDescriptors/{resource_type}"`.
-   *   The `{resource_type}` is a predefined type, such as
+   *   Required. The monitored resource descriptor to get.  The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/monitoredResourceDescriptors/[RESOURCE_TYPE]
+   *
+   *   The `[RESOURCE_TYPE]` is a predefined type, such as
    *   `cloudsql_database`.
    * @param {Object} [options]
    *   Optional parameters. You can override the default settings for this call, e.g, timeout,
@@ -501,8 +503,9 @@ class MetricServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project on which to execute the request. The format is
-   *   `"projects/{project_id_or_number}"`.
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
    * @param {string} [request.filter]
    *   If this field is empty, all custom and
    *   system-defined metric descriptors are returned.
@@ -627,8 +630,9 @@ class MetricServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project on which to execute the request. The format is
-   *   `"projects/{project_id_or_number}"`.
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
    * @param {string} [request.filter]
    *   If this field is empty, all custom and
    *   system-defined metric descriptors are returned.
@@ -682,9 +686,11 @@ class MetricServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The metric descriptor on which to execute the request. The format is
-   *   `"projects/{project_id_or_number}/metricDescriptors/{metric_id}"`.
-   *   An example value of `{metric_id}` is
+   *   Required. The metric descriptor on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]
+   *
+   *   An example value of `[METRIC_ID]` is
    *   `"compute.googleapis.com/instance/disk/read_bytes_count"`.
    * @param {Object} [options]
    *   Optional parameters. You can override the default settings for this call, e.g, timeout,
@@ -741,8 +747,9 @@ class MetricServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project on which to execute the request. The format is
-   *   `"projects/{project_id_or_number}"`.
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
    * @param {Object} request.metricDescriptor
    *   Required. The new [custom metric](https://cloud.google.com/monitoring/custom-metrics)
    *   descriptor.
@@ -806,14 +813,17 @@ class MetricServiceClient {
 
   /**
    * Deletes a metric descriptor. Only user-created
-   * [custom metrics](https://cloud.google.com/monitoring/custom-metrics) can be deleted.
+   * [custom metrics](https://cloud.google.com/monitoring/custom-metrics) can be
+   * deleted.
    *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The metric descriptor on which to execute the request. The format is
-   *   `"projects/{project_id_or_number}/metricDescriptors/{metric_id}"`.
-   *   An example of `{metric_id}` is:
+   *   Required. The metric descriptor on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]
+   *
+   *   An example of `[METRIC_ID]` is:
    *   `"custom.googleapis.com/my_test_metric"`.
    * @param {Object} [options]
    *   Optional parameters. You can override the default settings for this call, e.g, timeout,
@@ -864,13 +874,14 @@ class MetricServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project on which to execute the request. The format is
-   *   "projects/{project_id_or_number}".
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
    * @param {string} request.filter
-   *   Required. A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters) that specifies which time
-   *   series should be returned.  The filter must specify a single metric type,
-   *   and can additionally specify metric labels and other information. For
-   *   example:
+   *   Required. A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)
+   *   that specifies which time series should be returned.  The filter must
+   *   specify a single metric type, and can additionally specify metric labels
+   *   and other information. For example:
    *
    *       metric.type = "compute.googleapis.com/instance/cpu/usage_time" AND
    *           metric.labels.instance_name = "my-instance-name"
@@ -1024,13 +1035,14 @@ class MetricServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project on which to execute the request. The format is
-   *   "projects/{project_id_or_number}".
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
    * @param {string} request.filter
-   *   Required. A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters) that specifies which time
-   *   series should be returned.  The filter must specify a single metric type,
-   *   and can additionally specify metric labels and other information. For
-   *   example:
+   *   Required. A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)
+   *   that specifies which time series should be returned.  The filter must
+   *   specify a single metric type, and can additionally specify metric labels
+   *   and other information. For example:
    *
    *       metric.type = "compute.googleapis.com/instance/cpu/usage_time" AND
    *           metric.labels.instance_name = "my-instance-name"
@@ -1111,8 +1123,9 @@ class MetricServiceClient {
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
-   *   Required. The project on which to execute the request. The format is
-   *   `"projects/{project_id_or_number}"`.
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
    * @param {Object[]} request.timeSeries
    *   Required. The new data to be added to a list of time series.
    *   Adds at most one data point to each of several time series.  The new data

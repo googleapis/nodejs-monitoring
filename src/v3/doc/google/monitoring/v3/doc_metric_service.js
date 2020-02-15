@@ -19,15 +19,15 @@
  * The `ListMonitoredResourceDescriptors` request.
  *
  * @property {string} name
- *   Required. The project on which to execute the request. The format is
- *   `"projects/{project_id_or_number}"`.
+ *   Required. The project on which to execute the request. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]
  *
  * @property {string} filter
- *   An optional [filter](https://cloud.google.com/monitoring/api/v3/filters) describing
- *   the descriptors to be returned.  The filter can reference
- *   the descriptor's type and labels. For example, the
- *   following filter returns only Google Compute Engine descriptors
- *   that have an `id` label:
+ *   An optional [filter](https://cloud.google.com/monitoring/api/v3/filters)
+ *   describing the descriptors to be returned.  The filter can reference the
+ *   descriptor's type and labels. For example, the following filter returns
+ *   only Google Compute Engine descriptors that have an `id` label:
  *
  *       resource.type = starts_with("gce_") AND resource.label:id
  *
@@ -59,7 +59,7 @@ const ListMonitoredResourceDescriptorsRequest = {
  * @property {string} nextPageToken
  *   If there are more results than have been returned, then this field is set
  *   to a non-empty value.  To see the additional results,
- *   use that value as `pageToken` in the next call to this method.
+ *   use that value as `page_token` in the next call to this method.
  *
  * @typedef ListMonitoredResourceDescriptorsResponse
  * @memberof google.monitoring.v3
@@ -73,9 +73,11 @@ const ListMonitoredResourceDescriptorsResponse = {
  * The `GetMonitoredResourceDescriptor` request.
  *
  * @property {string} name
- *   Required. The monitored resource descriptor to get.  The format is
- *   `"projects/{project_id_or_number}/monitoredResourceDescriptors/{resource_type}"`.
- *   The `{resource_type}` is a predefined type, such as
+ *   Required. The monitored resource descriptor to get.  The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]/monitoredResourceDescriptors/[RESOURCE_TYPE]
+ *
+ *   The `[RESOURCE_TYPE]` is a predefined type, such as
  *   `cloudsql_database`.
  *
  * @typedef GetMonitoredResourceDescriptorRequest
@@ -90,8 +92,9 @@ const GetMonitoredResourceDescriptorRequest = {
  * The `ListMetricDescriptors` request.
  *
  * @property {string} name
- *   Required. The project on which to execute the request. The format is
- *   `"projects/{project_id_or_number}"`.
+ *   Required. The project on which to execute the request. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]
  *
  * @property {string} filter
  *   If this field is empty, all custom and
@@ -131,7 +134,7 @@ const ListMetricDescriptorsRequest = {
  * @property {string} nextPageToken
  *   If there are more results than have been returned, then this field is set
  *   to a non-empty value.  To see the additional results,
- *   use that value as `pageToken` in the next call to this method.
+ *   use that value as `page_token` in the next call to this method.
  *
  * @typedef ListMetricDescriptorsResponse
  * @memberof google.monitoring.v3
@@ -145,9 +148,11 @@ const ListMetricDescriptorsResponse = {
  * The `GetMetricDescriptor` request.
  *
  * @property {string} name
- *   Required. The metric descriptor on which to execute the request. The format is
- *   `"projects/{project_id_or_number}/metricDescriptors/{metric_id}"`.
- *   An example value of `{metric_id}` is
+ *   Required. The metric descriptor on which to execute the request. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]
+ *
+ *   An example value of `[METRIC_ID]` is
  *   `"compute.googleapis.com/instance/disk/read_bytes_count"`.
  *
  * @typedef GetMetricDescriptorRequest
@@ -162,8 +167,9 @@ const GetMetricDescriptorRequest = {
  * The `CreateMetricDescriptor` request.
  *
  * @property {string} name
- *   Required. The project on which to execute the request. The format is
- *   `"projects/{project_id_or_number}"`.
+ *   Required. The project on which to execute the request. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]
  *
  * @property {Object} metricDescriptor
  *   Required. The new [custom metric](https://cloud.google.com/monitoring/custom-metrics)
@@ -183,9 +189,11 @@ const CreateMetricDescriptorRequest = {
  * The `DeleteMetricDescriptor` request.
  *
  * @property {string} name
- *   Required. The metric descriptor on which to execute the request. The format is
- *   `"projects/{project_id_or_number}/metricDescriptors/{metric_id}"`.
- *   An example of `{metric_id}` is:
+ *   Required. The metric descriptor on which to execute the request. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]
+ *
+ *   An example of `[METRIC_ID]` is:
  *   `"custom.googleapis.com/my_test_metric"`.
  *
  * @typedef DeleteMetricDescriptorRequest
@@ -200,14 +208,15 @@ const DeleteMetricDescriptorRequest = {
  * The `ListTimeSeries` request.
  *
  * @property {string} name
- *   Required. The project on which to execute the request. The format is
- *   "projects/{project_id_or_number}".
+ *   Required. The project on which to execute the request. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]
  *
  * @property {string} filter
- *   Required. A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters) that specifies which time
- *   series should be returned.  The filter must specify a single metric type,
- *   and can additionally specify metric labels and other information. For
- *   example:
+ *   Required. A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)
+ *   that specifies which time series should be returned.  The filter must
+ *   specify a single metric type, and can additionally specify metric labels
+ *   and other information. For example:
  *
  *       metric.type = "compute.googleapis.com/instance/cpu/usage_time" AND
  *           metric.labels.instance_name = "my-instance-name"
@@ -289,7 +298,7 @@ const ListTimeSeriesRequest = {
  * @property {string} nextPageToken
  *   If there are more results than have been returned, then this field is set
  *   to a non-empty value.  To see the additional results,
- *   use that value as `pageToken` in the next call to this method.
+ *   use that value as `page_token` in the next call to this method.
  *
  * @property {Object[]} executionErrors
  *   Query execution errors that may have caused the time series data returned
@@ -309,8 +318,9 @@ const ListTimeSeriesResponse = {
  * The `CreateTimeSeries` request.
  *
  * @property {string} name
- *   Required. The project on which to execute the request. The format is
- *   `"projects/{project_id_or_number}"`.
+ *   Required. The project on which to execute the request. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]
  *
  * @property {Object[]} timeSeries
  *   Required. The new data to be added to a list of time series.

@@ -19,32 +19,42 @@
  * The `ListGroup` request.
  *
  * @property {string} name
- *   Required. The project whose groups are to be listed. The format is
- *   `"projects/{project_id_or_number}"`.
+ *   Required. The project whose groups are to be listed. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]
  *
  * @property {string} childrenOfGroup
- *   A group name: `"projects/{project_id_or_number}/groups/{group_id}"`.
- *   Returns groups whose `parentName` field contains the group
+ *   A group name. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+ *
+ *   Returns groups whose `parent_name` field contains the group
  *   name.  If no groups have this parent, the results are empty.
  *
  * @property {string} ancestorsOfGroup
- *   A group name: `"projects/{project_id_or_number}/groups/{group_id}"`.
+ *   A group name. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+ *
  *   Returns groups that are ancestors of the specified group.
  *   The groups are returned in order, starting with the immediate parent and
  *   ending with the most distant ancestor.  If the specified group has no
  *   immediate parent, the results are empty.
  *
  * @property {string} descendantsOfGroup
- *   A group name: `"projects/{project_id_or_number}/groups/{group_id}"`.
+ *   A group name. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+ *
  *   Returns the descendants of the specified group.  This is a superset of
- *   the results returned by the `childrenOfGroup` filter, and includes
+ *   the results returned by the `children_of_group` filter, and includes
  *   children-of-children, and so forth.
  *
  * @property {number} pageSize
  *   A positive number that is the maximum number of results to return.
  *
  * @property {string} pageToken
- *   If this field is not empty then it must contain the `nextPageToken` value
+ *   If this field is not empty then it must contain the `next_page_token` value
  *   returned by a previous call to this method.  Using this field causes the
  *   method to return additional results from the previous method call.
  *
@@ -67,7 +77,7 @@ const ListGroupsRequest = {
  * @property {string} nextPageToken
  *   If there are more results than have been returned, then this field is set
  *   to a non-empty value.  To see the additional results,
- *   use that value as `pageToken` in the next call to this method.
+ *   use that value as `page_token` in the next call to this method.
  *
  * @typedef ListGroupsResponse
  * @memberof google.monitoring.v3
@@ -81,8 +91,9 @@ const ListGroupsResponse = {
  * The `GetGroup` request.
  *
  * @property {string} name
- *   Required. The group to retrieve. The format is
- *   `"projects/{project_id_or_number}/groups/{group_id}"`.
+ *   Required. The group to retrieve. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
  *
  * @typedef GetGroupRequest
  * @memberof google.monitoring.v3
@@ -96,8 +107,9 @@ const GetGroupRequest = {
  * The `CreateGroup` request.
  *
  * @property {string} name
- *   Required. The project in which to create the group. The format is
- *   `"projects/{project_id_or_number}"`.
+ *   Required. The project in which to create the group. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]
  *
  * @property {Object} group
  *   Required. A group definition. It is an error to define the `name` field because
@@ -141,8 +153,9 @@ const UpdateGroupRequest = {
  * single group without any descendants.
  *
  * @property {string} name
- *   Required. The group to delete. The format is
- *   `"projects/{project_id_or_number}/groups/{group_id}"`.
+ *   Required. The group to delete. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
  *
  * @property {boolean} recursive
  *   If this field is true, then the request means to delete a group with all
@@ -161,25 +174,27 @@ const DeleteGroupRequest = {
  * The `ListGroupMembers` request.
  *
  * @property {string} name
- *   Required. The group whose members are listed. The format is
- *   `"projects/{project_id_or_number}/groups/{group_id}"`.
+ *   Required. The group whose members are listed. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
  *
  * @property {number} pageSize
  *   A positive number that is the maximum number of results to return.
  *
  * @property {string} pageToken
- *   If this field is not empty then it must contain the `nextPageToken` value
+ *   If this field is not empty then it must contain the `next_page_token` value
  *   returned by a previous call to this method.  Using this field causes the
  *   method to return additional results from the previous method call.
  *
  * @property {string} filter
- *   An optional [list filter](https://cloud.google.com/monitoring/api/learn_more#filtering) describing
- *   the members to be returned.  The filter may reference the type, labels, and
- *   metadata of monitored resources that comprise the group.
- *   For example, to return only resources representing Compute Engine VM
- *   instances, use this filter:
+ *   An optional [list
+ *   filter](https://cloud.google.com/monitoring/api/learn_more#filtering)
+ *   describing the members to be returned.  The filter may reference the type,
+ *   labels, and metadata of monitored resources that comprise the group. For
+ *   example, to return only resources representing Compute Engine VM instances,
+ *   use this filter:
  *
- *       resource.type = "gce_instance"
+ *       `resource.type = "gce_instance"`
  *
  * @property {Object} interval
  *   An optional time interval for which results should be returned. Only
@@ -208,7 +223,7 @@ const ListGroupMembersRequest = {
  * @property {string} nextPageToken
  *   If there are more results than have been returned, then this field is
  *   set to a non-empty value.  To see the additional results, use that value as
- *   `pageToken` in the next call to this method.
+ *   `page_token` in the next call to this method.
  *
  * @property {number} totalSize
  *   The total number of elements matching this request.
