@@ -25,7 +25,8 @@ const execSync = cmd => cp.execSync(cmd, {encoding: 'utf-8'});
 const delay = async test => {
   const retries = test.currentRetry();
   if (retries === 0) return; // no retry on the first failure.
-  const ms = Math.pow(2, retries) * 250;
+  // see: https://cloud.google.com/storage/docs/exponential-backoff:
+  const ms = Math.pow(2, retries) * 250 + Math.random() * 1000;
   return new Promise(done => {
     console.info(`retrying "${test.title}" in ${ms}ms`);
     setTimeout(done, ms);
@@ -33,7 +34,7 @@ const delay = async test => {
 };
 describe('quickstart', () => {
   it('should run the quickstart', async function() {
-    this.retries(5);
+    this.retries(8);
     await delay(this.test); // delay the start of the test, if this is a retry.
     const result = execSync('node quickstart');
     assert.match(result, /Done writing time series data/);
