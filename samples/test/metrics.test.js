@@ -30,7 +30,8 @@ const projectId = process.env.GCLOUD_PROJECT;
 const resourceId = 'cloudsql_database';
 
 // A helper for delaying integration tests with an exponential backoff.
-// See examples like: https://github.com/googleapis/nodejs-monitoring/issues/190
+// See examples like: https://github.com/googleapis/nodejs-monitoring/issues/190,
+// https://github.com/googleapis/nodejs-monitoring/issues/191.
 const delay = async test => {
   const retries = test.currentRetry();
   if (retries === 0) return Promise.resolve(); // no retry on the first failure.
