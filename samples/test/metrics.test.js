@@ -34,7 +34,7 @@ const resourceId = 'cloudsql_database';
 // https://github.com/googleapis/nodejs-monitoring/issues/191.
 const delay = async test => {
   const retries = test.currentRetry();
-  if (retries === 0) return Promise.resolve(); // no retry on the first failure.
+  if (retries === 0) return; // no retry on the first failure.
   const ms = Math.pow(2, retries) * 250;
   return new Promise(done => {
     console.info(`retrying "${test.title}" in ${ms}ms`);
@@ -49,7 +49,7 @@ describe('metrics', async () => {
   });
 
   it('should list metric descriptors, including the new custom one', async function() {
-    this.retries(4);
+    this.retries(5);
     await delay(this.test); // delay the start of the test, if this is a retry.
     const output = execSync(`${cmd} list`);
     assert.include(output, customMetricId);
@@ -133,7 +133,7 @@ describe('metrics', async () => {
   });
 
   it('should read time series data aggregated', async function() {
-    this.retries(4);
+    this.retries(5);
     await delay(this.test); // delay the start of the test, if this is a retry.
     const [timeSeries] = await client.listTimeSeries({
       name: client.projectPath(projectId),
