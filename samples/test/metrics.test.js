@@ -18,7 +18,6 @@ const monitoring = require('@google-cloud/monitoring');
 const {assert} = require('chai');
 const {describe, it} = require('mocha');
 const cp = require('child_process');
-const retry = require('p-retry');
 
 const execSync = cmd => cp.execSync(cmd, {encoding: 'utf-8'});
 
@@ -30,28 +29,30 @@ const filter = `metric.type="${computeMetricId}"`;
 const projectId = process.env.GCLOUD_PROJECT;
 const resourceId = 'cloudsql_database';
 
-describe('metrics', () => {
+// A helper for delaying integration tests with an exponential backoff.
+// See examples like: https://github.com/googleapis/nodejs-monitoring/issues/190
+const delay = async test => {
+  const retries = test.currentRetry();
+  if (retries === 0) return Promise.resolve(); // no retry on the first failure.
+  const ms = Math.pow(2, retries) * 250;
+  return new Promise(done => {
+    console.info(`retrying "${test.title}" in ${ms}ms`);
+    setTimeout(done, ms);
+  });
+};
+describe('metrics', async () => {
   it('should create a metric descriptors', () => {
     const output = execSync(`${cmd} create`);
     assert.include(output, 'Created custom Metric');
     assert.include(output, `Type: ${customMetricId}`);
   });
 
-  it('should list metric descriptors, including the new custom one', async () => {
-    // The write above appears to be eventually consistent. This retry should
-    // not be needed.  The tracking bug is here:
-    // https://github.com/googleapis/nodejs-monitoring/issues/190
-    await retry(
-      async () => {
-        const output = execSync(`${cmd} list`);
-        assert.include(output, customMetricId);
-        assert.include(output, computeMetricId);
-      },
-      {
-        retries: 10,
-        onFailedAttempt: () => console.warn('Read failed, retrying...'),
-      }
-    );
+  it('should list metric descriptors, including the new custom one', async function() {
+    this.retries(4);
+    await delay(this.test); // delay the start of the test, if this is a retry.
+    const output = execSync(`${cmd} list`);
+    assert.include(output, customMetricId);
+    assert.include(output, computeMetricId);
   });
 
   it('should get a metric descriptor', () => {
@@ -130,7 +131,9 @@ describe('metrics', () => {
     });
   });
 
-  it('should read time series data aggregated', async () => {
+  it('should read time series data aggregated', async function() {
+    this.retries(4);
+    await delay(this.test); // delay the start of the test, if this is a retry.
     const [timeSeries] = await client.listTimeSeries({
       name: client.projectPath(projectId),
       filter: filter,
