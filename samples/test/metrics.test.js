@@ -36,16 +36,14 @@ const delay = async test => {
   const retries = test.currentRetry();
   if (retries === 0) return; // no retry on the first failure.
   // see: https://cloud.google.com/storage/docs/exponential-backoff:
-  const ms = Math.pow(2, retries) * 500 + Math.random() * 1000;
+  const ms = Math.pow(2, retries) * 250 + Math.random() * 1000;
   return new Promise(done => {
     console.info(`retrying "${test.title}" in ${ms}ms`);
     setTimeout(done, ms);
   });
 };
 describe('metrics', async () => {
-  it('should create a metric descriptors', async function() {
-    this.retries(8);
-    await delay(this.test);
+  it('should create a metric descriptors', () => {
     const output = execSync(`${cmd} create`);
     assert.include(output, 'Created custom Metric');
     assert.include(output, `Type: ${customMetricId}`);
@@ -53,7 +51,7 @@ describe('metrics', async () => {
 
   it('should list metric descriptors, including the new custom one', async function() {
     this.retries(8);
-    await delay(this.test);
+    await delay(this.test); // delay the start of the test, if this is a retry.
     const output = execSync(`${cmd} list`);
     assert.include(output, customMetricId);
     assert.include(output, computeMetricId);
@@ -64,16 +62,12 @@ describe('metrics', async () => {
     assert.include(output, `Type: ${customMetricId}`);
   });
 
-  it('should write time series data', async function() {
-    this.retries(5);
-    await delay(this.test);
+  it('should write time series data', () => {
     const output = execSync(`${cmd} write`);
     assert.include(output, 'Done writing time series data.');
   });
 
-  it('should delete a metric descriptor', async function() {
-    this.retries(5);
-    await delay(this.test);
+  it('should delete a metric descriptor', () => {
     const output = execSync(`${cmd} delete ${customMetricId}`);
     assert.include(output, `Deleted ${customMetricId}`);
   });
@@ -141,7 +135,7 @@ describe('metrics', async () => {
 
   it('should read time series data aggregated', async function() {
     this.retries(5);
-    await delay(this.test);
+    await delay(this.test); // delay the start of the test, if this is a retry.
     const [timeSeries] = await client.listTimeSeries({
       name: client.projectPath(projectId),
       filter: filter,
