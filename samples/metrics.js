@@ -325,11 +325,10 @@ async function readTimeSeriesAggregate(projectId) {
   console.log('CPU utilization:');
   timeSeries.forEach(data => {
     console.log(data.metric.labels.instance_name);
-    for (const p of data.points) {
-      console.log(util.inspect(p));
-    }
     console.log(`  Now: ${data.points[0].value.doubleValue}`);
-    console.log(`  10 min ago: ${data.points[1].value.doubleValue}`);
+    if (data.points.length > 1) {
+      console.log(`  10 min ago: ${data.points[1].value.doubleValue}`);
+    }
     console.log('=====');
   });
   // [END monitoring_read_timeseries_align]
