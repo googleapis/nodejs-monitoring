@@ -289,7 +289,6 @@ async function readTimeSeriesAggregate(projectId) {
   // [START monitoring_read_timeseries_align]
   // Imports the Google Cloud client library
   const monitoring = require('@google-cloud/monitoring');
-  const util = require('util');
 
   // Creates a client
   const client = new monitoring.MetricServiceClient();
