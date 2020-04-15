@@ -17,18 +17,11 @@
 // ** All changes to this file may be overwritten. **
 
 import * as gax from 'google-gax';
-import {
-  Callback,
-  CallOptions,
-  Descriptors,
-  ClientOptions,
-  PaginationCallback,
-  GaxCall,
-} from 'google-gax';
+import {Callback, CallOptions, Descriptors, ClientOptions, PaginationCallback, GaxCall} from 'google-gax';
 import * as path from 'path';
 
-import {Transform} from 'stream';
-import {RequestType} from 'google-gax/build/src/apitypes';
+import { Transform } from 'stream';
+import { RequestType } from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
 import * as gapicConfig from './alert_policy_service_client_config.json';
 
@@ -55,12 +48,7 @@ export class AlertPolicyServiceClient {
   private _protos: {};
   private _defaults: {[method: string]: gax.CallSettings};
   auth: gax.GoogleAuth;
-  descriptors: Descriptors = {
-    page: {},
-    stream: {},
-    longrunning: {},
-    batching: {},
-  };
+  descriptors: Descriptors = {page: {}, stream: {}, longrunning: {}, batching: {}};
   innerApiCalls: {[name: string]: Function};
   pathTemplates: {[name: string]: gax.PathTemplate};
   alertPolicyServiceStub?: Promise<{[name: string]: Function}>;
@@ -94,12 +82,10 @@ export class AlertPolicyServiceClient {
   constructor(opts?: ClientOptions) {
     // Ensure that options include the service address and port.
     const staticMembers = this.constructor as typeof AlertPolicyServiceClient;
-    const servicePath =
-      opts && opts.servicePath
-        ? opts.servicePath
-        : opts && opts.apiEndpoint
-        ? opts.apiEndpoint
-        : staticMembers.servicePath;
+    const servicePath = opts && opts.servicePath ?
+        opts.servicePath :
+        ((opts && opts.apiEndpoint) ? opts.apiEndpoint :
+                                      staticMembers.servicePath);
     const port = opts && opts.port ? opts.port : staticMembers.port;
 
     if (!opts) {
@@ -109,8 +95,8 @@ export class AlertPolicyServiceClient {
     opts.port = opts.port || port;
     opts.clientConfig = opts.clientConfig || {};
 
-    const isBrowser = typeof window !== 'undefined';
-    if (isBrowser) {
+    const isBrowser = (typeof window !== 'undefined');
+    if (isBrowser){
       opts.fallback = true;
     }
     // If we are in browser, we are already using fallback because of the
@@ -127,10 +113,13 @@ export class AlertPolicyServiceClient {
     this._opts = opts;
 
     // Save the auth object to the client, for use by other methods.
-    this.auth = this._gaxGrpc.auth as gax.GoogleAuth;
+    this.auth = (this._gaxGrpc.auth as gax.GoogleAuth);
 
     // Determine the client header string.
-    const clientHeader = [`gax/${this._gaxModule.version}`, `gapic/${version}`];
+    const clientHeader = [
+      `gax/${this._gaxModule.version}`,
+      `gapic/${version}`,
+    ];
     if (typeof process !== 'undefined' && 'versions' in process) {
       clientHeader.push(`gl-node/${process.versions.node}`);
     } else {
@@ -146,18 +135,12 @@ export class AlertPolicyServiceClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
+    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
     this._protos = this._gaxGrpc.loadProto(
-      opts.fallback
-        ? // eslint-disable-next-line @typescript-eslint/no-var-requires
-          require('../../protos/protos.json')
-        : nodejsProtoPath
+      opts.fallback ?
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        require("../../protos/protos.json") :
+        nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -245,20 +228,14 @@ export class AlertPolicyServiceClient {
     // (e.g. 50 results at a time, with tokens to get subsequent
     // pages). Denote the keys used for pagination and results.
     this.descriptors.page = {
-      listAlertPolicies: new this._gaxModule.PageDescriptor(
-        'pageToken',
-        'nextPageToken',
-        'alertPolicies'
-      ),
+      listAlertPolicies:
+          new this._gaxModule.PageDescriptor('pageToken', 'nextPageToken', 'alertPolicies')
     };
 
     // Put together the default options sent with requests.
     this._defaults = this._gaxGrpc.constructSettings(
-      'google.monitoring.v3.AlertPolicyService',
-      gapicConfig as gax.ClientConfig,
-      opts.clientConfig || {},
-      {'x-goog-api-client': clientHeader.join(' ')}
-    );
+        'google.monitoring.v3.AlertPolicyService', gapicConfig as gax.ClientConfig,
+        opts.clientConfig || {}, {'x-goog-api-client': clientHeader.join(' ')});
 
     // Set up a dictionary of "inner API calls"; the core implementation
     // of calling the API is handled in `google-gax`, with this code
@@ -286,24 +263,16 @@ export class AlertPolicyServiceClient {
     // Put together the "service stub" for
     // google.monitoring.v3.AlertPolicyService.
     this.alertPolicyServiceStub = this._gaxGrpc.createStub(
-      this._opts.fallback
-        ? (this._protos as protobuf.Root).lookupService(
-            'google.monitoring.v3.AlertPolicyService'
-          )
-        : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        this._opts.fallback ?
+          (this._protos as protobuf.Root).lookupService('google.monitoring.v3.AlertPolicyService') :
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (this._protos as any).google.monitoring.v3.AlertPolicyService,
-      this._opts
-    ) as Promise<{[method: string]: Function}>;
+        this._opts) as Promise<{[method: string]: Function}>;
 
     // Iterate over each of the methods that the service provides
     // and create an API call method for each.
-    const alertPolicyServiceStubMethods = [
-      'listAlertPolicies',
-      'getAlertPolicy',
-      'createAlertPolicy',
-      'deleteAlertPolicy',
-      'updateAlertPolicy',
-    ];
+    const alertPolicyServiceStubMethods =
+        ['listAlertPolicies', 'getAlertPolicy', 'createAlertPolicy', 'deleteAlertPolicy', 'updateAlertPolicy'];
     for (const methodName of alertPolicyServiceStubMethods) {
       const callPromise = this.alertPolicyServiceStub.then(
         stub => (...args: Array<{}>) => {
@@ -313,17 +282,16 @@ export class AlertPolicyServiceClient {
           const func = stub[methodName];
           return func.apply(stub, args);
         },
-        (err: Error | null | undefined) => () => {
+        (err: Error|null|undefined) => () => {
           throw err;
-        }
-      );
+        });
 
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
         this.descriptors.page[methodName] ||
-          this.descriptors.stream[methodName] ||
-          this.descriptors.longrunning[methodName]
+            this.descriptors.stream[methodName] ||
+            this.descriptors.longrunning[methodName]
       );
 
       this.innerApiCalls[methodName] = apiCall;
@@ -362,7 +330,7 @@ export class AlertPolicyServiceClient {
     return [
       'https://www.googleapis.com/auth/cloud-platform',
       'https://www.googleapis.com/auth/monitoring',
-      'https://www.googleapis.com/auth/monitoring.read',
+      'https://www.googleapis.com/auth/monitoring.read'
     ];
   }
 
@@ -373,9 +341,8 @@ export class AlertPolicyServiceClient {
    * @param {function(Error, string)} callback - the callback to
    *   be called with the current project Id.
    */
-  getProjectId(
-    callback?: Callback<string, undefined, undefined>
-  ): Promise<string> | void {
+  getProjectId(callback?: Callback<string, undefined, undefined>):
+      Promise<string>|void {
     if (callback) {
       this.auth.getProjectId(callback);
       return;
@@ -387,74 +354,61 @@ export class AlertPolicyServiceClient {
   // -- Service calls --
   // -------------------
   getAlertPolicy(
-    request: protos.google.monitoring.v3.IGetAlertPolicyRequest,
-    options?: gax.CallOptions
-  ): Promise<
-    [
-      protos.google.monitoring.v3.IAlertPolicy,
-      protos.google.monitoring.v3.IGetAlertPolicyRequest | undefined,
-      {} | undefined
-    ]
-  >;
+      request: protos.google.monitoring.v3.IGetAlertPolicyRequest,
+      options?: gax.CallOptions):
+      Promise<[
+        protos.google.monitoring.v3.IAlertPolicy,
+        protos.google.monitoring.v3.IGetAlertPolicyRequest|undefined, {}|undefined
+      ]>;
   getAlertPolicy(
-    request: protos.google.monitoring.v3.IGetAlertPolicyRequest,
-    options: gax.CallOptions,
-    callback: Callback<
-      protos.google.monitoring.v3.IAlertPolicy,
-      protos.google.monitoring.v3.IGetAlertPolicyRequest | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  getAlertPolicy(
-    request: protos.google.monitoring.v3.IGetAlertPolicyRequest,
-    callback: Callback<
-      protos.google.monitoring.v3.IAlertPolicy,
-      protos.google.monitoring.v3.IGetAlertPolicyRequest | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  /**
-   * Gets a single alerting policy.
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.name
-   *   Required. The alerting policy to retrieve. The format is:
-   *
-   *       projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Promise} - The promise which resolves to an array.
-   *   The first element of the array is an object representing [AlertPolicy]{@link google.monitoring.v3.AlertPolicy}.
-   *   The promise has a method named "cancel" which cancels the ongoing API call.
-   */
-  getAlertPolicy(
-    request: protos.google.monitoring.v3.IGetAlertPolicyRequest,
-    optionsOrCallback?:
-      | gax.CallOptions
-      | Callback<
+      request: protos.google.monitoring.v3.IGetAlertPolicyRequest,
+      options: gax.CallOptions,
+      callback: Callback<
           protos.google.monitoring.v3.IAlertPolicy,
-          protos.google.monitoring.v3.IGetAlertPolicyRequest | null | undefined,
-          {} | null | undefined
-        >,
-    callback?: Callback<
-      protos.google.monitoring.v3.IAlertPolicy,
-      protos.google.monitoring.v3.IGetAlertPolicyRequest | null | undefined,
-      {} | null | undefined
-    >
-  ): Promise<
-    [
-      protos.google.monitoring.v3.IAlertPolicy,
-      protos.google.monitoring.v3.IGetAlertPolicyRequest | undefined,
-      {} | undefined
-    ]
-  > | void {
+          protos.google.monitoring.v3.IGetAlertPolicyRequest|null|undefined,
+          {}|null|undefined>): void;
+  getAlertPolicy(
+      request: protos.google.monitoring.v3.IGetAlertPolicyRequest,
+      callback: Callback<
+          protos.google.monitoring.v3.IAlertPolicy,
+          protos.google.monitoring.v3.IGetAlertPolicyRequest|null|undefined,
+          {}|null|undefined>): void;
+/**
+ * Gets a single alerting policy.
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.name
+ *   Required. The alerting policy to retrieve. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Promise} - The promise which resolves to an array.
+ *   The first element of the array is an object representing [AlertPolicy]{@link google.monitoring.v3.AlertPolicy}.
+ *   The promise has a method named "cancel" which cancels the ongoing API call.
+ */
+  getAlertPolicy(
+      request: protos.google.monitoring.v3.IGetAlertPolicyRequest,
+      optionsOrCallback?: gax.CallOptions|Callback<
+          protos.google.monitoring.v3.IAlertPolicy,
+          protos.google.monitoring.v3.IGetAlertPolicyRequest|null|undefined,
+          {}|null|undefined>,
+      callback?: Callback<
+          protos.google.monitoring.v3.IAlertPolicy,
+          protos.google.monitoring.v3.IGetAlertPolicyRequest|null|undefined,
+          {}|null|undefined>):
+      Promise<[
+        protos.google.monitoring.v3.IAlertPolicy,
+        protos.google.monitoring.v3.IGetAlertPolicyRequest|undefined, {}|undefined
+      ]>|void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    } else {
+    }
+    else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -463,93 +417,78 @@ export class AlertPolicyServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      name: request.name || '',
+      'name': request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.getAlertPolicy(request, options, callback);
   }
   createAlertPolicy(
-    request: protos.google.monitoring.v3.ICreateAlertPolicyRequest,
-    options?: gax.CallOptions
-  ): Promise<
-    [
-      protos.google.monitoring.v3.IAlertPolicy,
-      protos.google.monitoring.v3.ICreateAlertPolicyRequest | undefined,
-      {} | undefined
-    ]
-  >;
+      request: protos.google.monitoring.v3.ICreateAlertPolicyRequest,
+      options?: gax.CallOptions):
+      Promise<[
+        protos.google.monitoring.v3.IAlertPolicy,
+        protos.google.monitoring.v3.ICreateAlertPolicyRequest|undefined, {}|undefined
+      ]>;
   createAlertPolicy(
-    request: protos.google.monitoring.v3.ICreateAlertPolicyRequest,
-    options: gax.CallOptions,
-    callback: Callback<
-      protos.google.monitoring.v3.IAlertPolicy,
-      protos.google.monitoring.v3.ICreateAlertPolicyRequest | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  createAlertPolicy(
-    request: protos.google.monitoring.v3.ICreateAlertPolicyRequest,
-    callback: Callback<
-      protos.google.monitoring.v3.IAlertPolicy,
-      protos.google.monitoring.v3.ICreateAlertPolicyRequest | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  /**
-   * Creates a new alerting policy.
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.name
-   *   Required. The project in which to create the alerting policy. The format is:
-   *
-   *       projects/[PROJECT_ID_OR_NUMBER]
-   *
-   *   Note that this field names the parent container in which the alerting
-   *   policy will be written, not the name of the created policy. The alerting
-   *   policy that is returned will have a name that contains a normalized
-   *   representation of this name as a prefix but adds a suffix of the form
-   *   `/alertPolicies/[ALERT_POLICY_ID]`, identifying the policy in the
-   *   container.
-   * @param {google.monitoring.v3.AlertPolicy} request.alertPolicy
-   *   Required. The requested alerting policy. You should omit the `name` field in this
-   *   policy. The name will be returned in the new policy, including
-   *   a new `[ALERT_POLICY_ID]` value.
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Promise} - The promise which resolves to an array.
-   *   The first element of the array is an object representing [AlertPolicy]{@link google.monitoring.v3.AlertPolicy}.
-   *   The promise has a method named "cancel" which cancels the ongoing API call.
-   */
-  createAlertPolicy(
-    request: protos.google.monitoring.v3.ICreateAlertPolicyRequest,
-    optionsOrCallback?:
-      | gax.CallOptions
-      | Callback<
+      request: protos.google.monitoring.v3.ICreateAlertPolicyRequest,
+      options: gax.CallOptions,
+      callback: Callback<
           protos.google.monitoring.v3.IAlertPolicy,
-          | protos.google.monitoring.v3.ICreateAlertPolicyRequest
-          | null
-          | undefined,
-          {} | null | undefined
-        >,
-    callback?: Callback<
-      protos.google.monitoring.v3.IAlertPolicy,
-      protos.google.monitoring.v3.ICreateAlertPolicyRequest | null | undefined,
-      {} | null | undefined
-    >
-  ): Promise<
-    [
-      protos.google.monitoring.v3.IAlertPolicy,
-      protos.google.monitoring.v3.ICreateAlertPolicyRequest | undefined,
-      {} | undefined
-    ]
-  > | void {
+          protos.google.monitoring.v3.ICreateAlertPolicyRequest|null|undefined,
+          {}|null|undefined>): void;
+  createAlertPolicy(
+      request: protos.google.monitoring.v3.ICreateAlertPolicyRequest,
+      callback: Callback<
+          protos.google.monitoring.v3.IAlertPolicy,
+          protos.google.monitoring.v3.ICreateAlertPolicyRequest|null|undefined,
+          {}|null|undefined>): void;
+/**
+ * Creates a new alerting policy.
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.name
+ *   Required. The project in which to create the alerting policy. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]
+ *
+ *   Note that this field names the parent container in which the alerting
+ *   policy will be written, not the name of the created policy. The alerting
+ *   policy that is returned will have a name that contains a normalized
+ *   representation of this name as a prefix but adds a suffix of the form
+ *   `/alertPolicies/[ALERT_POLICY_ID]`, identifying the policy in the
+ *   container.
+ * @param {google.monitoring.v3.AlertPolicy} request.alertPolicy
+ *   Required. The requested alerting policy. You should omit the `name` field in this
+ *   policy. The name will be returned in the new policy, including
+ *   a new `[ALERT_POLICY_ID]` value.
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Promise} - The promise which resolves to an array.
+ *   The first element of the array is an object representing [AlertPolicy]{@link google.monitoring.v3.AlertPolicy}.
+ *   The promise has a method named "cancel" which cancels the ongoing API call.
+ */
+  createAlertPolicy(
+      request: protos.google.monitoring.v3.ICreateAlertPolicyRequest,
+      optionsOrCallback?: gax.CallOptions|Callback<
+          protos.google.monitoring.v3.IAlertPolicy,
+          protos.google.monitoring.v3.ICreateAlertPolicyRequest|null|undefined,
+          {}|null|undefined>,
+      callback?: Callback<
+          protos.google.monitoring.v3.IAlertPolicy,
+          protos.google.monitoring.v3.ICreateAlertPolicyRequest|null|undefined,
+          {}|null|undefined>):
+      Promise<[
+        protos.google.monitoring.v3.IAlertPolicy,
+        protos.google.monitoring.v3.ICreateAlertPolicyRequest|undefined, {}|undefined
+      ]>|void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    } else {
+    }
+    else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -558,84 +497,69 @@ export class AlertPolicyServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      name: request.name || '',
+      'name': request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.createAlertPolicy(request, options, callback);
   }
   deleteAlertPolicy(
-    request: protos.google.monitoring.v3.IDeleteAlertPolicyRequest,
-    options?: gax.CallOptions
-  ): Promise<
-    [
-      protos.google.protobuf.IEmpty,
-      protos.google.monitoring.v3.IDeleteAlertPolicyRequest | undefined,
-      {} | undefined
-    ]
-  >;
+      request: protos.google.monitoring.v3.IDeleteAlertPolicyRequest,
+      options?: gax.CallOptions):
+      Promise<[
+        protos.google.protobuf.IEmpty,
+        protos.google.monitoring.v3.IDeleteAlertPolicyRequest|undefined, {}|undefined
+      ]>;
   deleteAlertPolicy(
-    request: protos.google.monitoring.v3.IDeleteAlertPolicyRequest,
-    options: gax.CallOptions,
-    callback: Callback<
-      protos.google.protobuf.IEmpty,
-      protos.google.monitoring.v3.IDeleteAlertPolicyRequest | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  deleteAlertPolicy(
-    request: protos.google.monitoring.v3.IDeleteAlertPolicyRequest,
-    callback: Callback<
-      protos.google.protobuf.IEmpty,
-      protos.google.monitoring.v3.IDeleteAlertPolicyRequest | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  /**
-   * Deletes an alerting policy.
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.name
-   *   Required. The alerting policy to delete. The format is:
-   *
-   *       projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
-   *
-   *   For more information, see {@link google.monitoring.v3.AlertPolicy|AlertPolicy}.
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Promise} - The promise which resolves to an array.
-   *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
-   *   The promise has a method named "cancel" which cancels the ongoing API call.
-   */
-  deleteAlertPolicy(
-    request: protos.google.monitoring.v3.IDeleteAlertPolicyRequest,
-    optionsOrCallback?:
-      | gax.CallOptions
-      | Callback<
+      request: protos.google.monitoring.v3.IDeleteAlertPolicyRequest,
+      options: gax.CallOptions,
+      callback: Callback<
           protos.google.protobuf.IEmpty,
-          | protos.google.monitoring.v3.IDeleteAlertPolicyRequest
-          | null
-          | undefined,
-          {} | null | undefined
-        >,
-    callback?: Callback<
-      protos.google.protobuf.IEmpty,
-      protos.google.monitoring.v3.IDeleteAlertPolicyRequest | null | undefined,
-      {} | null | undefined
-    >
-  ): Promise<
-    [
-      protos.google.protobuf.IEmpty,
-      protos.google.monitoring.v3.IDeleteAlertPolicyRequest | undefined,
-      {} | undefined
-    ]
-  > | void {
+          protos.google.monitoring.v3.IDeleteAlertPolicyRequest|null|undefined,
+          {}|null|undefined>): void;
+  deleteAlertPolicy(
+      request: protos.google.monitoring.v3.IDeleteAlertPolicyRequest,
+      callback: Callback<
+          protos.google.protobuf.IEmpty,
+          protos.google.monitoring.v3.IDeleteAlertPolicyRequest|null|undefined,
+          {}|null|undefined>): void;
+/**
+ * Deletes an alerting policy.
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.name
+ *   Required. The alerting policy to delete. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
+ *
+ *   For more information, see {@link google.monitoring.v3.AlertPolicy|AlertPolicy}.
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Promise} - The promise which resolves to an array.
+ *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
+ *   The promise has a method named "cancel" which cancels the ongoing API call.
+ */
+  deleteAlertPolicy(
+      request: protos.google.monitoring.v3.IDeleteAlertPolicyRequest,
+      optionsOrCallback?: gax.CallOptions|Callback<
+          protos.google.protobuf.IEmpty,
+          protos.google.monitoring.v3.IDeleteAlertPolicyRequest|null|undefined,
+          {}|null|undefined>,
+      callback?: Callback<
+          protos.google.protobuf.IEmpty,
+          protos.google.monitoring.v3.IDeleteAlertPolicyRequest|null|undefined,
+          {}|null|undefined>):
+      Promise<[
+        protos.google.protobuf.IEmpty,
+        protos.google.monitoring.v3.IDeleteAlertPolicyRequest|undefined, {}|undefined
+      ]>|void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    } else {
+    }
+    else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -644,108 +568,93 @@ export class AlertPolicyServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      name: request.name || '',
+      'name': request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.deleteAlertPolicy(request, options, callback);
   }
   updateAlertPolicy(
-    request: protos.google.monitoring.v3.IUpdateAlertPolicyRequest,
-    options?: gax.CallOptions
-  ): Promise<
-    [
-      protos.google.monitoring.v3.IAlertPolicy,
-      protos.google.monitoring.v3.IUpdateAlertPolicyRequest | undefined,
-      {} | undefined
-    ]
-  >;
+      request: protos.google.monitoring.v3.IUpdateAlertPolicyRequest,
+      options?: gax.CallOptions):
+      Promise<[
+        protos.google.monitoring.v3.IAlertPolicy,
+        protos.google.monitoring.v3.IUpdateAlertPolicyRequest|undefined, {}|undefined
+      ]>;
   updateAlertPolicy(
-    request: protos.google.monitoring.v3.IUpdateAlertPolicyRequest,
-    options: gax.CallOptions,
-    callback: Callback<
-      protos.google.monitoring.v3.IAlertPolicy,
-      protos.google.monitoring.v3.IUpdateAlertPolicyRequest | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  updateAlertPolicy(
-    request: protos.google.monitoring.v3.IUpdateAlertPolicyRequest,
-    callback: Callback<
-      protos.google.monitoring.v3.IAlertPolicy,
-      protos.google.monitoring.v3.IUpdateAlertPolicyRequest | null | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  /**
-   * Updates an alerting policy. You can either replace the entire policy with
-   * a new one or replace only certain fields in the current alerting policy by
-   * specifying the fields to be updated via `updateMask`. Returns the
-   * updated alerting policy.
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {google.protobuf.FieldMask} request.updateMask
-   *   Optional. A list of alerting policy field names. If this field is not
-   *   empty, each listed field in the existing alerting policy is set to the
-   *   value of the corresponding field in the supplied policy (`alert_policy`),
-   *   or to the field's default value if the field is not in the supplied
-   *   alerting policy.  Fields not listed retain their previous value.
-   *
-   *   Examples of valid field masks include `display_name`, `documentation`,
-   *   `documentation.content`, `documentation.mime_type`, `user_labels`,
-   *   `user_label.nameofkey`, `enabled`, `conditions`, `combiner`, etc.
-   *
-   *   If this field is empty, then the supplied alerting policy replaces the
-   *   existing policy. It is the same as deleting the existing policy and
-   *   adding the supplied policy, except for the following:
-   *
-   *   +   The new policy will have the same `[ALERT_POLICY_ID]` as the former
-   *       policy. This gives you continuity with the former policy in your
-   *       notifications and incidents.
-   *   +   Conditions in the new policy will keep their former `[CONDITION_ID]` if
-   *       the supplied condition includes the `name` field with that
-   *       `[CONDITION_ID]`. If the supplied condition omits the `name` field,
-   *       then a new `[CONDITION_ID]` is created.
-   * @param {google.monitoring.v3.AlertPolicy} request.alertPolicy
-   *   Required. The updated alerting policy or the updated values for the
-   *   fields listed in `update_mask`.
-   *   If `update_mask` is not empty, any fields in this policy that are
-   *   not in `update_mask` are ignored.
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Promise} - The promise which resolves to an array.
-   *   The first element of the array is an object representing [AlertPolicy]{@link google.monitoring.v3.AlertPolicy}.
-   *   The promise has a method named "cancel" which cancels the ongoing API call.
-   */
-  updateAlertPolicy(
-    request: protos.google.monitoring.v3.IUpdateAlertPolicyRequest,
-    optionsOrCallback?:
-      | gax.CallOptions
-      | Callback<
+      request: protos.google.monitoring.v3.IUpdateAlertPolicyRequest,
+      options: gax.CallOptions,
+      callback: Callback<
           protos.google.monitoring.v3.IAlertPolicy,
-          | protos.google.monitoring.v3.IUpdateAlertPolicyRequest
-          | null
-          | undefined,
-          {} | null | undefined
-        >,
-    callback?: Callback<
-      protos.google.monitoring.v3.IAlertPolicy,
-      protos.google.monitoring.v3.IUpdateAlertPolicyRequest | null | undefined,
-      {} | null | undefined
-    >
-  ): Promise<
-    [
-      protos.google.monitoring.v3.IAlertPolicy,
-      protos.google.monitoring.v3.IUpdateAlertPolicyRequest | undefined,
-      {} | undefined
-    ]
-  > | void {
+          protos.google.monitoring.v3.IUpdateAlertPolicyRequest|null|undefined,
+          {}|null|undefined>): void;
+  updateAlertPolicy(
+      request: protos.google.monitoring.v3.IUpdateAlertPolicyRequest,
+      callback: Callback<
+          protos.google.monitoring.v3.IAlertPolicy,
+          protos.google.monitoring.v3.IUpdateAlertPolicyRequest|null|undefined,
+          {}|null|undefined>): void;
+/**
+ * Updates an alerting policy. You can either replace the entire policy with
+ * a new one or replace only certain fields in the current alerting policy by
+ * specifying the fields to be updated via `updateMask`. Returns the
+ * updated alerting policy.
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {google.protobuf.FieldMask} request.updateMask
+ *   Optional. A list of alerting policy field names. If this field is not
+ *   empty, each listed field in the existing alerting policy is set to the
+ *   value of the corresponding field in the supplied policy (`alert_policy`),
+ *   or to the field's default value if the field is not in the supplied
+ *   alerting policy.  Fields not listed retain their previous value.
+ *
+ *   Examples of valid field masks include `display_name`, `documentation`,
+ *   `documentation.content`, `documentation.mime_type`, `user_labels`,
+ *   `user_label.nameofkey`, `enabled`, `conditions`, `combiner`, etc.
+ *
+ *   If this field is empty, then the supplied alerting policy replaces the
+ *   existing policy. It is the same as deleting the existing policy and
+ *   adding the supplied policy, except for the following:
+ *
+ *   +   The new policy will have the same `[ALERT_POLICY_ID]` as the former
+ *       policy. This gives you continuity with the former policy in your
+ *       notifications and incidents.
+ *   +   Conditions in the new policy will keep their former `[CONDITION_ID]` if
+ *       the supplied condition includes the `name` field with that
+ *       `[CONDITION_ID]`. If the supplied condition omits the `name` field,
+ *       then a new `[CONDITION_ID]` is created.
+ * @param {google.monitoring.v3.AlertPolicy} request.alertPolicy
+ *   Required. The updated alerting policy or the updated values for the
+ *   fields listed in `update_mask`.
+ *   If `update_mask` is not empty, any fields in this policy that are
+ *   not in `update_mask` are ignored.
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Promise} - The promise which resolves to an array.
+ *   The first element of the array is an object representing [AlertPolicy]{@link google.monitoring.v3.AlertPolicy}.
+ *   The promise has a method named "cancel" which cancels the ongoing API call.
+ */
+  updateAlertPolicy(
+      request: protos.google.monitoring.v3.IUpdateAlertPolicyRequest,
+      optionsOrCallback?: gax.CallOptions|Callback<
+          protos.google.monitoring.v3.IAlertPolicy,
+          protos.google.monitoring.v3.IUpdateAlertPolicyRequest|null|undefined,
+          {}|null|undefined>,
+      callback?: Callback<
+          protos.google.monitoring.v3.IAlertPolicy,
+          protos.google.monitoring.v3.IUpdateAlertPolicyRequest|null|undefined,
+          {}|null|undefined>):
+      Promise<[
+        protos.google.monitoring.v3.IAlertPolicy,
+        protos.google.monitoring.v3.IUpdateAlertPolicyRequest|undefined, {}|undefined
+      ]>|void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    } else {
+    }
+    else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -761,113 +670,100 @@ export class AlertPolicyServiceClient {
   }
 
   listAlertPolicies(
-    request: protos.google.monitoring.v3.IListAlertPoliciesRequest,
-    options?: gax.CallOptions
-  ): Promise<
-    [
-      protos.google.monitoring.v3.IAlertPolicy[],
-      protos.google.monitoring.v3.IListAlertPoliciesRequest | null,
-      protos.google.monitoring.v3.IListAlertPoliciesResponse
-    ]
-  >;
+      request: protos.google.monitoring.v3.IListAlertPoliciesRequest,
+      options?: gax.CallOptions):
+      Promise<[
+        protos.google.monitoring.v3.IAlertPolicy[],
+        protos.google.monitoring.v3.IListAlertPoliciesRequest|null,
+        protos.google.monitoring.v3.IListAlertPoliciesResponse
+      ]>;
   listAlertPolicies(
-    request: protos.google.monitoring.v3.IListAlertPoliciesRequest,
-    options: gax.CallOptions,
-    callback: PaginationCallback<
-      protos.google.monitoring.v3.IListAlertPoliciesRequest,
-      protos.google.monitoring.v3.IListAlertPoliciesResponse | null | undefined,
-      protos.google.monitoring.v3.IAlertPolicy
-    >
-  ): void;
-  listAlertPolicies(
-    request: protos.google.monitoring.v3.IListAlertPoliciesRequest,
-    callback: PaginationCallback<
-      protos.google.monitoring.v3.IListAlertPoliciesRequest,
-      protos.google.monitoring.v3.IListAlertPoliciesResponse | null | undefined,
-      protos.google.monitoring.v3.IAlertPolicy
-    >
-  ): void;
-  /**
-   * Lists the existing alerting policies for the project.
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.name
-   *   Required. The project whose alert policies are to be listed. The format is:
-   *
-   *       projects/[PROJECT_ID_OR_NUMBER]
-   *
-   *   Note that this field names the parent container in which the alerting
-   *   policies to be listed are stored. To retrieve a single alerting policy
-   *   by name, use the
-   *   {@link google.monitoring.v3.AlertPolicyService.GetAlertPolicy|GetAlertPolicy}
-   *   operation, instead.
-   * @param {string} request.filter
-   *   If provided, this field specifies the criteria that must be met by
-   *   alert policies to be included in the response.
-   *
-   *   For more details, see [sorting and
-   *   filtering](https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).
-   * @param {string} request.orderBy
-   *   A comma-separated list of fields by which to sort the result. Supports
-   *   the same set of field references as the `filter` field. Entries can be
-   *   prefixed with a minus sign to sort by the field in descending order.
-   *
-   *   For more details, see [sorting and
-   *   filtering](https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).
-   * @param {number} request.pageSize
-   *   The maximum number of results to return in a single response.
-   * @param {string} request.pageToken
-   *   If this field is not empty then it must contain the `nextPageToken` value
-   *   returned by a previous call to this method.  Using this field causes the
-   *   method to return more results from the previous method call.
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Promise} - The promise which resolves to an array.
-   *   The first element of the array is Array of [AlertPolicy]{@link google.monitoring.v3.AlertPolicy}.
-   *   The client library support auto-pagination by default: it will call the API as many
-   *   times as needed and will merge results from all the pages into this array.
-   *
-   *   When autoPaginate: false is specified through options, the array has three elements.
-   *   The first element is Array of [AlertPolicy]{@link google.monitoring.v3.AlertPolicy} that corresponds to
-   *   the one page received from the API server.
-   *   If the second element is not null it contains the request object of type [ListAlertPoliciesRequest]{@link google.monitoring.v3.ListAlertPoliciesRequest}
-   *   that can be used to obtain the next page of the results.
-   *   If it is null, the next page does not exist.
-   *   The third element contains the raw response received from the API server. Its type is
-   *   [ListAlertPoliciesResponse]{@link google.monitoring.v3.ListAlertPoliciesResponse}.
-   *
-   *   The promise has a method named "cancel" which cancels the ongoing API call.
-   */
-  listAlertPolicies(
-    request: protos.google.monitoring.v3.IListAlertPoliciesRequest,
-    optionsOrCallback?:
-      | gax.CallOptions
-      | PaginationCallback<
+      request: protos.google.monitoring.v3.IListAlertPoliciesRequest,
+      options: gax.CallOptions,
+      callback: PaginationCallback<
           protos.google.monitoring.v3.IListAlertPoliciesRequest,
-          | protos.google.monitoring.v3.IListAlertPoliciesResponse
-          | null
-          | undefined,
-          protos.google.monitoring.v3.IAlertPolicy
-        >,
-    callback?: PaginationCallback<
-      protos.google.monitoring.v3.IListAlertPoliciesRequest,
-      protos.google.monitoring.v3.IListAlertPoliciesResponse | null | undefined,
-      protos.google.monitoring.v3.IAlertPolicy
-    >
-  ): Promise<
-    [
-      protos.google.monitoring.v3.IAlertPolicy[],
-      protos.google.monitoring.v3.IListAlertPoliciesRequest | null,
-      protos.google.monitoring.v3.IListAlertPoliciesResponse
-    ]
-  > | void {
+          protos.google.monitoring.v3.IListAlertPoliciesResponse|null|undefined,
+          protos.google.monitoring.v3.IAlertPolicy>): void;
+  listAlertPolicies(
+      request: protos.google.monitoring.v3.IListAlertPoliciesRequest,
+      callback: PaginationCallback<
+          protos.google.monitoring.v3.IListAlertPoliciesRequest,
+          protos.google.monitoring.v3.IListAlertPoliciesResponse|null|undefined,
+          protos.google.monitoring.v3.IAlertPolicy>): void;
+/**
+ * Lists the existing alerting policies for the project.
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.name
+ *   Required. The project whose alert policies are to be listed. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]
+ *
+ *   Note that this field names the parent container in which the alerting
+ *   policies to be listed are stored. To retrieve a single alerting policy
+ *   by name, use the
+ *   {@link google.monitoring.v3.AlertPolicyService.GetAlertPolicy|GetAlertPolicy}
+ *   operation, instead.
+ * @param {string} request.filter
+ *   If provided, this field specifies the criteria that must be met by
+ *   alert policies to be included in the response.
+ *
+ *   For more details, see [sorting and
+ *   filtering](https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).
+ * @param {string} request.orderBy
+ *   A comma-separated list of fields by which to sort the result. Supports
+ *   the same set of field references as the `filter` field. Entries can be
+ *   prefixed with a minus sign to sort by the field in descending order.
+ *
+ *   For more details, see [sorting and
+ *   filtering](https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).
+ * @param {number} request.pageSize
+ *   The maximum number of results to return in a single response.
+ * @param {string} request.pageToken
+ *   If this field is not empty then it must contain the `nextPageToken` value
+ *   returned by a previous call to this method.  Using this field causes the
+ *   method to return more results from the previous method call.
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Promise} - The promise which resolves to an array.
+ *   The first element of the array is Array of [AlertPolicy]{@link google.monitoring.v3.AlertPolicy}.
+ *   The client library support auto-pagination by default: it will call the API as many
+ *   times as needed and will merge results from all the pages into this array.
+ *
+ *   When autoPaginate: false is specified through options, the array has three elements.
+ *   The first element is Array of [AlertPolicy]{@link google.monitoring.v3.AlertPolicy} that corresponds to
+ *   the one page received from the API server.
+ *   If the second element is not null it contains the request object of type [ListAlertPoliciesRequest]{@link google.monitoring.v3.ListAlertPoliciesRequest}
+ *   that can be used to obtain the next page of the results.
+ *   If it is null, the next page does not exist.
+ *   The third element contains the raw response received from the API server. Its type is
+ *   [ListAlertPoliciesResponse]{@link google.monitoring.v3.ListAlertPoliciesResponse}.
+ *
+ *   The promise has a method named "cancel" which cancels the ongoing API call.
+ */
+  listAlertPolicies(
+      request: protos.google.monitoring.v3.IListAlertPoliciesRequest,
+      optionsOrCallback?: gax.CallOptions|PaginationCallback<
+          protos.google.monitoring.v3.IListAlertPoliciesRequest,
+          protos.google.monitoring.v3.IListAlertPoliciesResponse|null|undefined,
+          protos.google.monitoring.v3.IAlertPolicy>,
+      callback?: PaginationCallback<
+          protos.google.monitoring.v3.IListAlertPoliciesRequest,
+          protos.google.monitoring.v3.IListAlertPoliciesResponse|null|undefined,
+          protos.google.monitoring.v3.IAlertPolicy>):
+      Promise<[
+        protos.google.monitoring.v3.IAlertPolicy[],
+        protos.google.monitoring.v3.IListAlertPoliciesRequest|null,
+        protos.google.monitoring.v3.IListAlertPoliciesResponse
+      ]>|void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    } else {
+    }
+    else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -876,65 +772,65 @@ export class AlertPolicyServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      name: request.name || '',
+      'name': request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.listAlertPolicies(request, options, callback);
   }
 
-  /**
-   * Equivalent to {@link listAlertPolicies}, but returns a NodeJS Stream object.
-   *
-   * This fetches the paged responses for {@link listAlertPolicies} continuously
-   * and invokes the callback registered for 'data' event for each element in the
-   * responses.
-   *
-   * The returned object has 'end' method when no more elements are required.
-   *
-   * autoPaginate option will be ignored.
-   *
-   * @see {@link https://nodejs.org/api/stream.html}
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.name
-   *   Required. The project whose alert policies are to be listed. The format is:
-   *
-   *       projects/[PROJECT_ID_OR_NUMBER]
-   *
-   *   Note that this field names the parent container in which the alerting
-   *   policies to be listed are stored. To retrieve a single alerting policy
-   *   by name, use the
-   *   {@link google.monitoring.v3.AlertPolicyService.GetAlertPolicy|GetAlertPolicy}
-   *   operation, instead.
-   * @param {string} request.filter
-   *   If provided, this field specifies the criteria that must be met by
-   *   alert policies to be included in the response.
-   *
-   *   For more details, see [sorting and
-   *   filtering](https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).
-   * @param {string} request.orderBy
-   *   A comma-separated list of fields by which to sort the result. Supports
-   *   the same set of field references as the `filter` field. Entries can be
-   *   prefixed with a minus sign to sort by the field in descending order.
-   *
-   *   For more details, see [sorting and
-   *   filtering](https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).
-   * @param {number} request.pageSize
-   *   The maximum number of results to return in a single response.
-   * @param {string} request.pageToken
-   *   If this field is not empty then it must contain the `nextPageToken` value
-   *   returned by a previous call to this method.  Using this field causes the
-   *   method to return more results from the previous method call.
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Stream}
-   *   An object stream which emits an object representing [AlertPolicy]{@link google.monitoring.v3.AlertPolicy} on 'data' event.
-   */
+/**
+ * Equivalent to {@link listAlertPolicies}, but returns a NodeJS Stream object.
+ *
+ * This fetches the paged responses for {@link listAlertPolicies} continuously
+ * and invokes the callback registered for 'data' event for each element in the
+ * responses.
+ *
+ * The returned object has 'end' method when no more elements are required.
+ *
+ * autoPaginate option will be ignored.
+ *
+ * @see {@link https://nodejs.org/api/stream.html}
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.name
+ *   Required. The project whose alert policies are to be listed. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]
+ *
+ *   Note that this field names the parent container in which the alerting
+ *   policies to be listed are stored. To retrieve a single alerting policy
+ *   by name, use the
+ *   {@link google.monitoring.v3.AlertPolicyService.GetAlertPolicy|GetAlertPolicy}
+ *   operation, instead.
+ * @param {string} request.filter
+ *   If provided, this field specifies the criteria that must be met by
+ *   alert policies to be included in the response.
+ *
+ *   For more details, see [sorting and
+ *   filtering](https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).
+ * @param {string} request.orderBy
+ *   A comma-separated list of fields by which to sort the result. Supports
+ *   the same set of field references as the `filter` field. Entries can be
+ *   prefixed with a minus sign to sort by the field in descending order.
+ *
+ *   For more details, see [sorting and
+ *   filtering](https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).
+ * @param {number} request.pageSize
+ *   The maximum number of results to return in a single response.
+ * @param {string} request.pageToken
+ *   If this field is not empty then it must contain the `nextPageToken` value
+ *   returned by a previous call to this method.  Using this field causes the
+ *   method to return more results from the previous method call.
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Stream}
+ *   An object stream which emits an object representing [AlertPolicy]{@link google.monitoring.v3.AlertPolicy} on 'data' event.
+ */
   listAlertPoliciesStream(
-    request?: protos.google.monitoring.v3.IListAlertPoliciesRequest,
-    options?: gax.CallOptions
-  ): Transform {
+      request?: protos.google.monitoring.v3.IListAlertPoliciesRequest,
+      options?: gax.CallOptions):
+    Transform{
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -942,7 +838,7 @@ export class AlertPolicyServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      name: request.name || '',
+      'name': request.name || '',
     });
     const callSettings = new gax.CallSettings(options);
     this.initialize();
@@ -953,51 +849,51 @@ export class AlertPolicyServiceClient {
     );
   }
 
-  /**
-   * Equivalent to {@link listAlertPolicies}, but returns an iterable object.
-   *
-   * for-await-of syntax is used with the iterable to recursively get response element on-demand.
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {string} request.name
-   *   Required. The project whose alert policies are to be listed. The format is:
-   *
-   *       projects/[PROJECT_ID_OR_NUMBER]
-   *
-   *   Note that this field names the parent container in which the alerting
-   *   policies to be listed are stored. To retrieve a single alerting policy
-   *   by name, use the
-   *   {@link google.monitoring.v3.AlertPolicyService.GetAlertPolicy|GetAlertPolicy}
-   *   operation, instead.
-   * @param {string} request.filter
-   *   If provided, this field specifies the criteria that must be met by
-   *   alert policies to be included in the response.
-   *
-   *   For more details, see [sorting and
-   *   filtering](https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).
-   * @param {string} request.orderBy
-   *   A comma-separated list of fields by which to sort the result. Supports
-   *   the same set of field references as the `filter` field. Entries can be
-   *   prefixed with a minus sign to sort by the field in descending order.
-   *
-   *   For more details, see [sorting and
-   *   filtering](https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).
-   * @param {number} request.pageSize
-   *   The maximum number of results to return in a single response.
-   * @param {string} request.pageToken
-   *   If this field is not empty then it must contain the `nextPageToken` value
-   *   returned by a previous call to this method.  Using this field causes the
-   *   method to return more results from the previous method call.
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Object}
-   *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
-   */
+/**
+ * Equivalent to {@link listAlertPolicies}, but returns an iterable object.
+ *
+ * for-await-of syntax is used with the iterable to recursively get response element on-demand.
+ *
+ * @param {Object} request
+ *   The request object that will be sent.
+ * @param {string} request.name
+ *   Required. The project whose alert policies are to be listed. The format is:
+ *
+ *       projects/[PROJECT_ID_OR_NUMBER]
+ *
+ *   Note that this field names the parent container in which the alerting
+ *   policies to be listed are stored. To retrieve a single alerting policy
+ *   by name, use the
+ *   {@link google.monitoring.v3.AlertPolicyService.GetAlertPolicy|GetAlertPolicy}
+ *   operation, instead.
+ * @param {string} request.filter
+ *   If provided, this field specifies the criteria that must be met by
+ *   alert policies to be included in the response.
+ *
+ *   For more details, see [sorting and
+ *   filtering](https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).
+ * @param {string} request.orderBy
+ *   A comma-separated list of fields by which to sort the result. Supports
+ *   the same set of field references as the `filter` field. Entries can be
+ *   prefixed with a minus sign to sort by the field in descending order.
+ *
+ *   For more details, see [sorting and
+ *   filtering](https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).
+ * @param {number} request.pageSize
+ *   The maximum number of results to return in a single response.
+ * @param {string} request.pageToken
+ *   If this field is not empty then it must contain the `nextPageToken` value
+ *   returned by a previous call to this method.  Using this field causes the
+ *   method to return more results from the previous method call.
+ * @param {object} [options]
+ *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+ * @returns {Object}
+ *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
+ */
   listAlertPoliciesAsync(
-    request?: protos.google.monitoring.v3.IListAlertPoliciesRequest,
-    options?: gax.CallOptions
-  ): AsyncIterable<protos.google.monitoring.v3.IAlertPolicy> {
+      request?: protos.google.monitoring.v3.IListAlertPoliciesRequest,
+      options?: gax.CallOptions):
+    AsyncIterable<protos.google.monitoring.v3.IAlertPolicy>{
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1005,14 +901,14 @@ export class AlertPolicyServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      name: request.name || '',
+      'name': request.name || '',
     });
     options = options || {};
     const callSettings = new gax.CallSettings(options);
     this.initialize();
     return this.descriptors.page.listAlertPolicies.asyncIterate(
       this.innerApiCalls['listAlertPolicies'] as GaxCall,
-      (request as unknown) as RequestType,
+      request as unknown as RequestType,
       callSettings
     ) as AsyncIterable<protos.google.monitoring.v3.IAlertPolicy>;
   }
@@ -1027,7 +923,7 @@ export class AlertPolicyServiceClient {
    * @param {string} alert_policy
    * @returns {string} Resource name string.
    */
-  folderAlertPolicyPath(folder: string, alertPolicy: string) {
+  folderAlertPolicyPath(folder:string,alertPolicy:string) {
     return this.pathTemplates.folderAlertPolicyPathTemplate.render({
       folder: folder,
       alert_policy: alertPolicy,
@@ -1042,9 +938,7 @@ export class AlertPolicyServiceClient {
    * @returns {string} A string representing the folder.
    */
   matchFolderFromFolderAlertPolicyName(folderAlertPolicyName: string) {
-    return this.pathTemplates.folderAlertPolicyPathTemplate.match(
-      folderAlertPolicyName
-    ).folder;
+    return this.pathTemplates.folderAlertPolicyPathTemplate.match(folderAlertPolicyName).folder;
   }
 
   /**
@@ -1055,9 +949,7 @@ export class AlertPolicyServiceClient {
    * @returns {string} A string representing the alert_policy.
    */
   matchAlertPolicyFromFolderAlertPolicyName(folderAlertPolicyName: string) {
-    return this.pathTemplates.folderAlertPolicyPathTemplate.match(
-      folderAlertPolicyName
-    ).alert_policy;
+    return this.pathTemplates.folderAlertPolicyPathTemplate.match(folderAlertPolicyName).alert_policy;
   }
 
   /**
@@ -1068,11 +960,7 @@ export class AlertPolicyServiceClient {
    * @param {string} condition
    * @returns {string} Resource name string.
    */
-  folderAlertPolicyConditionPath(
-    folder: string,
-    alertPolicy: string,
-    condition: string
-  ) {
+  folderAlertPolicyConditionPath(folder:string,alertPolicy:string,condition:string) {
     return this.pathTemplates.folderAlertPolicyConditionPathTemplate.render({
       folder: folder,
       alert_policy: alertPolicy,
@@ -1087,12 +975,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing folder_alert_policy_condition resource.
    * @returns {string} A string representing the folder.
    */
-  matchFolderFromFolderAlertPolicyConditionName(
-    folderAlertPolicyConditionName: string
-  ) {
-    return this.pathTemplates.folderAlertPolicyConditionPathTemplate.match(
-      folderAlertPolicyConditionName
-    ).folder;
+  matchFolderFromFolderAlertPolicyConditionName(folderAlertPolicyConditionName: string) {
+    return this.pathTemplates.folderAlertPolicyConditionPathTemplate.match(folderAlertPolicyConditionName).folder;
   }
 
   /**
@@ -1102,12 +986,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing folder_alert_policy_condition resource.
    * @returns {string} A string representing the alert_policy.
    */
-  matchAlertPolicyFromFolderAlertPolicyConditionName(
-    folderAlertPolicyConditionName: string
-  ) {
-    return this.pathTemplates.folderAlertPolicyConditionPathTemplate.match(
-      folderAlertPolicyConditionName
-    ).alert_policy;
+  matchAlertPolicyFromFolderAlertPolicyConditionName(folderAlertPolicyConditionName: string) {
+    return this.pathTemplates.folderAlertPolicyConditionPathTemplate.match(folderAlertPolicyConditionName).alert_policy;
   }
 
   /**
@@ -1117,12 +997,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing folder_alert_policy_condition resource.
    * @returns {string} A string representing the condition.
    */
-  matchConditionFromFolderAlertPolicyConditionName(
-    folderAlertPolicyConditionName: string
-  ) {
-    return this.pathTemplates.folderAlertPolicyConditionPathTemplate.match(
-      folderAlertPolicyConditionName
-    ).condition;
+  matchConditionFromFolderAlertPolicyConditionName(folderAlertPolicyConditionName: string) {
+    return this.pathTemplates.folderAlertPolicyConditionPathTemplate.match(folderAlertPolicyConditionName).condition;
   }
 
   /**
@@ -1132,7 +1008,7 @@ export class AlertPolicyServiceClient {
    * @param {string} channel_descriptor
    * @returns {string} Resource name string.
    */
-  folderChannelDescriptorPath(folder: string, channelDescriptor: string) {
+  folderChannelDescriptorPath(folder:string,channelDescriptor:string) {
     return this.pathTemplates.folderChannelDescriptorPathTemplate.render({
       folder: folder,
       channel_descriptor: channelDescriptor,
@@ -1146,12 +1022,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing folder_channel_descriptor resource.
    * @returns {string} A string representing the folder.
    */
-  matchFolderFromFolderChannelDescriptorName(
-    folderChannelDescriptorName: string
-  ) {
-    return this.pathTemplates.folderChannelDescriptorPathTemplate.match(
-      folderChannelDescriptorName
-    ).folder;
+  matchFolderFromFolderChannelDescriptorName(folderChannelDescriptorName: string) {
+    return this.pathTemplates.folderChannelDescriptorPathTemplate.match(folderChannelDescriptorName).folder;
   }
 
   /**
@@ -1161,12 +1033,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing folder_channel_descriptor resource.
    * @returns {string} A string representing the channel_descriptor.
    */
-  matchChannelDescriptorFromFolderChannelDescriptorName(
-    folderChannelDescriptorName: string
-  ) {
-    return this.pathTemplates.folderChannelDescriptorPathTemplate.match(
-      folderChannelDescriptorName
-    ).channel_descriptor;
+  matchChannelDescriptorFromFolderChannelDescriptorName(folderChannelDescriptorName: string) {
+    return this.pathTemplates.folderChannelDescriptorPathTemplate.match(folderChannelDescriptorName).channel_descriptor;
   }
 
   /**
@@ -1176,7 +1044,7 @@ export class AlertPolicyServiceClient {
    * @param {string} group
    * @returns {string} Resource name string.
    */
-  folderGroupPath(folder: string, group: string) {
+  folderGroupPath(folder:string,group:string) {
     return this.pathTemplates.folderGroupPathTemplate.render({
       folder: folder,
       group: group,
@@ -1191,8 +1059,7 @@ export class AlertPolicyServiceClient {
    * @returns {string} A string representing the folder.
    */
   matchFolderFromFolderGroupName(folderGroupName: string) {
-    return this.pathTemplates.folderGroupPathTemplate.match(folderGroupName)
-      .folder;
+    return this.pathTemplates.folderGroupPathTemplate.match(folderGroupName).folder;
   }
 
   /**
@@ -1203,8 +1070,7 @@ export class AlertPolicyServiceClient {
    * @returns {string} A string representing the group.
    */
   matchGroupFromFolderGroupName(folderGroupName: string) {
-    return this.pathTemplates.folderGroupPathTemplate.match(folderGroupName)
-      .group;
+    return this.pathTemplates.folderGroupPathTemplate.match(folderGroupName).group;
   }
 
   /**
@@ -1214,7 +1080,7 @@ export class AlertPolicyServiceClient {
    * @param {string} notification_channel
    * @returns {string} Resource name string.
    */
-  folderNotificationChannelPath(folder: string, notificationChannel: string) {
+  folderNotificationChannelPath(folder:string,notificationChannel:string) {
     return this.pathTemplates.folderNotificationChannelPathTemplate.render({
       folder: folder,
       notification_channel: notificationChannel,
@@ -1228,12 +1094,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing folder_notification_channel resource.
    * @returns {string} A string representing the folder.
    */
-  matchFolderFromFolderNotificationChannelName(
-    folderNotificationChannelName: string
-  ) {
-    return this.pathTemplates.folderNotificationChannelPathTemplate.match(
-      folderNotificationChannelName
-    ).folder;
+  matchFolderFromFolderNotificationChannelName(folderNotificationChannelName: string) {
+    return this.pathTemplates.folderNotificationChannelPathTemplate.match(folderNotificationChannelName).folder;
   }
 
   /**
@@ -1243,12 +1105,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing folder_notification_channel resource.
    * @returns {string} A string representing the notification_channel.
    */
-  matchNotificationChannelFromFolderNotificationChannelName(
-    folderNotificationChannelName: string
-  ) {
-    return this.pathTemplates.folderNotificationChannelPathTemplate.match(
-      folderNotificationChannelName
-    ).notification_channel;
+  matchNotificationChannelFromFolderNotificationChannelName(folderNotificationChannelName: string) {
+    return this.pathTemplates.folderNotificationChannelPathTemplate.match(folderNotificationChannelName).notification_channel;
   }
 
   /**
@@ -1258,7 +1116,7 @@ export class AlertPolicyServiceClient {
    * @param {string} service
    * @returns {string} Resource name string.
    */
-  folderServicePath(folder: string, service: string) {
+  folderServicePath(folder:string,service:string) {
     return this.pathTemplates.folderServicePathTemplate.render({
       folder: folder,
       service: service,
@@ -1273,8 +1131,7 @@ export class AlertPolicyServiceClient {
    * @returns {string} A string representing the folder.
    */
   matchFolderFromFolderServiceName(folderServiceName: string) {
-    return this.pathTemplates.folderServicePathTemplate.match(folderServiceName)
-      .folder;
+    return this.pathTemplates.folderServicePathTemplate.match(folderServiceName).folder;
   }
 
   /**
@@ -1285,8 +1142,7 @@ export class AlertPolicyServiceClient {
    * @returns {string} A string representing the service.
    */
   matchServiceFromFolderServiceName(folderServiceName: string) {
-    return this.pathTemplates.folderServicePathTemplate.match(folderServiceName)
-      .service;
+    return this.pathTemplates.folderServicePathTemplate.match(folderServiceName).service;
   }
 
   /**
@@ -1297,18 +1153,12 @@ export class AlertPolicyServiceClient {
    * @param {string} service_level_objective
    * @returns {string} Resource name string.
    */
-  folderServiceServiceLevelObjectivePath(
-    folder: string,
-    service: string,
-    serviceLevelObjective: string
-  ) {
-    return this.pathTemplates.folderServiceServiceLevelObjectivePathTemplate.render(
-      {
-        folder: folder,
-        service: service,
-        service_level_objective: serviceLevelObjective,
-      }
-    );
+  folderServiceServiceLevelObjectivePath(folder:string,service:string,serviceLevelObjective:string) {
+    return this.pathTemplates.folderServiceServiceLevelObjectivePathTemplate.render({
+      folder: folder,
+      service: service,
+      service_level_objective: serviceLevelObjective,
+    });
   }
 
   /**
@@ -1318,12 +1168,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing folder_service_service_level_objective resource.
    * @returns {string} A string representing the folder.
    */
-  matchFolderFromFolderServiceServiceLevelObjectiveName(
-    folderServiceServiceLevelObjectiveName: string
-  ) {
-    return this.pathTemplates.folderServiceServiceLevelObjectivePathTemplate.match(
-      folderServiceServiceLevelObjectiveName
-    ).folder;
+  matchFolderFromFolderServiceServiceLevelObjectiveName(folderServiceServiceLevelObjectiveName: string) {
+    return this.pathTemplates.folderServiceServiceLevelObjectivePathTemplate.match(folderServiceServiceLevelObjectiveName).folder;
   }
 
   /**
@@ -1333,12 +1179,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing folder_service_service_level_objective resource.
    * @returns {string} A string representing the service.
    */
-  matchServiceFromFolderServiceServiceLevelObjectiveName(
-    folderServiceServiceLevelObjectiveName: string
-  ) {
-    return this.pathTemplates.folderServiceServiceLevelObjectivePathTemplate.match(
-      folderServiceServiceLevelObjectiveName
-    ).service;
+  matchServiceFromFolderServiceServiceLevelObjectiveName(folderServiceServiceLevelObjectiveName: string) {
+    return this.pathTemplates.folderServiceServiceLevelObjectivePathTemplate.match(folderServiceServiceLevelObjectiveName).service;
   }
 
   /**
@@ -1348,12 +1190,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing folder_service_service_level_objective resource.
    * @returns {string} A string representing the service_level_objective.
    */
-  matchServiceLevelObjectiveFromFolderServiceServiceLevelObjectiveName(
-    folderServiceServiceLevelObjectiveName: string
-  ) {
-    return this.pathTemplates.folderServiceServiceLevelObjectivePathTemplate.match(
-      folderServiceServiceLevelObjectiveName
-    ).service_level_objective;
+  matchServiceLevelObjectiveFromFolderServiceServiceLevelObjectiveName(folderServiceServiceLevelObjectiveName: string) {
+    return this.pathTemplates.folderServiceServiceLevelObjectivePathTemplate.match(folderServiceServiceLevelObjectiveName).service_level_objective;
   }
 
   /**
@@ -1363,7 +1201,7 @@ export class AlertPolicyServiceClient {
    * @param {string} uptime_check_config
    * @returns {string} Resource name string.
    */
-  folderUptimeCheckConfigPath(folder: string, uptimeCheckConfig: string) {
+  folderUptimeCheckConfigPath(folder:string,uptimeCheckConfig:string) {
     return this.pathTemplates.folderUptimeCheckConfigPathTemplate.render({
       folder: folder,
       uptime_check_config: uptimeCheckConfig,
@@ -1377,12 +1215,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing folder_uptime_check_config resource.
    * @returns {string} A string representing the folder.
    */
-  matchFolderFromFolderUptimeCheckConfigName(
-    folderUptimeCheckConfigName: string
-  ) {
-    return this.pathTemplates.folderUptimeCheckConfigPathTemplate.match(
-      folderUptimeCheckConfigName
-    ).folder;
+  matchFolderFromFolderUptimeCheckConfigName(folderUptimeCheckConfigName: string) {
+    return this.pathTemplates.folderUptimeCheckConfigPathTemplate.match(folderUptimeCheckConfigName).folder;
   }
 
   /**
@@ -1392,12 +1226,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing folder_uptime_check_config resource.
    * @returns {string} A string representing the uptime_check_config.
    */
-  matchUptimeCheckConfigFromFolderUptimeCheckConfigName(
-    folderUptimeCheckConfigName: string
-  ) {
-    return this.pathTemplates.folderUptimeCheckConfigPathTemplate.match(
-      folderUptimeCheckConfigName
-    ).uptime_check_config;
+  matchUptimeCheckConfigFromFolderUptimeCheckConfigName(folderUptimeCheckConfigName: string) {
+    return this.pathTemplates.folderUptimeCheckConfigPathTemplate.match(folderUptimeCheckConfigName).uptime_check_config;
   }
 
   /**
@@ -1407,7 +1237,7 @@ export class AlertPolicyServiceClient {
    * @param {string} alert_policy
    * @returns {string} Resource name string.
    */
-  organizationAlertPolicyPath(organization: string, alertPolicy: string) {
+  organizationAlertPolicyPath(organization:string,alertPolicy:string) {
     return this.pathTemplates.organizationAlertPolicyPathTemplate.render({
       organization: organization,
       alert_policy: alertPolicy,
@@ -1421,12 +1251,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing organization_alert_policy resource.
    * @returns {string} A string representing the organization.
    */
-  matchOrganizationFromOrganizationAlertPolicyName(
-    organizationAlertPolicyName: string
-  ) {
-    return this.pathTemplates.organizationAlertPolicyPathTemplate.match(
-      organizationAlertPolicyName
-    ).organization;
+  matchOrganizationFromOrganizationAlertPolicyName(organizationAlertPolicyName: string) {
+    return this.pathTemplates.organizationAlertPolicyPathTemplate.match(organizationAlertPolicyName).organization;
   }
 
   /**
@@ -1436,12 +1262,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing organization_alert_policy resource.
    * @returns {string} A string representing the alert_policy.
    */
-  matchAlertPolicyFromOrganizationAlertPolicyName(
-    organizationAlertPolicyName: string
-  ) {
-    return this.pathTemplates.organizationAlertPolicyPathTemplate.match(
-      organizationAlertPolicyName
-    ).alert_policy;
+  matchAlertPolicyFromOrganizationAlertPolicyName(organizationAlertPolicyName: string) {
+    return this.pathTemplates.organizationAlertPolicyPathTemplate.match(organizationAlertPolicyName).alert_policy;
   }
 
   /**
@@ -1452,18 +1274,12 @@ export class AlertPolicyServiceClient {
    * @param {string} condition
    * @returns {string} Resource name string.
    */
-  organizationAlertPolicyConditionPath(
-    organization: string,
-    alertPolicy: string,
-    condition: string
-  ) {
-    return this.pathTemplates.organizationAlertPolicyConditionPathTemplate.render(
-      {
-        organization: organization,
-        alert_policy: alertPolicy,
-        condition: condition,
-      }
-    );
+  organizationAlertPolicyConditionPath(organization:string,alertPolicy:string,condition:string) {
+    return this.pathTemplates.organizationAlertPolicyConditionPathTemplate.render({
+      organization: organization,
+      alert_policy: alertPolicy,
+      condition: condition,
+    });
   }
 
   /**
@@ -1473,12 +1289,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing organization_alert_policy_condition resource.
    * @returns {string} A string representing the organization.
    */
-  matchOrganizationFromOrganizationAlertPolicyConditionName(
-    organizationAlertPolicyConditionName: string
-  ) {
-    return this.pathTemplates.organizationAlertPolicyConditionPathTemplate.match(
-      organizationAlertPolicyConditionName
-    ).organization;
+  matchOrganizationFromOrganizationAlertPolicyConditionName(organizationAlertPolicyConditionName: string) {
+    return this.pathTemplates.organizationAlertPolicyConditionPathTemplate.match(organizationAlertPolicyConditionName).organization;
   }
 
   /**
@@ -1488,12 +1300,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing organization_alert_policy_condition resource.
    * @returns {string} A string representing the alert_policy.
    */
-  matchAlertPolicyFromOrganizationAlertPolicyConditionName(
-    organizationAlertPolicyConditionName: string
-  ) {
-    return this.pathTemplates.organizationAlertPolicyConditionPathTemplate.match(
-      organizationAlertPolicyConditionName
-    ).alert_policy;
+  matchAlertPolicyFromOrganizationAlertPolicyConditionName(organizationAlertPolicyConditionName: string) {
+    return this.pathTemplates.organizationAlertPolicyConditionPathTemplate.match(organizationAlertPolicyConditionName).alert_policy;
   }
 
   /**
@@ -1503,12 +1311,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing organization_alert_policy_condition resource.
    * @returns {string} A string representing the condition.
    */
-  matchConditionFromOrganizationAlertPolicyConditionName(
-    organizationAlertPolicyConditionName: string
-  ) {
-    return this.pathTemplates.organizationAlertPolicyConditionPathTemplate.match(
-      organizationAlertPolicyConditionName
-    ).condition;
+  matchConditionFromOrganizationAlertPolicyConditionName(organizationAlertPolicyConditionName: string) {
+    return this.pathTemplates.organizationAlertPolicyConditionPathTemplate.match(organizationAlertPolicyConditionName).condition;
   }
 
   /**
@@ -1518,10 +1322,7 @@ export class AlertPolicyServiceClient {
    * @param {string} channel_descriptor
    * @returns {string} Resource name string.
    */
-  organizationChannelDescriptorPath(
-    organization: string,
-    channelDescriptor: string
-  ) {
+  organizationChannelDescriptorPath(organization:string,channelDescriptor:string) {
     return this.pathTemplates.organizationChannelDescriptorPathTemplate.render({
       organization: organization,
       channel_descriptor: channelDescriptor,
@@ -1535,12 +1336,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing organization_channel_descriptor resource.
    * @returns {string} A string representing the organization.
    */
-  matchOrganizationFromOrganizationChannelDescriptorName(
-    organizationChannelDescriptorName: string
-  ) {
-    return this.pathTemplates.organizationChannelDescriptorPathTemplate.match(
-      organizationChannelDescriptorName
-    ).organization;
+  matchOrganizationFromOrganizationChannelDescriptorName(organizationChannelDescriptorName: string) {
+    return this.pathTemplates.organizationChannelDescriptorPathTemplate.match(organizationChannelDescriptorName).organization;
   }
 
   /**
@@ -1550,12 +1347,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing organization_channel_descriptor resource.
    * @returns {string} A string representing the channel_descriptor.
    */
-  matchChannelDescriptorFromOrganizationChannelDescriptorName(
-    organizationChannelDescriptorName: string
-  ) {
-    return this.pathTemplates.organizationChannelDescriptorPathTemplate.match(
-      organizationChannelDescriptorName
-    ).channel_descriptor;
+  matchChannelDescriptorFromOrganizationChannelDescriptorName(organizationChannelDescriptorName: string) {
+    return this.pathTemplates.organizationChannelDescriptorPathTemplate.match(organizationChannelDescriptorName).channel_descriptor;
   }
 
   /**
@@ -1565,7 +1358,7 @@ export class AlertPolicyServiceClient {
    * @param {string} group
    * @returns {string} Resource name string.
    */
-  organizationGroupPath(organization: string, group: string) {
+  organizationGroupPath(organization:string,group:string) {
     return this.pathTemplates.organizationGroupPathTemplate.render({
       organization: organization,
       group: group,
@@ -1580,9 +1373,7 @@ export class AlertPolicyServiceClient {
    * @returns {string} A string representing the organization.
    */
   matchOrganizationFromOrganizationGroupName(organizationGroupName: string) {
-    return this.pathTemplates.organizationGroupPathTemplate.match(
-      organizationGroupName
-    ).organization;
+    return this.pathTemplates.organizationGroupPathTemplate.match(organizationGroupName).organization;
   }
 
   /**
@@ -1593,9 +1384,7 @@ export class AlertPolicyServiceClient {
    * @returns {string} A string representing the group.
    */
   matchGroupFromOrganizationGroupName(organizationGroupName: string) {
-    return this.pathTemplates.organizationGroupPathTemplate.match(
-      organizationGroupName
-    ).group;
+    return this.pathTemplates.organizationGroupPathTemplate.match(organizationGroupName).group;
   }
 
   /**
@@ -1605,16 +1394,11 @@ export class AlertPolicyServiceClient {
    * @param {string} notification_channel
    * @returns {string} Resource name string.
    */
-  organizationNotificationChannelPath(
-    organization: string,
-    notificationChannel: string
-  ) {
-    return this.pathTemplates.organizationNotificationChannelPathTemplate.render(
-      {
-        organization: organization,
-        notification_channel: notificationChannel,
-      }
-    );
+  organizationNotificationChannelPath(organization:string,notificationChannel:string) {
+    return this.pathTemplates.organizationNotificationChannelPathTemplate.render({
+      organization: organization,
+      notification_channel: notificationChannel,
+    });
   }
 
   /**
@@ -1624,12 +1408,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing organization_notification_channel resource.
    * @returns {string} A string representing the organization.
    */
-  matchOrganizationFromOrganizationNotificationChannelName(
-    organizationNotificationChannelName: string
-  ) {
-    return this.pathTemplates.organizationNotificationChannelPathTemplate.match(
-      organizationNotificationChannelName
-    ).organization;
+  matchOrganizationFromOrganizationNotificationChannelName(organizationNotificationChannelName: string) {
+    return this.pathTemplates.organizationNotificationChannelPathTemplate.match(organizationNotificationChannelName).organization;
   }
 
   /**
@@ -1639,12 +1419,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing organization_notification_channel resource.
    * @returns {string} A string representing the notification_channel.
    */
-  matchNotificationChannelFromOrganizationNotificationChannelName(
-    organizationNotificationChannelName: string
-  ) {
-    return this.pathTemplates.organizationNotificationChannelPathTemplate.match(
-      organizationNotificationChannelName
-    ).notification_channel;
+  matchNotificationChannelFromOrganizationNotificationChannelName(organizationNotificationChannelName: string) {
+    return this.pathTemplates.organizationNotificationChannelPathTemplate.match(organizationNotificationChannelName).notification_channel;
   }
 
   /**
@@ -1654,7 +1430,7 @@ export class AlertPolicyServiceClient {
    * @param {string} service
    * @returns {string} Resource name string.
    */
-  organizationServicePath(organization: string, service: string) {
+  organizationServicePath(organization:string,service:string) {
     return this.pathTemplates.organizationServicePathTemplate.render({
       organization: organization,
       service: service,
@@ -1668,12 +1444,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing organization_service resource.
    * @returns {string} A string representing the organization.
    */
-  matchOrganizationFromOrganizationServiceName(
-    organizationServiceName: string
-  ) {
-    return this.pathTemplates.organizationServicePathTemplate.match(
-      organizationServiceName
-    ).organization;
+  matchOrganizationFromOrganizationServiceName(organizationServiceName: string) {
+    return this.pathTemplates.organizationServicePathTemplate.match(organizationServiceName).organization;
   }
 
   /**
@@ -1684,9 +1456,7 @@ export class AlertPolicyServiceClient {
    * @returns {string} A string representing the service.
    */
   matchServiceFromOrganizationServiceName(organizationServiceName: string) {
-    return this.pathTemplates.organizationServicePathTemplate.match(
-      organizationServiceName
-    ).service;
+    return this.pathTemplates.organizationServicePathTemplate.match(organizationServiceName).service;
   }
 
   /**
@@ -1697,18 +1467,12 @@ export class AlertPolicyServiceClient {
    * @param {string} service_level_objective
    * @returns {string} Resource name string.
    */
-  organizationServiceServiceLevelObjectivePath(
-    organization: string,
-    service: string,
-    serviceLevelObjective: string
-  ) {
-    return this.pathTemplates.organizationServiceServiceLevelObjectivePathTemplate.render(
-      {
-        organization: organization,
-        service: service,
-        service_level_objective: serviceLevelObjective,
-      }
-    );
+  organizationServiceServiceLevelObjectivePath(organization:string,service:string,serviceLevelObjective:string) {
+    return this.pathTemplates.organizationServiceServiceLevelObjectivePathTemplate.render({
+      organization: organization,
+      service: service,
+      service_level_objective: serviceLevelObjective,
+    });
   }
 
   /**
@@ -1718,12 +1482,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing organization_service_service_level_objective resource.
    * @returns {string} A string representing the organization.
    */
-  matchOrganizationFromOrganizationServiceServiceLevelObjectiveName(
-    organizationServiceServiceLevelObjectiveName: string
-  ) {
-    return this.pathTemplates.organizationServiceServiceLevelObjectivePathTemplate.match(
-      organizationServiceServiceLevelObjectiveName
-    ).organization;
+  matchOrganizationFromOrganizationServiceServiceLevelObjectiveName(organizationServiceServiceLevelObjectiveName: string) {
+    return this.pathTemplates.organizationServiceServiceLevelObjectivePathTemplate.match(organizationServiceServiceLevelObjectiveName).organization;
   }
 
   /**
@@ -1733,12 +1493,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing organization_service_service_level_objective resource.
    * @returns {string} A string representing the service.
    */
-  matchServiceFromOrganizationServiceServiceLevelObjectiveName(
-    organizationServiceServiceLevelObjectiveName: string
-  ) {
-    return this.pathTemplates.organizationServiceServiceLevelObjectivePathTemplate.match(
-      organizationServiceServiceLevelObjectiveName
-    ).service;
+  matchServiceFromOrganizationServiceServiceLevelObjectiveName(organizationServiceServiceLevelObjectiveName: string) {
+    return this.pathTemplates.organizationServiceServiceLevelObjectivePathTemplate.match(organizationServiceServiceLevelObjectiveName).service;
   }
 
   /**
@@ -1748,12 +1504,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing organization_service_service_level_objective resource.
    * @returns {string} A string representing the service_level_objective.
    */
-  matchServiceLevelObjectiveFromOrganizationServiceServiceLevelObjectiveName(
-    organizationServiceServiceLevelObjectiveName: string
-  ) {
-    return this.pathTemplates.organizationServiceServiceLevelObjectivePathTemplate.match(
-      organizationServiceServiceLevelObjectiveName
-    ).service_level_objective;
+  matchServiceLevelObjectiveFromOrganizationServiceServiceLevelObjectiveName(organizationServiceServiceLevelObjectiveName: string) {
+    return this.pathTemplates.organizationServiceServiceLevelObjectivePathTemplate.match(organizationServiceServiceLevelObjectiveName).service_level_objective;
   }
 
   /**
@@ -1763,10 +1515,7 @@ export class AlertPolicyServiceClient {
    * @param {string} uptime_check_config
    * @returns {string} Resource name string.
    */
-  organizationUptimeCheckConfigPath(
-    organization: string,
-    uptimeCheckConfig: string
-  ) {
+  organizationUptimeCheckConfigPath(organization:string,uptimeCheckConfig:string) {
     return this.pathTemplates.organizationUptimeCheckConfigPathTemplate.render({
       organization: organization,
       uptime_check_config: uptimeCheckConfig,
@@ -1780,12 +1529,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing organization_uptime_check_config resource.
    * @returns {string} A string representing the organization.
    */
-  matchOrganizationFromOrganizationUptimeCheckConfigName(
-    organizationUptimeCheckConfigName: string
-  ) {
-    return this.pathTemplates.organizationUptimeCheckConfigPathTemplate.match(
-      organizationUptimeCheckConfigName
-    ).organization;
+  matchOrganizationFromOrganizationUptimeCheckConfigName(organizationUptimeCheckConfigName: string) {
+    return this.pathTemplates.organizationUptimeCheckConfigPathTemplate.match(organizationUptimeCheckConfigName).organization;
   }
 
   /**
@@ -1795,12 +1540,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing organization_uptime_check_config resource.
    * @returns {string} A string representing the uptime_check_config.
    */
-  matchUptimeCheckConfigFromOrganizationUptimeCheckConfigName(
-    organizationUptimeCheckConfigName: string
-  ) {
-    return this.pathTemplates.organizationUptimeCheckConfigPathTemplate.match(
-      organizationUptimeCheckConfigName
-    ).uptime_check_config;
+  matchUptimeCheckConfigFromOrganizationUptimeCheckConfigName(organizationUptimeCheckConfigName: string) {
+    return this.pathTemplates.organizationUptimeCheckConfigPathTemplate.match(organizationUptimeCheckConfigName).uptime_check_config;
   }
 
   /**
@@ -1809,7 +1550,7 @@ export class AlertPolicyServiceClient {
    * @param {string} project
    * @returns {string} Resource name string.
    */
-  projectPath(project: string) {
+  projectPath(project:string) {
     return this.pathTemplates.projectPathTemplate.render({
       project: project,
     });
@@ -1833,7 +1574,7 @@ export class AlertPolicyServiceClient {
    * @param {string} alert_policy
    * @returns {string} Resource name string.
    */
-  projectAlertPolicyPath(project: string, alertPolicy: string) {
+  projectAlertPolicyPath(project:string,alertPolicy:string) {
     return this.pathTemplates.projectAlertPolicyPathTemplate.render({
       project: project,
       alert_policy: alertPolicy,
@@ -1848,9 +1589,7 @@ export class AlertPolicyServiceClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectAlertPolicyName(projectAlertPolicyName: string) {
-    return this.pathTemplates.projectAlertPolicyPathTemplate.match(
-      projectAlertPolicyName
-    ).project;
+    return this.pathTemplates.projectAlertPolicyPathTemplate.match(projectAlertPolicyName).project;
   }
 
   /**
@@ -1861,9 +1600,7 @@ export class AlertPolicyServiceClient {
    * @returns {string} A string representing the alert_policy.
    */
   matchAlertPolicyFromProjectAlertPolicyName(projectAlertPolicyName: string) {
-    return this.pathTemplates.projectAlertPolicyPathTemplate.match(
-      projectAlertPolicyName
-    ).alert_policy;
+    return this.pathTemplates.projectAlertPolicyPathTemplate.match(projectAlertPolicyName).alert_policy;
   }
 
   /**
@@ -1874,11 +1611,7 @@ export class AlertPolicyServiceClient {
    * @param {string} condition
    * @returns {string} Resource name string.
    */
-  projectAlertPolicyConditionPath(
-    project: string,
-    alertPolicy: string,
-    condition: string
-  ) {
+  projectAlertPolicyConditionPath(project:string,alertPolicy:string,condition:string) {
     return this.pathTemplates.projectAlertPolicyConditionPathTemplate.render({
       project: project,
       alert_policy: alertPolicy,
@@ -1893,12 +1626,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing project_alert_policy_condition resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectAlertPolicyConditionName(
-    projectAlertPolicyConditionName: string
-  ) {
-    return this.pathTemplates.projectAlertPolicyConditionPathTemplate.match(
-      projectAlertPolicyConditionName
-    ).project;
+  matchProjectFromProjectAlertPolicyConditionName(projectAlertPolicyConditionName: string) {
+    return this.pathTemplates.projectAlertPolicyConditionPathTemplate.match(projectAlertPolicyConditionName).project;
   }
 
   /**
@@ -1908,12 +1637,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing project_alert_policy_condition resource.
    * @returns {string} A string representing the alert_policy.
    */
-  matchAlertPolicyFromProjectAlertPolicyConditionName(
-    projectAlertPolicyConditionName: string
-  ) {
-    return this.pathTemplates.projectAlertPolicyConditionPathTemplate.match(
-      projectAlertPolicyConditionName
-    ).alert_policy;
+  matchAlertPolicyFromProjectAlertPolicyConditionName(projectAlertPolicyConditionName: string) {
+    return this.pathTemplates.projectAlertPolicyConditionPathTemplate.match(projectAlertPolicyConditionName).alert_policy;
   }
 
   /**
@@ -1923,12 +1648,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing project_alert_policy_condition resource.
    * @returns {string} A string representing the condition.
    */
-  matchConditionFromProjectAlertPolicyConditionName(
-    projectAlertPolicyConditionName: string
-  ) {
-    return this.pathTemplates.projectAlertPolicyConditionPathTemplate.match(
-      projectAlertPolicyConditionName
-    ).condition;
+  matchConditionFromProjectAlertPolicyConditionName(projectAlertPolicyConditionName: string) {
+    return this.pathTemplates.projectAlertPolicyConditionPathTemplate.match(projectAlertPolicyConditionName).condition;
   }
 
   /**
@@ -1938,7 +1659,7 @@ export class AlertPolicyServiceClient {
    * @param {string} channel_descriptor
    * @returns {string} Resource name string.
    */
-  projectChannelDescriptorPath(project: string, channelDescriptor: string) {
+  projectChannelDescriptorPath(project:string,channelDescriptor:string) {
     return this.pathTemplates.projectChannelDescriptorPathTemplate.render({
       project: project,
       channel_descriptor: channelDescriptor,
@@ -1952,12 +1673,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing project_channel_descriptor resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectChannelDescriptorName(
-    projectChannelDescriptorName: string
-  ) {
-    return this.pathTemplates.projectChannelDescriptorPathTemplate.match(
-      projectChannelDescriptorName
-    ).project;
+  matchProjectFromProjectChannelDescriptorName(projectChannelDescriptorName: string) {
+    return this.pathTemplates.projectChannelDescriptorPathTemplate.match(projectChannelDescriptorName).project;
   }
 
   /**
@@ -1967,12 +1684,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing project_channel_descriptor resource.
    * @returns {string} A string representing the channel_descriptor.
    */
-  matchChannelDescriptorFromProjectChannelDescriptorName(
-    projectChannelDescriptorName: string
-  ) {
-    return this.pathTemplates.projectChannelDescriptorPathTemplate.match(
-      projectChannelDescriptorName
-    ).channel_descriptor;
+  matchChannelDescriptorFromProjectChannelDescriptorName(projectChannelDescriptorName: string) {
+    return this.pathTemplates.projectChannelDescriptorPathTemplate.match(projectChannelDescriptorName).channel_descriptor;
   }
 
   /**
@@ -1982,7 +1695,7 @@ export class AlertPolicyServiceClient {
    * @param {string} group
    * @returns {string} Resource name string.
    */
-  projectGroupPath(project: string, group: string) {
+  projectGroupPath(project:string,group:string) {
     return this.pathTemplates.projectGroupPathTemplate.render({
       project: project,
       group: group,
@@ -1997,8 +1710,7 @@ export class AlertPolicyServiceClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectGroupName(projectGroupName: string) {
-    return this.pathTemplates.projectGroupPathTemplate.match(projectGroupName)
-      .project;
+    return this.pathTemplates.projectGroupPathTemplate.match(projectGroupName).project;
   }
 
   /**
@@ -2009,8 +1721,7 @@ export class AlertPolicyServiceClient {
    * @returns {string} A string representing the group.
    */
   matchGroupFromProjectGroupName(projectGroupName: string) {
-    return this.pathTemplates.projectGroupPathTemplate.match(projectGroupName)
-      .group;
+    return this.pathTemplates.projectGroupPathTemplate.match(projectGroupName).group;
   }
 
   /**
@@ -2020,7 +1731,7 @@ export class AlertPolicyServiceClient {
    * @param {string} notification_channel
    * @returns {string} Resource name string.
    */
-  projectNotificationChannelPath(project: string, notificationChannel: string) {
+  projectNotificationChannelPath(project:string,notificationChannel:string) {
     return this.pathTemplates.projectNotificationChannelPathTemplate.render({
       project: project,
       notification_channel: notificationChannel,
@@ -2034,12 +1745,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing project_notification_channel resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectNotificationChannelName(
-    projectNotificationChannelName: string
-  ) {
-    return this.pathTemplates.projectNotificationChannelPathTemplate.match(
-      projectNotificationChannelName
-    ).project;
+  matchProjectFromProjectNotificationChannelName(projectNotificationChannelName: string) {
+    return this.pathTemplates.projectNotificationChannelPathTemplate.match(projectNotificationChannelName).project;
   }
 
   /**
@@ -2049,12 +1756,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing project_notification_channel resource.
    * @returns {string} A string representing the notification_channel.
    */
-  matchNotificationChannelFromProjectNotificationChannelName(
-    projectNotificationChannelName: string
-  ) {
-    return this.pathTemplates.projectNotificationChannelPathTemplate.match(
-      projectNotificationChannelName
-    ).notification_channel;
+  matchNotificationChannelFromProjectNotificationChannelName(projectNotificationChannelName: string) {
+    return this.pathTemplates.projectNotificationChannelPathTemplate.match(projectNotificationChannelName).notification_channel;
   }
 
   /**
@@ -2064,7 +1767,7 @@ export class AlertPolicyServiceClient {
    * @param {string} service
    * @returns {string} Resource name string.
    */
-  projectServicePath(project: string, service: string) {
+  projectServicePath(project:string,service:string) {
     return this.pathTemplates.projectServicePathTemplate.render({
       project: project,
       service: service,
@@ -2079,9 +1782,7 @@ export class AlertPolicyServiceClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectServiceName(projectServiceName: string) {
-    return this.pathTemplates.projectServicePathTemplate.match(
-      projectServiceName
-    ).project;
+    return this.pathTemplates.projectServicePathTemplate.match(projectServiceName).project;
   }
 
   /**
@@ -2092,9 +1793,7 @@ export class AlertPolicyServiceClient {
    * @returns {string} A string representing the service.
    */
   matchServiceFromProjectServiceName(projectServiceName: string) {
-    return this.pathTemplates.projectServicePathTemplate.match(
-      projectServiceName
-    ).service;
+    return this.pathTemplates.projectServicePathTemplate.match(projectServiceName).service;
   }
 
   /**
@@ -2105,18 +1804,12 @@ export class AlertPolicyServiceClient {
    * @param {string} service_level_objective
    * @returns {string} Resource name string.
    */
-  projectServiceServiceLevelObjectivePath(
-    project: string,
-    service: string,
-    serviceLevelObjective: string
-  ) {
-    return this.pathTemplates.projectServiceServiceLevelObjectivePathTemplate.render(
-      {
-        project: project,
-        service: service,
-        service_level_objective: serviceLevelObjective,
-      }
-    );
+  projectServiceServiceLevelObjectivePath(project:string,service:string,serviceLevelObjective:string) {
+    return this.pathTemplates.projectServiceServiceLevelObjectivePathTemplate.render({
+      project: project,
+      service: service,
+      service_level_objective: serviceLevelObjective,
+    });
   }
 
   /**
@@ -2126,12 +1819,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing project_service_service_level_objective resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectServiceServiceLevelObjectiveName(
-    projectServiceServiceLevelObjectiveName: string
-  ) {
-    return this.pathTemplates.projectServiceServiceLevelObjectivePathTemplate.match(
-      projectServiceServiceLevelObjectiveName
-    ).project;
+  matchProjectFromProjectServiceServiceLevelObjectiveName(projectServiceServiceLevelObjectiveName: string) {
+    return this.pathTemplates.projectServiceServiceLevelObjectivePathTemplate.match(projectServiceServiceLevelObjectiveName).project;
   }
 
   /**
@@ -2141,12 +1830,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing project_service_service_level_objective resource.
    * @returns {string} A string representing the service.
    */
-  matchServiceFromProjectServiceServiceLevelObjectiveName(
-    projectServiceServiceLevelObjectiveName: string
-  ) {
-    return this.pathTemplates.projectServiceServiceLevelObjectivePathTemplate.match(
-      projectServiceServiceLevelObjectiveName
-    ).service;
+  matchServiceFromProjectServiceServiceLevelObjectiveName(projectServiceServiceLevelObjectiveName: string) {
+    return this.pathTemplates.projectServiceServiceLevelObjectivePathTemplate.match(projectServiceServiceLevelObjectiveName).service;
   }
 
   /**
@@ -2156,12 +1841,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing project_service_service_level_objective resource.
    * @returns {string} A string representing the service_level_objective.
    */
-  matchServiceLevelObjectiveFromProjectServiceServiceLevelObjectiveName(
-    projectServiceServiceLevelObjectiveName: string
-  ) {
-    return this.pathTemplates.projectServiceServiceLevelObjectivePathTemplate.match(
-      projectServiceServiceLevelObjectiveName
-    ).service_level_objective;
+  matchServiceLevelObjectiveFromProjectServiceServiceLevelObjectiveName(projectServiceServiceLevelObjectiveName: string) {
+    return this.pathTemplates.projectServiceServiceLevelObjectivePathTemplate.match(projectServiceServiceLevelObjectiveName).service_level_objective;
   }
 
   /**
@@ -2171,7 +1852,7 @@ export class AlertPolicyServiceClient {
    * @param {string} uptime_check_config
    * @returns {string} Resource name string.
    */
-  projectUptimeCheckConfigPath(project: string, uptimeCheckConfig: string) {
+  projectUptimeCheckConfigPath(project:string,uptimeCheckConfig:string) {
     return this.pathTemplates.projectUptimeCheckConfigPathTemplate.render({
       project: project,
       uptime_check_config: uptimeCheckConfig,
@@ -2185,12 +1866,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing project_uptime_check_config resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectUptimeCheckConfigName(
-    projectUptimeCheckConfigName: string
-  ) {
-    return this.pathTemplates.projectUptimeCheckConfigPathTemplate.match(
-      projectUptimeCheckConfigName
-    ).project;
+  matchProjectFromProjectUptimeCheckConfigName(projectUptimeCheckConfigName: string) {
+    return this.pathTemplates.projectUptimeCheckConfigPathTemplate.match(projectUptimeCheckConfigName).project;
   }
 
   /**
@@ -2200,12 +1877,8 @@ export class AlertPolicyServiceClient {
    *   A fully-qualified path representing project_uptime_check_config resource.
    * @returns {string} A string representing the uptime_check_config.
    */
-  matchUptimeCheckConfigFromProjectUptimeCheckConfigName(
-    projectUptimeCheckConfigName: string
-  ) {
-    return this.pathTemplates.projectUptimeCheckConfigPathTemplate.match(
-      projectUptimeCheckConfigName
-    ).uptime_check_config;
+  matchUptimeCheckConfigFromProjectUptimeCheckConfigName(projectUptimeCheckConfigName: string) {
+    return this.pathTemplates.projectUptimeCheckConfigPathTemplate.match(projectUptimeCheckConfigName).uptime_check_config;
   }
 
   /**
