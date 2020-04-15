@@ -16,7 +16,14 @@
 // ** https://github.com/googleapis/gapic-generator-typescript **
 // ** All changes to this file may be overwritten. **
 
-import {AlertPolicyServiceClient, GroupServiceClient, MetricServiceClient, NotificationChannelServiceClient, ServiceMonitoringServiceClient, UptimeCheckServiceClient} from '@google-cloud/monitoring';
+import {
+  AlertPolicyServiceClient,
+  GroupServiceClient,
+  MetricServiceClient,
+  NotificationChannelServiceClient,
+  ServiceMonitoringServiceClient,
+  UptimeCheckServiceClient,
+} from '@google-cloud/monitoring';
 
 function main() {
   new AlertPolicyServiceClient();

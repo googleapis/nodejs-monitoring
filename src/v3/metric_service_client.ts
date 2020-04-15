@@ -17,11 +17,18 @@
 // ** All changes to this file may be overwritten. **
 
 import * as gax from 'google-gax';
-import {Callback, CallOptions, Descriptors, ClientOptions, PaginationCallback, GaxCall} from 'google-gax';
+import {
+  Callback,
+  CallOptions,
+  Descriptors,
+  ClientOptions,
+  PaginationCallback,
+  GaxCall,
+} from 'google-gax';
 import * as path from 'path';
 
-import { Transform } from 'stream';
-import { RequestType } from 'google-gax/build/src/apitypes';
+import {Transform} from 'stream';
+import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
 import * as gapicConfig from './metric_service_client_config.json';
 
@@ -41,7 +48,12 @@ export class MetricServiceClient {
   private _protos: {};
   private _defaults: {[method: string]: gax.CallSettings};
   auth: gax.GoogleAuth;
-  descriptors: Descriptors = {page: {}, stream: {}, longrunning: {}, batching: {}};
+  descriptors: Descriptors = {
+    page: {},
+    stream: {},
+    longrunning: {},
+    batching: {},
+  };
   innerApiCalls: {[name: string]: Function};
   pathTemplates: {[name: string]: gax.PathTemplate};
   metricServiceStub?: Promise<{[name: string]: Function}>;
@@ -75,10 +87,12 @@ export class MetricServiceClient {
   constructor(opts?: ClientOptions) {
     // Ensure that options include the service address and port.
     const staticMembers = this.constructor as typeof MetricServiceClient;
-    const servicePath = opts && opts.servicePath ?
-        opts.servicePath :
-        ((opts && opts.apiEndpoint) ? opts.apiEndpoint :
-                                      staticMembers.servicePath);
+    const servicePath =
+      opts && opts.servicePath
+        ? opts.servicePath
+        : opts && opts.apiEndpoint
+        ? opts.apiEndpoint
+        : staticMembers.servicePath;
     const port = opts && opts.port ? opts.port : staticMembers.port;
 
     if (!opts) {
@@ -88,8 +102,8 @@ export class MetricServiceClient {
     opts.port = opts.port || port;
     opts.clientConfig = opts.clientConfig || {};
 
-    const isBrowser = (typeof window !== 'undefined');
-    if (isBrowser){
+    const isBrowser = typeof window !== 'undefined';
+    if (isBrowser) {
       opts.fallback = true;
     }
     // If we are in browser, we are already using fallback because of the
@@ -106,13 +120,10 @@ export class MetricServiceClient {
     this._opts = opts;
 
     // Save the auth object to the client, for use by other methods.
-    this.auth = (this._gaxGrpc.auth as gax.GoogleAuth);
+    this.auth = this._gaxGrpc.auth as gax.GoogleAuth;
 
     // Determine the client header string.
-    const clientHeader = [
-      `gax/${this._gaxModule.version}`,
-      `gapic/${version}`,
-    ];
+    const clientHeader = [`gax/${this._gaxModule.version}`, `gapic/${version}`];
     if (typeof process !== 'undefined' && 'versions' in process) {
       clientHeader.push(`gl-node/${process.versions.node}`);
     } else {
@@ -128,12 +139,18 @@ export class MetricServiceClient {
     // For Node.js, pass the path to JSON proto file.
     // For browsers, pass the JSON content.
 
-    const nodejsProtoPath = path.join(__dirname, '..', '..', 'protos', 'protos.json');
+    const nodejsProtoPath = path.join(
+      __dirname,
+      '..',
+      '..',
+      'protos',
+      'protos.json'
+    );
     this._protos = this._gaxGrpc.loadProto(
-      opts.fallback ?
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        require("../../protos/protos.json") :
-        nodejsProtoPath
+      opts.fallback
+        ? // eslint-disable-next-line @typescript-eslint/no-var-requires
+          require('../../protos/protos.json')
+        : nodejsProtoPath
     );
 
     // This API contains "path templates"; forward-slash-separated
@@ -239,18 +256,30 @@ export class MetricServiceClient {
     // (e.g. 50 results at a time, with tokens to get subsequent
     // pages). Denote the keys used for pagination and results.
     this.descriptors.page = {
-      listMonitoredResourceDescriptors:
-          new this._gaxModule.PageDescriptor('pageToken', 'nextPageToken', 'resourceDescriptors'),
-      listMetricDescriptors:
-          new this._gaxModule.PageDescriptor('pageToken', 'nextPageToken', 'metricDescriptors'),
-      listTimeSeries:
-          new this._gaxModule.PageDescriptor('pageToken', 'nextPageToken', 'timeSeries')
+      listMonitoredResourceDescriptors: new this._gaxModule.PageDescriptor(
+        'pageToken',
+        'nextPageToken',
+        'resourceDescriptors'
+      ),
+      listMetricDescriptors: new this._gaxModule.PageDescriptor(
+        'pageToken',
+        'nextPageToken',
+        'metricDescriptors'
+      ),
+      listTimeSeries: new this._gaxModule.PageDescriptor(
+        'pageToken',
+        'nextPageToken',
+        'timeSeries'
+      ),
     };
 
     // Put together the default options sent with requests.
     this._defaults = this._gaxGrpc.constructSettings(
-        'google.monitoring.v3.MetricService', gapicConfig as gax.ClientConfig,
-        opts.clientConfig || {}, {'x-goog-api-client': clientHeader.join(' ')});
+      'google.monitoring.v3.MetricService',
+      gapicConfig as gax.ClientConfig,
+      opts.clientConfig || {},
+      {'x-goog-api-client': clientHeader.join(' ')}
+    );
 
     // Set up a dictionary of "inner API calls"; the core implementation
     // of calling the API is handled in `google-gax`, with this code
@@ -278,16 +307,27 @@ export class MetricServiceClient {
     // Put together the "service stub" for
     // google.monitoring.v3.MetricService.
     this.metricServiceStub = this._gaxGrpc.createStub(
-        this._opts.fallback ?
-          (this._protos as protobuf.Root).lookupService('google.monitoring.v3.MetricService') :
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      this._opts.fallback
+        ? (this._protos as protobuf.Root).lookupService(
+            'google.monitoring.v3.MetricService'
+          )
+        : // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (this._protos as any).google.monitoring.v3.MetricService,
-        this._opts) as Promise<{[method: string]: Function}>;
+      this._opts
+    ) as Promise<{[method: string]: Function}>;
 
     // Iterate over each of the methods that the service provides
     // and create an API call method for each.
-    const metricServiceStubMethods =
-        ['listMonitoredResourceDescriptors', 'getMonitoredResourceDescriptor', 'listMetricDescriptors', 'getMetricDescriptor', 'createMetricDescriptor', 'deleteMetricDescriptor', 'listTimeSeries', 'createTimeSeries'];
+    const metricServiceStubMethods = [
+      'listMonitoredResourceDescriptors',
+      'getMonitoredResourceDescriptor',
+      'listMetricDescriptors',
+      'getMetricDescriptor',
+      'createMetricDescriptor',
+      'deleteMetricDescriptor',
+      'listTimeSeries',
+      'createTimeSeries',
+    ];
     for (const methodName of metricServiceStubMethods) {
       const callPromise = this.metricServiceStub.then(
         stub => (...args: Array<{}>) => {
@@ -297,16 +337,17 @@ export class MetricServiceClient {
           const func = stub[methodName];
           return func.apply(stub, args);
         },
-        (err: Error|null|undefined) => () => {
+        (err: Error | null | undefined) => () => {
           throw err;
-        });
+        }
+      );
 
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
         this.descriptors.page[methodName] ||
-            this.descriptors.stream[methodName] ||
-            this.descriptors.longrunning[methodName]
+          this.descriptors.stream[methodName] ||
+          this.descriptors.longrunning[methodName]
       );
 
       this.innerApiCalls[methodName] = apiCall;
@@ -346,7 +387,7 @@ export class MetricServiceClient {
       'https://www.googleapis.com/auth/cloud-platform',
       'https://www.googleapis.com/auth/monitoring',
       'https://www.googleapis.com/auth/monitoring.read',
-      'https://www.googleapis.com/auth/monitoring.write'
+      'https://www.googleapis.com/auth/monitoring.write',
     ];
   }
 
@@ -357,8 +398,9 @@ export class MetricServiceClient {
    * @param {function(Error, string)} callback - the callback to
    *   be called with the current project Id.
    */
-  getProjectId(callback?: Callback<string, undefined, undefined>):
-      Promise<string>|void {
+  getProjectId(
+    callback?: Callback<string, undefined, undefined>
+  ): Promise<string> | void {
     if (callback) {
       this.auth.getProjectId(callback);
       return;
@@ -370,64 +412,91 @@ export class MetricServiceClient {
   // -- Service calls --
   // -------------------
   getMonitoredResourceDescriptor(
-      request: protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protos.google.api.IMonitoredResourceDescriptor,
-        protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protos.google.api.IMonitoredResourceDescriptor,
+      (
+        | protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
   getMonitoredResourceDescriptor(
-      request: protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protos.google.api.IMonitoredResourceDescriptor,
-          protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protos.google.api.IMonitoredResourceDescriptor,
+      | protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   getMonitoredResourceDescriptor(
-      request: protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest,
-      callback: Callback<
-          protos.google.api.IMonitoredResourceDescriptor,
-          protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Gets a single monitored resource descriptor. This method does not require a Workspace.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The monitored resource descriptor to get.  The format is:
- *
- *       projects/[PROJECT_ID_OR_NUMBER]/monitoredResourceDescriptors/[RESOURCE_TYPE]
- *
- *   The `[RESOURCE_TYPE]` is a predefined type, such as
- *   `cloudsql_database`.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [MonitoredResourceDescriptor]{@link google.api.MonitoredResourceDescriptor}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest,
+    callback: Callback<
+      protos.google.api.IMonitoredResourceDescriptor,
+      | protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Gets a single monitored resource descriptor. This method does not require a Workspace.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The monitored resource descriptor to get.  The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/monitoredResourceDescriptors/[RESOURCE_TYPE]
+   *
+   *   The `[RESOURCE_TYPE]` is a predefined type, such as
+   *   `cloudsql_database`.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [MonitoredResourceDescriptor]{@link google.api.MonitoredResourceDescriptor}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   getMonitoredResourceDescriptor(
-      request: protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protos.google.api.IMonitoredResourceDescriptor,
-          protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.api.IMonitoredResourceDescriptor,
-          protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.api.IMonitoredResourceDescriptor,
-        protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.api.IMonitoredResourceDescriptor,
+      | protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.api.IMonitoredResourceDescriptor,
+      (
+        | protos.google.monitoring.v3.IGetMonitoredResourceDescriptorRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -436,70 +505,95 @@ export class MetricServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     this.initialize();
-    return this.innerApiCalls.getMonitoredResourceDescriptor(request, options, callback);
+    return this.innerApiCalls.getMonitoredResourceDescriptor(
+      request,
+      options,
+      callback
+    );
   }
   getMetricDescriptor(
-      request: protos.google.monitoring.v3.IGetMetricDescriptorRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protos.google.api.IMetricDescriptor,
-        protos.google.monitoring.v3.IGetMetricDescriptorRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.monitoring.v3.IGetMetricDescriptorRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protos.google.api.IMetricDescriptor,
+      protos.google.monitoring.v3.IGetMetricDescriptorRequest | undefined,
+      {} | undefined
+    ]
+  >;
   getMetricDescriptor(
-      request: protos.google.monitoring.v3.IGetMetricDescriptorRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protos.google.api.IMetricDescriptor,
-          protos.google.monitoring.v3.IGetMetricDescriptorRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.monitoring.v3.IGetMetricDescriptorRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protos.google.api.IMetricDescriptor,
+      | protos.google.monitoring.v3.IGetMetricDescriptorRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   getMetricDescriptor(
-      request: protos.google.monitoring.v3.IGetMetricDescriptorRequest,
-      callback: Callback<
-          protos.google.api.IMetricDescriptor,
-          protos.google.monitoring.v3.IGetMetricDescriptorRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Gets a single metric descriptor. This method does not require a Workspace.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The metric descriptor on which to execute the request. The format is:
- *
- *       projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]
- *
- *   An example value of `[METRIC_ID]` is
- *   `"compute.googleapis.com/instance/disk/read_bytes_count"`.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [MetricDescriptor]{@link google.api.MetricDescriptor}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protos.google.monitoring.v3.IGetMetricDescriptorRequest,
+    callback: Callback<
+      protos.google.api.IMetricDescriptor,
+      | protos.google.monitoring.v3.IGetMetricDescriptorRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Gets a single metric descriptor. This method does not require a Workspace.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The metric descriptor on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]
+   *
+   *   An example value of `[METRIC_ID]` is
+   *   `"compute.googleapis.com/instance/disk/read_bytes_count"`.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [MetricDescriptor]{@link google.api.MetricDescriptor}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   getMetricDescriptor(
-      request: protos.google.monitoring.v3.IGetMetricDescriptorRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protos.google.monitoring.v3.IGetMetricDescriptorRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protos.google.api.IMetricDescriptor,
-          protos.google.monitoring.v3.IGetMetricDescriptorRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.api.IMetricDescriptor,
-          protos.google.monitoring.v3.IGetMetricDescriptorRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.api.IMetricDescriptor,
-        protos.google.monitoring.v3.IGetMetricDescriptorRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.monitoring.v3.IGetMetricDescriptorRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.api.IMetricDescriptor,
+      | protos.google.monitoring.v3.IGetMetricDescriptorRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.api.IMetricDescriptor,
+      protos.google.monitoring.v3.IGetMetricDescriptorRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -508,72 +602,93 @@ export class MetricServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.getMetricDescriptor(request, options, callback);
   }
   createMetricDescriptor(
-      request: protos.google.monitoring.v3.ICreateMetricDescriptorRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protos.google.api.IMetricDescriptor,
-        protos.google.monitoring.v3.ICreateMetricDescriptorRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.monitoring.v3.ICreateMetricDescriptorRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protos.google.api.IMetricDescriptor,
+      protos.google.monitoring.v3.ICreateMetricDescriptorRequest | undefined,
+      {} | undefined
+    ]
+  >;
   createMetricDescriptor(
-      request: protos.google.monitoring.v3.ICreateMetricDescriptorRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protos.google.api.IMetricDescriptor,
-          protos.google.monitoring.v3.ICreateMetricDescriptorRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.monitoring.v3.ICreateMetricDescriptorRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protos.google.api.IMetricDescriptor,
+      | protos.google.monitoring.v3.ICreateMetricDescriptorRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   createMetricDescriptor(
-      request: protos.google.monitoring.v3.ICreateMetricDescriptorRequest,
-      callback: Callback<
-          protos.google.api.IMetricDescriptor,
-          protos.google.monitoring.v3.ICreateMetricDescriptorRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Creates a new metric descriptor.
- * User-created metric descriptors define
- * [custom metrics](https://cloud.google.com/monitoring/custom-metrics).
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The project on which to execute the request. The format is:
- *
- *       projects/[PROJECT_ID_OR_NUMBER]
- * @param {google.api.MetricDescriptor} request.metricDescriptor
- *   Required. The new [custom metric](https://cloud.google.com/monitoring/custom-metrics)
- *   descriptor.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [MetricDescriptor]{@link google.api.MetricDescriptor}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protos.google.monitoring.v3.ICreateMetricDescriptorRequest,
+    callback: Callback<
+      protos.google.api.IMetricDescriptor,
+      | protos.google.monitoring.v3.ICreateMetricDescriptorRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Creates a new metric descriptor.
+   * User-created metric descriptors define
+   * [custom metrics](https://cloud.google.com/monitoring/custom-metrics).
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
+   * @param {google.api.MetricDescriptor} request.metricDescriptor
+   *   Required. The new [custom metric](https://cloud.google.com/monitoring/custom-metrics)
+   *   descriptor.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [MetricDescriptor]{@link google.api.MetricDescriptor}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   createMetricDescriptor(
-      request: protos.google.monitoring.v3.ICreateMetricDescriptorRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protos.google.monitoring.v3.ICreateMetricDescriptorRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protos.google.api.IMetricDescriptor,
-          protos.google.monitoring.v3.ICreateMetricDescriptorRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.api.IMetricDescriptor,
-          protos.google.monitoring.v3.ICreateMetricDescriptorRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.api.IMetricDescriptor,
-        protos.google.monitoring.v3.ICreateMetricDescriptorRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.monitoring.v3.ICreateMetricDescriptorRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.api.IMetricDescriptor,
+      | protos.google.monitoring.v3.ICreateMetricDescriptorRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.api.IMetricDescriptor,
+      protos.google.monitoring.v3.ICreateMetricDescriptorRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -582,72 +697,97 @@ export class MetricServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     this.initialize();
-    return this.innerApiCalls.createMetricDescriptor(request, options, callback);
+    return this.innerApiCalls.createMetricDescriptor(
+      request,
+      options,
+      callback
+    );
   }
   deleteMetricDescriptor(
-      request: protos.google.monitoring.v3.IDeleteMetricDescriptorRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protos.google.protobuf.IEmpty,
-        protos.google.monitoring.v3.IDeleteMetricDescriptorRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.monitoring.v3.IDeleteMetricDescriptorRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      protos.google.monitoring.v3.IDeleteMetricDescriptorRequest | undefined,
+      {} | undefined
+    ]
+  >;
   deleteMetricDescriptor(
-      request: protos.google.monitoring.v3.IDeleteMetricDescriptorRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.monitoring.v3.IDeleteMetricDescriptorRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.monitoring.v3.IDeleteMetricDescriptorRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.monitoring.v3.IDeleteMetricDescriptorRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   deleteMetricDescriptor(
-      request: protos.google.monitoring.v3.IDeleteMetricDescriptorRequest,
-      callback: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.monitoring.v3.IDeleteMetricDescriptorRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Deletes a metric descriptor. Only user-created
- * [custom metrics](https://cloud.google.com/monitoring/custom-metrics) can be
- * deleted.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The metric descriptor on which to execute the request. The format is:
- *
- *       projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]
- *
- *   An example of `[METRIC_ID]` is:
- *   `"custom.googleapis.com/my_test_metric"`.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protos.google.monitoring.v3.IDeleteMetricDescriptorRequest,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.monitoring.v3.IDeleteMetricDescriptorRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Deletes a metric descriptor. Only user-created
+   * [custom metrics](https://cloud.google.com/monitoring/custom-metrics) can be
+   * deleted.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The metric descriptor on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]
+   *
+   *   An example of `[METRIC_ID]` is:
+   *   `"custom.googleapis.com/my_test_metric"`.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   deleteMetricDescriptor(
-      request: protos.google.monitoring.v3.IDeleteMetricDescriptorRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protos.google.monitoring.v3.IDeleteMetricDescriptorRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protos.google.protobuf.IEmpty,
-          protos.google.monitoring.v3.IDeleteMetricDescriptorRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.monitoring.v3.IDeleteMetricDescriptorRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.protobuf.IEmpty,
-        protos.google.monitoring.v3.IDeleteMetricDescriptorRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.monitoring.v3.IDeleteMetricDescriptorRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.monitoring.v3.IDeleteMetricDescriptorRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      protos.google.monitoring.v3.IDeleteMetricDescriptorRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -656,78 +796,97 @@ export class MetricServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     this.initialize();
-    return this.innerApiCalls.deleteMetricDescriptor(request, options, callback);
+    return this.innerApiCalls.deleteMetricDescriptor(
+      request,
+      options,
+      callback
+    );
   }
   createTimeSeries(
-      request: protos.google.monitoring.v3.ICreateTimeSeriesRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protos.google.protobuf.IEmpty,
-        protos.google.monitoring.v3.ICreateTimeSeriesRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.monitoring.v3.ICreateTimeSeriesRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      protos.google.monitoring.v3.ICreateTimeSeriesRequest | undefined,
+      {} | undefined
+    ]
+  >;
   createTimeSeries(
-      request: protos.google.monitoring.v3.ICreateTimeSeriesRequest,
-      options: gax.CallOptions,
-      callback: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.monitoring.v3.ICreateTimeSeriesRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.monitoring.v3.ICreateTimeSeriesRequest,
+    options: gax.CallOptions,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      protos.google.monitoring.v3.ICreateTimeSeriesRequest | null | undefined,
+      {} | null | undefined
+    >
+  ): void;
   createTimeSeries(
-      request: protos.google.monitoring.v3.ICreateTimeSeriesRequest,
-      callback: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.monitoring.v3.ICreateTimeSeriesRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Creates or adds data to one or more time series.
- * The response is empty if all time series in the request were written.
- * If any time series could not be written, a corresponding failure message is
- * included in the error response.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The project on which to execute the request. The format is:
- *
- *       projects/[PROJECT_ID_OR_NUMBER]
- * @param {number[]} request.timeSeries
- *   Required. The new data to be added to a list of time series.
- *   Adds at most one data point to each of several time series.  The new data
- *   point must be more recent than any other point in its time series.  Each
- *   `TimeSeries` value must fully specify a unique time series by supplying
- *   all label values for the metric and the monitored resource.
- *
- *   The maximum number of `TimeSeries` objects per `Create` request is 200.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protos.google.monitoring.v3.ICreateTimeSeriesRequest,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      protos.google.monitoring.v3.ICreateTimeSeriesRequest | null | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Creates or adds data to one or more time series.
+   * The response is empty if all time series in the request were written.
+   * If any time series could not be written, a corresponding failure message is
+   * included in the error response.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
+   * @param {number[]} request.timeSeries
+   *   Required. The new data to be added to a list of time series.
+   *   Adds at most one data point to each of several time series.  The new data
+   *   point must be more recent than any other point in its time series.  Each
+   *   `TimeSeries` value must fully specify a unique time series by supplying
+   *   all label values for the metric and the monitored resource.
+   *
+   *   The maximum number of `TimeSeries` objects per `Create` request is 200.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   createTimeSeries(
-      request: protos.google.monitoring.v3.ICreateTimeSeriesRequest,
-      optionsOrCallback?: gax.CallOptions|Callback<
+    request: protos.google.monitoring.v3.ICreateTimeSeriesRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | Callback<
           protos.google.protobuf.IEmpty,
-          protos.google.monitoring.v3.ICreateTimeSeriesRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.monitoring.v3.ICreateTimeSeriesRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.protobuf.IEmpty,
-        protos.google.monitoring.v3.ICreateTimeSeriesRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.monitoring.v3.ICreateTimeSeriesRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.protobuf.IEmpty,
+      protos.google.monitoring.v3.ICreateTimeSeriesRequest | null | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      protos.google.monitoring.v3.ICreateTimeSeriesRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -736,95 +895,114 @@ export class MetricServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.createTimeSeries(request, options, callback);
   }
 
   listMonitoredResourceDescriptors(
-      request: protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protos.google.api.IMonitoredResourceDescriptor[],
-        protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest|null,
-        protos.google.monitoring.v3.IListMonitoredResourceDescriptorsResponse
-      ]>;
+    request: protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protos.google.api.IMonitoredResourceDescriptor[],
+      protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest | null,
+      protos.google.monitoring.v3.IListMonitoredResourceDescriptorsResponse
+    ]
+  >;
   listMonitoredResourceDescriptors(
-      request: protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
-      options: gax.CallOptions,
-      callback: PaginationCallback<
-          protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
-          protos.google.monitoring.v3.IListMonitoredResourceDescriptorsResponse|null|undefined,
-          protos.google.api.IMonitoredResourceDescriptor>): void;
+    request: protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
+    options: gax.CallOptions,
+    callback: PaginationCallback<
+      protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
+      | protos.google.monitoring.v3.IListMonitoredResourceDescriptorsResponse
+      | null
+      | undefined,
+      protos.google.api.IMonitoredResourceDescriptor
+    >
+  ): void;
   listMonitoredResourceDescriptors(
-      request: protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
-      callback: PaginationCallback<
-          protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
-          protos.google.monitoring.v3.IListMonitoredResourceDescriptorsResponse|null|undefined,
-          protos.google.api.IMonitoredResourceDescriptor>): void;
-/**
- * Lists monitored resource descriptors that match a filter. This method does not require a Workspace.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The project on which to execute the request. The format is:
- *
- *       projects/[PROJECT_ID_OR_NUMBER]
- * @param {string} request.filter
- *   An optional [filter](https://cloud.google.com/monitoring/api/v3/filters)
- *   describing the descriptors to be returned.  The filter can reference the
- *   descriptor's type and labels. For example, the following filter returns
- *   only Google Compute Engine descriptors that have an `id` label:
- *
- *       resource.type = starts_with("gce_") AND resource.label:id
- * @param {number} request.pageSize
- *   A positive number that is the maximum number of results to return.
- * @param {string} request.pageToken
- *   If this field is not empty then it must contain the `nextPageToken` value
- *   returned by a previous call to this method.  Using this field causes the
- *   method to return additional results from the previous method call.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is Array of [MonitoredResourceDescriptor]{@link google.api.MonitoredResourceDescriptor}.
- *   The client library support auto-pagination by default: it will call the API as many
- *   times as needed and will merge results from all the pages into this array.
- *
- *   When autoPaginate: false is specified through options, the array has three elements.
- *   The first element is Array of [MonitoredResourceDescriptor]{@link google.api.MonitoredResourceDescriptor} that corresponds to
- *   the one page received from the API server.
- *   If the second element is not null it contains the request object of type [ListMonitoredResourceDescriptorsRequest]{@link google.monitoring.v3.ListMonitoredResourceDescriptorsRequest}
- *   that can be used to obtain the next page of the results.
- *   If it is null, the next page does not exist.
- *   The third element contains the raw response received from the API server. Its type is
- *   [ListMonitoredResourceDescriptorsResponse]{@link google.monitoring.v3.ListMonitoredResourceDescriptorsResponse}.
- *
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
+    callback: PaginationCallback<
+      protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
+      | protos.google.monitoring.v3.IListMonitoredResourceDescriptorsResponse
+      | null
+      | undefined,
+      protos.google.api.IMonitoredResourceDescriptor
+    >
+  ): void;
+  /**
+   * Lists monitored resource descriptors that match a filter. This method does not require a Workspace.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
+   * @param {string} request.filter
+   *   An optional [filter](https://cloud.google.com/monitoring/api/v3/filters)
+   *   describing the descriptors to be returned.  The filter can reference the
+   *   descriptor's type and labels. For example, the following filter returns
+   *   only Google Compute Engine descriptors that have an `id` label:
+   *
+   *       resource.type = starts_with("gce_") AND resource.label:id
+   * @param {number} request.pageSize
+   *   A positive number that is the maximum number of results to return.
+   * @param {string} request.pageToken
+   *   If this field is not empty then it must contain the `nextPageToken` value
+   *   returned by a previous call to this method.  Using this field causes the
+   *   method to return additional results from the previous method call.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is Array of [MonitoredResourceDescriptor]{@link google.api.MonitoredResourceDescriptor}.
+   *   The client library support auto-pagination by default: it will call the API as many
+   *   times as needed and will merge results from all the pages into this array.
+   *
+   *   When autoPaginate: false is specified through options, the array has three elements.
+   *   The first element is Array of [MonitoredResourceDescriptor]{@link google.api.MonitoredResourceDescriptor} that corresponds to
+   *   the one page received from the API server.
+   *   If the second element is not null it contains the request object of type [ListMonitoredResourceDescriptorsRequest]{@link google.monitoring.v3.ListMonitoredResourceDescriptorsRequest}
+   *   that can be used to obtain the next page of the results.
+   *   If it is null, the next page does not exist.
+   *   The third element contains the raw response received from the API server. Its type is
+   *   [ListMonitoredResourceDescriptorsResponse]{@link google.monitoring.v3.ListMonitoredResourceDescriptorsResponse}.
+   *
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   listMonitoredResourceDescriptors(
-      request: protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
-      optionsOrCallback?: gax.CallOptions|PaginationCallback<
+    request: protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | PaginationCallback<
           protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
-          protos.google.monitoring.v3.IListMonitoredResourceDescriptorsResponse|null|undefined,
-          protos.google.api.IMonitoredResourceDescriptor>,
-      callback?: PaginationCallback<
-          protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
-          protos.google.monitoring.v3.IListMonitoredResourceDescriptorsResponse|null|undefined,
-          protos.google.api.IMonitoredResourceDescriptor>):
-      Promise<[
-        protos.google.api.IMonitoredResourceDescriptor[],
-        protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest|null,
-        protos.google.monitoring.v3.IListMonitoredResourceDescriptorsResponse
-      ]>|void {
+          | protos.google.monitoring.v3.IListMonitoredResourceDescriptorsResponse
+          | null
+          | undefined,
+          protos.google.api.IMonitoredResourceDescriptor
+        >,
+    callback?: PaginationCallback<
+      protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
+      | protos.google.monitoring.v3.IListMonitoredResourceDescriptorsResponse
+      | null
+      | undefined,
+      protos.google.api.IMonitoredResourceDescriptor
+    >
+  ): Promise<
+    [
+      protos.google.api.IMonitoredResourceDescriptor[],
+      protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest | null,
+      protos.google.monitoring.v3.IListMonitoredResourceDescriptorsResponse
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -833,53 +1011,57 @@ export class MetricServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     this.initialize();
-    return this.innerApiCalls.listMonitoredResourceDescriptors(request, options, callback);
+    return this.innerApiCalls.listMonitoredResourceDescriptors(
+      request,
+      options,
+      callback
+    );
   }
 
-/**
- * Equivalent to {@link listMonitoredResourceDescriptors}, but returns a NodeJS Stream object.
- *
- * This fetches the paged responses for {@link listMonitoredResourceDescriptors} continuously
- * and invokes the callback registered for 'data' event for each element in the
- * responses.
- *
- * The returned object has 'end' method when no more elements are required.
- *
- * autoPaginate option will be ignored.
- *
- * @see {@link https://nodejs.org/api/stream.html}
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The project on which to execute the request. The format is:
- *
- *       projects/[PROJECT_ID_OR_NUMBER]
- * @param {string} request.filter
- *   An optional [filter](https://cloud.google.com/monitoring/api/v3/filters)
- *   describing the descriptors to be returned.  The filter can reference the
- *   descriptor's type and labels. For example, the following filter returns
- *   only Google Compute Engine descriptors that have an `id` label:
- *
- *       resource.type = starts_with("gce_") AND resource.label:id
- * @param {number} request.pageSize
- *   A positive number that is the maximum number of results to return.
- * @param {string} request.pageToken
- *   If this field is not empty then it must contain the `nextPageToken` value
- *   returned by a previous call to this method.  Using this field causes the
- *   method to return additional results from the previous method call.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Stream}
- *   An object stream which emits an object representing [MonitoredResourceDescriptor]{@link google.api.MonitoredResourceDescriptor} on 'data' event.
- */
+  /**
+   * Equivalent to {@link listMonitoredResourceDescriptors}, but returns a NodeJS Stream object.
+   *
+   * This fetches the paged responses for {@link listMonitoredResourceDescriptors} continuously
+   * and invokes the callback registered for 'data' event for each element in the
+   * responses.
+   *
+   * The returned object has 'end' method when no more elements are required.
+   *
+   * autoPaginate option will be ignored.
+   *
+   * @see {@link https://nodejs.org/api/stream.html}
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
+   * @param {string} request.filter
+   *   An optional [filter](https://cloud.google.com/monitoring/api/v3/filters)
+   *   describing the descriptors to be returned.  The filter can reference the
+   *   descriptor's type and labels. For example, the following filter returns
+   *   only Google Compute Engine descriptors that have an `id` label:
+   *
+   *       resource.type = starts_with("gce_") AND resource.label:id
+   * @param {number} request.pageSize
+   *   A positive number that is the maximum number of results to return.
+   * @param {string} request.pageToken
+   *   If this field is not empty then it must contain the `nextPageToken` value
+   *   returned by a previous call to this method.  Using this field causes the
+   *   method to return additional results from the previous method call.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Stream}
+   *   An object stream which emits an object representing [MonitoredResourceDescriptor]{@link google.api.MonitoredResourceDescriptor} on 'data' event.
+   */
   listMonitoredResourceDescriptorsStream(
-      request?: protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
-      options?: gax.CallOptions):
-    Transform{
+    request?: protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
+    options?: gax.CallOptions
+  ): Transform {
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -887,7 +1069,7 @@ export class MetricServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     const callSettings = new gax.CallSettings(options);
     this.initialize();
@@ -898,39 +1080,39 @@ export class MetricServiceClient {
     );
   }
 
-/**
- * Equivalent to {@link listMonitoredResourceDescriptors}, but returns an iterable object.
- *
- * for-await-of syntax is used with the iterable to recursively get response element on-demand.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The project on which to execute the request. The format is:
- *
- *       projects/[PROJECT_ID_OR_NUMBER]
- * @param {string} request.filter
- *   An optional [filter](https://cloud.google.com/monitoring/api/v3/filters)
- *   describing the descriptors to be returned.  The filter can reference the
- *   descriptor's type and labels. For example, the following filter returns
- *   only Google Compute Engine descriptors that have an `id` label:
- *
- *       resource.type = starts_with("gce_") AND resource.label:id
- * @param {number} request.pageSize
- *   A positive number that is the maximum number of results to return.
- * @param {string} request.pageToken
- *   If this field is not empty then it must contain the `nextPageToken` value
- *   returned by a previous call to this method.  Using this field causes the
- *   method to return additional results from the previous method call.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Object}
- *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
- */
+  /**
+   * Equivalent to {@link listMonitoredResourceDescriptors}, but returns an iterable object.
+   *
+   * for-await-of syntax is used with the iterable to recursively get response element on-demand.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
+   * @param {string} request.filter
+   *   An optional [filter](https://cloud.google.com/monitoring/api/v3/filters)
+   *   describing the descriptors to be returned.  The filter can reference the
+   *   descriptor's type and labels. For example, the following filter returns
+   *   only Google Compute Engine descriptors that have an `id` label:
+   *
+   *       resource.type = starts_with("gce_") AND resource.label:id
+   * @param {number} request.pageSize
+   *   A positive number that is the maximum number of results to return.
+   * @param {string} request.pageToken
+   *   If this field is not empty then it must contain the `nextPageToken` value
+   *   returned by a previous call to this method.  Using this field causes the
+   *   method to return additional results from the previous method call.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Object}
+   *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
+   */
   listMonitoredResourceDescriptorsAsync(
-      request?: protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
-      options?: gax.CallOptions):
-    AsyncIterable<protos.google.api.IMonitoredResourceDescriptor>{
+    request?: protos.google.monitoring.v3.IListMonitoredResourceDescriptorsRequest,
+    options?: gax.CallOptions
+  ): AsyncIterable<protos.google.api.IMonitoredResourceDescriptor> {
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -938,102 +1120,121 @@ export class MetricServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     options = options || {};
     const callSettings = new gax.CallSettings(options);
     this.initialize();
     return this.descriptors.page.listMonitoredResourceDescriptors.asyncIterate(
       this.innerApiCalls['listMonitoredResourceDescriptors'] as GaxCall,
-      request as unknown as RequestType,
+      (request as unknown) as RequestType,
       callSettings
     ) as AsyncIterable<protos.google.api.IMonitoredResourceDescriptor>;
   }
   listMetricDescriptors(
-      request: protos.google.monitoring.v3.IListMetricDescriptorsRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protos.google.api.IMetricDescriptor[],
-        protos.google.monitoring.v3.IListMetricDescriptorsRequest|null,
-        protos.google.monitoring.v3.IListMetricDescriptorsResponse
-      ]>;
+    request: protos.google.monitoring.v3.IListMetricDescriptorsRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protos.google.api.IMetricDescriptor[],
+      protos.google.monitoring.v3.IListMetricDescriptorsRequest | null,
+      protos.google.monitoring.v3.IListMetricDescriptorsResponse
+    ]
+  >;
   listMetricDescriptors(
-      request: protos.google.monitoring.v3.IListMetricDescriptorsRequest,
-      options: gax.CallOptions,
-      callback: PaginationCallback<
-          protos.google.monitoring.v3.IListMetricDescriptorsRequest,
-          protos.google.monitoring.v3.IListMetricDescriptorsResponse|null|undefined,
-          protos.google.api.IMetricDescriptor>): void;
+    request: protos.google.monitoring.v3.IListMetricDescriptorsRequest,
+    options: gax.CallOptions,
+    callback: PaginationCallback<
+      protos.google.monitoring.v3.IListMetricDescriptorsRequest,
+      | protos.google.monitoring.v3.IListMetricDescriptorsResponse
+      | null
+      | undefined,
+      protos.google.api.IMetricDescriptor
+    >
+  ): void;
   listMetricDescriptors(
-      request: protos.google.monitoring.v3.IListMetricDescriptorsRequest,
-      callback: PaginationCallback<
-          protos.google.monitoring.v3.IListMetricDescriptorsRequest,
-          protos.google.monitoring.v3.IListMetricDescriptorsResponse|null|undefined,
-          protos.google.api.IMetricDescriptor>): void;
-/**
- * Lists metric descriptors that match a filter. This method does not require a Workspace.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The project on which to execute the request. The format is:
- *
- *       projects/[PROJECT_ID_OR_NUMBER]
- * @param {string} request.filter
- *   If this field is empty, all custom and
- *   system-defined metric descriptors are returned.
- *   Otherwise, the [filter](https://cloud.google.com/monitoring/api/v3/filters)
- *   specifies which metric descriptors are to be
- *   returned. For example, the following filter matches all
- *   [custom metrics](https://cloud.google.com/monitoring/custom-metrics):
- *
- *       metric.type = starts_with("custom.googleapis.com/")
- * @param {number} request.pageSize
- *   A positive number that is the maximum number of results to return.
- * @param {string} request.pageToken
- *   If this field is not empty then it must contain the `nextPageToken` value
- *   returned by a previous call to this method.  Using this field causes the
- *   method to return additional results from the previous method call.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is Array of [MetricDescriptor]{@link google.api.MetricDescriptor}.
- *   The client library support auto-pagination by default: it will call the API as many
- *   times as needed and will merge results from all the pages into this array.
- *
- *   When autoPaginate: false is specified through options, the array has three elements.
- *   The first element is Array of [MetricDescriptor]{@link google.api.MetricDescriptor} that corresponds to
- *   the one page received from the API server.
- *   If the second element is not null it contains the request object of type [ListMetricDescriptorsRequest]{@link google.monitoring.v3.ListMetricDescriptorsRequest}
- *   that can be used to obtain the next page of the results.
- *   If it is null, the next page does not exist.
- *   The third element contains the raw response received from the API server. Its type is
- *   [ListMetricDescriptorsResponse]{@link google.monitoring.v3.ListMetricDescriptorsResponse}.
- *
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protos.google.monitoring.v3.IListMetricDescriptorsRequest,
+    callback: PaginationCallback<
+      protos.google.monitoring.v3.IListMetricDescriptorsRequest,
+      | protos.google.monitoring.v3.IListMetricDescriptorsResponse
+      | null
+      | undefined,
+      protos.google.api.IMetricDescriptor
+    >
+  ): void;
+  /**
+   * Lists metric descriptors that match a filter. This method does not require a Workspace.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
+   * @param {string} request.filter
+   *   If this field is empty, all custom and
+   *   system-defined metric descriptors are returned.
+   *   Otherwise, the [filter](https://cloud.google.com/monitoring/api/v3/filters)
+   *   specifies which metric descriptors are to be
+   *   returned. For example, the following filter matches all
+   *   [custom metrics](https://cloud.google.com/monitoring/custom-metrics):
+   *
+   *       metric.type = starts_with("custom.googleapis.com/")
+   * @param {number} request.pageSize
+   *   A positive number that is the maximum number of results to return.
+   * @param {string} request.pageToken
+   *   If this field is not empty then it must contain the `nextPageToken` value
+   *   returned by a previous call to this method.  Using this field causes the
+   *   method to return additional results from the previous method call.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is Array of [MetricDescriptor]{@link google.api.MetricDescriptor}.
+   *   The client library support auto-pagination by default: it will call the API as many
+   *   times as needed and will merge results from all the pages into this array.
+   *
+   *   When autoPaginate: false is specified through options, the array has three elements.
+   *   The first element is Array of [MetricDescriptor]{@link google.api.MetricDescriptor} that corresponds to
+   *   the one page received from the API server.
+   *   If the second element is not null it contains the request object of type [ListMetricDescriptorsRequest]{@link google.monitoring.v3.ListMetricDescriptorsRequest}
+   *   that can be used to obtain the next page of the results.
+   *   If it is null, the next page does not exist.
+   *   The third element contains the raw response received from the API server. Its type is
+   *   [ListMetricDescriptorsResponse]{@link google.monitoring.v3.ListMetricDescriptorsResponse}.
+   *
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   listMetricDescriptors(
-      request: protos.google.monitoring.v3.IListMetricDescriptorsRequest,
-      optionsOrCallback?: gax.CallOptions|PaginationCallback<
+    request: protos.google.monitoring.v3.IListMetricDescriptorsRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | PaginationCallback<
           protos.google.monitoring.v3.IListMetricDescriptorsRequest,
-          protos.google.monitoring.v3.IListMetricDescriptorsResponse|null|undefined,
-          protos.google.api.IMetricDescriptor>,
-      callback?: PaginationCallback<
-          protos.google.monitoring.v3.IListMetricDescriptorsRequest,
-          protos.google.monitoring.v3.IListMetricDescriptorsResponse|null|undefined,
-          protos.google.api.IMetricDescriptor>):
-      Promise<[
-        protos.google.api.IMetricDescriptor[],
-        protos.google.monitoring.v3.IListMetricDescriptorsRequest|null,
-        protos.google.monitoring.v3.IListMetricDescriptorsResponse
-      ]>|void {
+          | protos.google.monitoring.v3.IListMetricDescriptorsResponse
+          | null
+          | undefined,
+          protos.google.api.IMetricDescriptor
+        >,
+    callback?: PaginationCallback<
+      protos.google.monitoring.v3.IListMetricDescriptorsRequest,
+      | protos.google.monitoring.v3.IListMetricDescriptorsResponse
+      | null
+      | undefined,
+      protos.google.api.IMetricDescriptor
+    >
+  ): Promise<
+    [
+      protos.google.api.IMetricDescriptor[],
+      protos.google.monitoring.v3.IListMetricDescriptorsRequest | null,
+      protos.google.monitoring.v3.IListMetricDescriptorsResponse
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -1042,55 +1243,55 @@ export class MetricServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.listMetricDescriptors(request, options, callback);
   }
 
-/**
- * Equivalent to {@link listMetricDescriptors}, but returns a NodeJS Stream object.
- *
- * This fetches the paged responses for {@link listMetricDescriptors} continuously
- * and invokes the callback registered for 'data' event for each element in the
- * responses.
- *
- * The returned object has 'end' method when no more elements are required.
- *
- * autoPaginate option will be ignored.
- *
- * @see {@link https://nodejs.org/api/stream.html}
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The project on which to execute the request. The format is:
- *
- *       projects/[PROJECT_ID_OR_NUMBER]
- * @param {string} request.filter
- *   If this field is empty, all custom and
- *   system-defined metric descriptors are returned.
- *   Otherwise, the [filter](https://cloud.google.com/monitoring/api/v3/filters)
- *   specifies which metric descriptors are to be
- *   returned. For example, the following filter matches all
- *   [custom metrics](https://cloud.google.com/monitoring/custom-metrics):
- *
- *       metric.type = starts_with("custom.googleapis.com/")
- * @param {number} request.pageSize
- *   A positive number that is the maximum number of results to return.
- * @param {string} request.pageToken
- *   If this field is not empty then it must contain the `nextPageToken` value
- *   returned by a previous call to this method.  Using this field causes the
- *   method to return additional results from the previous method call.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Stream}
- *   An object stream which emits an object representing [MetricDescriptor]{@link google.api.MetricDescriptor} on 'data' event.
- */
+  /**
+   * Equivalent to {@link listMetricDescriptors}, but returns a NodeJS Stream object.
+   *
+   * This fetches the paged responses for {@link listMetricDescriptors} continuously
+   * and invokes the callback registered for 'data' event for each element in the
+   * responses.
+   *
+   * The returned object has 'end' method when no more elements are required.
+   *
+   * autoPaginate option will be ignored.
+   *
+   * @see {@link https://nodejs.org/api/stream.html}
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
+   * @param {string} request.filter
+   *   If this field is empty, all custom and
+   *   system-defined metric descriptors are returned.
+   *   Otherwise, the [filter](https://cloud.google.com/monitoring/api/v3/filters)
+   *   specifies which metric descriptors are to be
+   *   returned. For example, the following filter matches all
+   *   [custom metrics](https://cloud.google.com/monitoring/custom-metrics):
+   *
+   *       metric.type = starts_with("custom.googleapis.com/")
+   * @param {number} request.pageSize
+   *   A positive number that is the maximum number of results to return.
+   * @param {string} request.pageToken
+   *   If this field is not empty then it must contain the `nextPageToken` value
+   *   returned by a previous call to this method.  Using this field causes the
+   *   method to return additional results from the previous method call.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Stream}
+   *   An object stream which emits an object representing [MetricDescriptor]{@link google.api.MetricDescriptor} on 'data' event.
+   */
   listMetricDescriptorsStream(
-      request?: protos.google.monitoring.v3.IListMetricDescriptorsRequest,
-      options?: gax.CallOptions):
-    Transform{
+    request?: protos.google.monitoring.v3.IListMetricDescriptorsRequest,
+    options?: gax.CallOptions
+  ): Transform {
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1098,7 +1299,7 @@ export class MetricServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     const callSettings = new gax.CallSettings(options);
     this.initialize();
@@ -1109,41 +1310,41 @@ export class MetricServiceClient {
     );
   }
 
-/**
- * Equivalent to {@link listMetricDescriptors}, but returns an iterable object.
- *
- * for-await-of syntax is used with the iterable to recursively get response element on-demand.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The project on which to execute the request. The format is:
- *
- *       projects/[PROJECT_ID_OR_NUMBER]
- * @param {string} request.filter
- *   If this field is empty, all custom and
- *   system-defined metric descriptors are returned.
- *   Otherwise, the [filter](https://cloud.google.com/monitoring/api/v3/filters)
- *   specifies which metric descriptors are to be
- *   returned. For example, the following filter matches all
- *   [custom metrics](https://cloud.google.com/monitoring/custom-metrics):
- *
- *       metric.type = starts_with("custom.googleapis.com/")
- * @param {number} request.pageSize
- *   A positive number that is the maximum number of results to return.
- * @param {string} request.pageToken
- *   If this field is not empty then it must contain the `nextPageToken` value
- *   returned by a previous call to this method.  Using this field causes the
- *   method to return additional results from the previous method call.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Object}
- *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
- */
+  /**
+   * Equivalent to {@link listMetricDescriptors}, but returns an iterable object.
+   *
+   * for-await-of syntax is used with the iterable to recursively get response element on-demand.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
+   * @param {string} request.filter
+   *   If this field is empty, all custom and
+   *   system-defined metric descriptors are returned.
+   *   Otherwise, the [filter](https://cloud.google.com/monitoring/api/v3/filters)
+   *   specifies which metric descriptors are to be
+   *   returned. For example, the following filter matches all
+   *   [custom metrics](https://cloud.google.com/monitoring/custom-metrics):
+   *
+   *       metric.type = starts_with("custom.googleapis.com/")
+   * @param {number} request.pageSize
+   *   A positive number that is the maximum number of results to return.
+   * @param {string} request.pageToken
+   *   If this field is not empty then it must contain the `nextPageToken` value
+   *   returned by a previous call to this method.  Using this field causes the
+   *   method to return additional results from the previous method call.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Object}
+   *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
+   */
   listMetricDescriptorsAsync(
-      request?: protos.google.monitoring.v3.IListMetricDescriptorsRequest,
-      options?: gax.CallOptions):
-    AsyncIterable<protos.google.api.IMetricDescriptor>{
+    request?: protos.google.monitoring.v3.IListMetricDescriptorsRequest,
+    options?: gax.CallOptions
+  ): AsyncIterable<protos.google.api.IMetricDescriptor> {
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1151,120 +1352,133 @@ export class MetricServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     options = options || {};
     const callSettings = new gax.CallSettings(options);
     this.initialize();
     return this.descriptors.page.listMetricDescriptors.asyncIterate(
       this.innerApiCalls['listMetricDescriptors'] as GaxCall,
-      request as unknown as RequestType,
+      (request as unknown) as RequestType,
       callSettings
     ) as AsyncIterable<protos.google.api.IMetricDescriptor>;
   }
   listTimeSeries(
-      request: protos.google.monitoring.v3.IListTimeSeriesRequest,
-      options?: gax.CallOptions):
-      Promise<[
-        protos.google.monitoring.v3.ITimeSeries[],
-        protos.google.monitoring.v3.IListTimeSeriesRequest|null,
-        protos.google.monitoring.v3.IListTimeSeriesResponse
-      ]>;
+    request: protos.google.monitoring.v3.IListTimeSeriesRequest,
+    options?: gax.CallOptions
+  ): Promise<
+    [
+      protos.google.monitoring.v3.ITimeSeries[],
+      protos.google.monitoring.v3.IListTimeSeriesRequest | null,
+      protos.google.monitoring.v3.IListTimeSeriesResponse
+    ]
+  >;
   listTimeSeries(
-      request: protos.google.monitoring.v3.IListTimeSeriesRequest,
-      options: gax.CallOptions,
-      callback: PaginationCallback<
-          protos.google.monitoring.v3.IListTimeSeriesRequest,
-          protos.google.monitoring.v3.IListTimeSeriesResponse|null|undefined,
-          protos.google.monitoring.v3.ITimeSeries>): void;
+    request: protos.google.monitoring.v3.IListTimeSeriesRequest,
+    options: gax.CallOptions,
+    callback: PaginationCallback<
+      protos.google.monitoring.v3.IListTimeSeriesRequest,
+      protos.google.monitoring.v3.IListTimeSeriesResponse | null | undefined,
+      protos.google.monitoring.v3.ITimeSeries
+    >
+  ): void;
   listTimeSeries(
-      request: protos.google.monitoring.v3.IListTimeSeriesRequest,
-      callback: PaginationCallback<
-          protos.google.monitoring.v3.IListTimeSeriesRequest,
-          protos.google.monitoring.v3.IListTimeSeriesResponse|null|undefined,
-          protos.google.monitoring.v3.ITimeSeries>): void;
-/**
- * Lists time series that match a filter. This method does not require a Workspace.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The project on which to execute the request. The format is:
- *
- *       projects/[PROJECT_ID_OR_NUMBER]
- * @param {string} request.filter
- *   Required. A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)
- *   that specifies which time series should be returned.  The filter must
- *   specify a single metric type, and can additionally specify metric labels
- *   and other information. For example:
- *
- *       metric.type = "compute.googleapis.com/instance/cpu/usage_time" AND
- *           metric.labels.instance_name = "my-instance-name"
- * @param {google.monitoring.v3.TimeInterval} request.interval
- *   Required. The time interval for which results should be returned. Only time series
- *   that contain data points in the specified interval are included
- *   in the response.
- * @param {google.monitoring.v3.Aggregation} request.aggregation
- *   Specifies the alignment of data points in individual time series as
- *   well as how to combine the retrieved time series across specified labels.
- *
- *   By default (if no `aggregation` is explicitly specified), the raw time
- *   series data is returned.
- * @param {string} request.orderBy
- *   Unsupported: must be left blank. The points in each time series are
- *   currently returned in reverse time order (most recent to oldest).
- * @param {google.monitoring.v3.ListTimeSeriesRequest.TimeSeriesView} request.view
- *   Required. Specifies which information is returned about the time series.
- * @param {number} request.pageSize
- *   A positive number that is the maximum number of results to return. If
- *   `page_size` is empty or more than 100,000 results, the effective
- *   `page_size` is 100,000 results. If `view` is set to `FULL`, this is the
- *   maximum number of `Points` returned. If `view` is set to `HEADERS`, this is
- *   the maximum number of `TimeSeries` returned.
- * @param {string} request.pageToken
- *   If this field is not empty then it must contain the `nextPageToken` value
- *   returned by a previous call to this method.  Using this field causes the
- *   method to return additional results from the previous method call.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is Array of [TimeSeries]{@link google.monitoring.v3.TimeSeries}.
- *   The client library support auto-pagination by default: it will call the API as many
- *   times as needed and will merge results from all the pages into this array.
- *
- *   When autoPaginate: false is specified through options, the array has three elements.
- *   The first element is Array of [TimeSeries]{@link google.monitoring.v3.TimeSeries} that corresponds to
- *   the one page received from the API server.
- *   If the second element is not null it contains the request object of type [ListTimeSeriesRequest]{@link google.monitoring.v3.ListTimeSeriesRequest}
- *   that can be used to obtain the next page of the results.
- *   If it is null, the next page does not exist.
- *   The third element contains the raw response received from the API server. Its type is
- *   [ListTimeSeriesResponse]{@link google.monitoring.v3.ListTimeSeriesResponse}.
- *
- *   The promise has a method named "cancel" which cancels the ongoing API call.
- */
+    request: protos.google.monitoring.v3.IListTimeSeriesRequest,
+    callback: PaginationCallback<
+      protos.google.monitoring.v3.IListTimeSeriesRequest,
+      protos.google.monitoring.v3.IListTimeSeriesResponse | null | undefined,
+      protos.google.monitoring.v3.ITimeSeries
+    >
+  ): void;
+  /**
+   * Lists time series that match a filter. This method does not require a Workspace.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
+   * @param {string} request.filter
+   *   Required. A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)
+   *   that specifies which time series should be returned.  The filter must
+   *   specify a single metric type, and can additionally specify metric labels
+   *   and other information. For example:
+   *
+   *       metric.type = "compute.googleapis.com/instance/cpu/usage_time" AND
+   *           metric.labels.instance_name = "my-instance-name"
+   * @param {google.monitoring.v3.TimeInterval} request.interval
+   *   Required. The time interval for which results should be returned. Only time series
+   *   that contain data points in the specified interval are included
+   *   in the response.
+   * @param {google.monitoring.v3.Aggregation} request.aggregation
+   *   Specifies the alignment of data points in individual time series as
+   *   well as how to combine the retrieved time series across specified labels.
+   *
+   *   By default (if no `aggregation` is explicitly specified), the raw time
+   *   series data is returned.
+   * @param {string} request.orderBy
+   *   Unsupported: must be left blank. The points in each time series are
+   *   currently returned in reverse time order (most recent to oldest).
+   * @param {google.monitoring.v3.ListTimeSeriesRequest.TimeSeriesView} request.view
+   *   Required. Specifies which information is returned about the time series.
+   * @param {number} request.pageSize
+   *   A positive number that is the maximum number of results to return. If
+   *   `page_size` is empty or more than 100,000 results, the effective
+   *   `page_size` is 100,000 results. If `view` is set to `FULL`, this is the
+   *   maximum number of `Points` returned. If `view` is set to `HEADERS`, this is
+   *   the maximum number of `TimeSeries` returned.
+   * @param {string} request.pageToken
+   *   If this field is not empty then it must contain the `nextPageToken` value
+   *   returned by a previous call to this method.  Using this field causes the
+   *   method to return additional results from the previous method call.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is Array of [TimeSeries]{@link google.monitoring.v3.TimeSeries}.
+   *   The client library support auto-pagination by default: it will call the API as many
+   *   times as needed and will merge results from all the pages into this array.
+   *
+   *   When autoPaginate: false is specified through options, the array has three elements.
+   *   The first element is Array of [TimeSeries]{@link google.monitoring.v3.TimeSeries} that corresponds to
+   *   the one page received from the API server.
+   *   If the second element is not null it contains the request object of type [ListTimeSeriesRequest]{@link google.monitoring.v3.ListTimeSeriesRequest}
+   *   that can be used to obtain the next page of the results.
+   *   If it is null, the next page does not exist.
+   *   The third element contains the raw response received from the API server. Its type is
+   *   [ListTimeSeriesResponse]{@link google.monitoring.v3.ListTimeSeriesResponse}.
+   *
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
+   */
   listTimeSeries(
-      request: protos.google.monitoring.v3.IListTimeSeriesRequest,
-      optionsOrCallback?: gax.CallOptions|PaginationCallback<
+    request: protos.google.monitoring.v3.IListTimeSeriesRequest,
+    optionsOrCallback?:
+      | gax.CallOptions
+      | PaginationCallback<
           protos.google.monitoring.v3.IListTimeSeriesRequest,
-          protos.google.monitoring.v3.IListTimeSeriesResponse|null|undefined,
-          protos.google.monitoring.v3.ITimeSeries>,
-      callback?: PaginationCallback<
-          protos.google.monitoring.v3.IListTimeSeriesRequest,
-          protos.google.monitoring.v3.IListTimeSeriesResponse|null|undefined,
-          protos.google.monitoring.v3.ITimeSeries>):
-      Promise<[
-        protos.google.monitoring.v3.ITimeSeries[],
-        protos.google.monitoring.v3.IListTimeSeriesRequest|null,
-        protos.google.monitoring.v3.IListTimeSeriesResponse
-      ]>|void {
+          | protos.google.monitoring.v3.IListTimeSeriesResponse
+          | null
+          | undefined,
+          protos.google.monitoring.v3.ITimeSeries
+        >,
+    callback?: PaginationCallback<
+      protos.google.monitoring.v3.IListTimeSeriesRequest,
+      protos.google.monitoring.v3.IListTimeSeriesResponse | null | undefined,
+      protos.google.monitoring.v3.ITimeSeries
+    >
+  ): Promise<
+    [
+      protos.google.monitoring.v3.ITimeSeries[],
+      protos.google.monitoring.v3.IListTimeSeriesRequest | null,
+      protos.google.monitoring.v3.IListTimeSeriesResponse
+    ]
+  > | void {
     request = request || {};
     let options: gax.CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as gax.CallOptions;
     }
     options = options || {};
@@ -1273,73 +1487,73 @@ export class MetricServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.listTimeSeries(request, options, callback);
   }
 
-/**
- * Equivalent to {@link listTimeSeries}, but returns a NodeJS Stream object.
- *
- * This fetches the paged responses for {@link listTimeSeries} continuously
- * and invokes the callback registered for 'data' event for each element in the
- * responses.
- *
- * The returned object has 'end' method when no more elements are required.
- *
- * autoPaginate option will be ignored.
- *
- * @see {@link https://nodejs.org/api/stream.html}
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The project on which to execute the request. The format is:
- *
- *       projects/[PROJECT_ID_OR_NUMBER]
- * @param {string} request.filter
- *   Required. A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)
- *   that specifies which time series should be returned.  The filter must
- *   specify a single metric type, and can additionally specify metric labels
- *   and other information. For example:
- *
- *       metric.type = "compute.googleapis.com/instance/cpu/usage_time" AND
- *           metric.labels.instance_name = "my-instance-name"
- * @param {google.monitoring.v3.TimeInterval} request.interval
- *   Required. The time interval for which results should be returned. Only time series
- *   that contain data points in the specified interval are included
- *   in the response.
- * @param {google.monitoring.v3.Aggregation} request.aggregation
- *   Specifies the alignment of data points in individual time series as
- *   well as how to combine the retrieved time series across specified labels.
- *
- *   By default (if no `aggregation` is explicitly specified), the raw time
- *   series data is returned.
- * @param {string} request.orderBy
- *   Unsupported: must be left blank. The points in each time series are
- *   currently returned in reverse time order (most recent to oldest).
- * @param {google.monitoring.v3.ListTimeSeriesRequest.TimeSeriesView} request.view
- *   Required. Specifies which information is returned about the time series.
- * @param {number} request.pageSize
- *   A positive number that is the maximum number of results to return. If
- *   `page_size` is empty or more than 100,000 results, the effective
- *   `page_size` is 100,000 results. If `view` is set to `FULL`, this is the
- *   maximum number of `Points` returned. If `view` is set to `HEADERS`, this is
- *   the maximum number of `TimeSeries` returned.
- * @param {string} request.pageToken
- *   If this field is not empty then it must contain the `nextPageToken` value
- *   returned by a previous call to this method.  Using this field causes the
- *   method to return additional results from the previous method call.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Stream}
- *   An object stream which emits an object representing [TimeSeries]{@link google.monitoring.v3.TimeSeries} on 'data' event.
- */
+  /**
+   * Equivalent to {@link listTimeSeries}, but returns a NodeJS Stream object.
+   *
+   * This fetches the paged responses for {@link listTimeSeries} continuously
+   * and invokes the callback registered for 'data' event for each element in the
+   * responses.
+   *
+   * The returned object has 'end' method when no more elements are required.
+   *
+   * autoPaginate option will be ignored.
+   *
+   * @see {@link https://nodejs.org/api/stream.html}
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
+   * @param {string} request.filter
+   *   Required. A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)
+   *   that specifies which time series should be returned.  The filter must
+   *   specify a single metric type, and can additionally specify metric labels
+   *   and other information. For example:
+   *
+   *       metric.type = "compute.googleapis.com/instance/cpu/usage_time" AND
+   *           metric.labels.instance_name = "my-instance-name"
+   * @param {google.monitoring.v3.TimeInterval} request.interval
+   *   Required. The time interval for which results should be returned. Only time series
+   *   that contain data points in the specified interval are included
+   *   in the response.
+   * @param {google.monitoring.v3.Aggregation} request.aggregation
+   *   Specifies the alignment of data points in individual time series as
+   *   well as how to combine the retrieved time series across specified labels.
+   *
+   *   By default (if no `aggregation` is explicitly specified), the raw time
+   *   series data is returned.
+   * @param {string} request.orderBy
+   *   Unsupported: must be left blank. The points in each time series are
+   *   currently returned in reverse time order (most recent to oldest).
+   * @param {google.monitoring.v3.ListTimeSeriesRequest.TimeSeriesView} request.view
+   *   Required. Specifies which information is returned about the time series.
+   * @param {number} request.pageSize
+   *   A positive number that is the maximum number of results to return. If
+   *   `page_size` is empty or more than 100,000 results, the effective
+   *   `page_size` is 100,000 results. If `view` is set to `FULL`, this is the
+   *   maximum number of `Points` returned. If `view` is set to `HEADERS`, this is
+   *   the maximum number of `TimeSeries` returned.
+   * @param {string} request.pageToken
+   *   If this field is not empty then it must contain the `nextPageToken` value
+   *   returned by a previous call to this method.  Using this field causes the
+   *   method to return additional results from the previous method call.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Stream}
+   *   An object stream which emits an object representing [TimeSeries]{@link google.monitoring.v3.TimeSeries} on 'data' event.
+   */
   listTimeSeriesStream(
-      request?: protos.google.monitoring.v3.IListTimeSeriesRequest,
-      options?: gax.CallOptions):
-    Transform{
+    request?: protos.google.monitoring.v3.IListTimeSeriesRequest,
+    options?: gax.CallOptions
+  ): Transform {
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1347,7 +1561,7 @@ export class MetricServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     const callSettings = new gax.CallSettings(options);
     this.initialize();
@@ -1358,59 +1572,59 @@ export class MetricServiceClient {
     );
   }
 
-/**
- * Equivalent to {@link listTimeSeries}, but returns an iterable object.
- *
- * for-await-of syntax is used with the iterable to recursively get response element on-demand.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The project on which to execute the request. The format is:
- *
- *       projects/[PROJECT_ID_OR_NUMBER]
- * @param {string} request.filter
- *   Required. A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)
- *   that specifies which time series should be returned.  The filter must
- *   specify a single metric type, and can additionally specify metric labels
- *   and other information. For example:
- *
- *       metric.type = "compute.googleapis.com/instance/cpu/usage_time" AND
- *           metric.labels.instance_name = "my-instance-name"
- * @param {google.monitoring.v3.TimeInterval} request.interval
- *   Required. The time interval for which results should be returned. Only time series
- *   that contain data points in the specified interval are included
- *   in the response.
- * @param {google.monitoring.v3.Aggregation} request.aggregation
- *   Specifies the alignment of data points in individual time series as
- *   well as how to combine the retrieved time series across specified labels.
- *
- *   By default (if no `aggregation` is explicitly specified), the raw time
- *   series data is returned.
- * @param {string} request.orderBy
- *   Unsupported: must be left blank. The points in each time series are
- *   currently returned in reverse time order (most recent to oldest).
- * @param {google.monitoring.v3.ListTimeSeriesRequest.TimeSeriesView} request.view
- *   Required. Specifies which information is returned about the time series.
- * @param {number} request.pageSize
- *   A positive number that is the maximum number of results to return. If
- *   `page_size` is empty or more than 100,000 results, the effective
- *   `page_size` is 100,000 results. If `view` is set to `FULL`, this is the
- *   maximum number of `Points` returned. If `view` is set to `HEADERS`, this is
- *   the maximum number of `TimeSeries` returned.
- * @param {string} request.pageToken
- *   If this field is not empty then it must contain the `nextPageToken` value
- *   returned by a previous call to this method.  Using this field causes the
- *   method to return additional results from the previous method call.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Object}
- *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
- */
+  /**
+   * Equivalent to {@link listTimeSeries}, but returns an iterable object.
+   *
+   * for-await-of syntax is used with the iterable to recursively get response element on-demand.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The project on which to execute the request. The format is:
+   *
+   *       projects/[PROJECT_ID_OR_NUMBER]
+   * @param {string} request.filter
+   *   Required. A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)
+   *   that specifies which time series should be returned.  The filter must
+   *   specify a single metric type, and can additionally specify metric labels
+   *   and other information. For example:
+   *
+   *       metric.type = "compute.googleapis.com/instance/cpu/usage_time" AND
+   *           metric.labels.instance_name = "my-instance-name"
+   * @param {google.monitoring.v3.TimeInterval} request.interval
+   *   Required. The time interval for which results should be returned. Only time series
+   *   that contain data points in the specified interval are included
+   *   in the response.
+   * @param {google.monitoring.v3.Aggregation} request.aggregation
+   *   Specifies the alignment of data points in individual time series as
+   *   well as how to combine the retrieved time series across specified labels.
+   *
+   *   By default (if no `aggregation` is explicitly specified), the raw time
+   *   series data is returned.
+   * @param {string} request.orderBy
+   *   Unsupported: must be left blank. The points in each time series are
+   *   currently returned in reverse time order (most recent to oldest).
+   * @param {google.monitoring.v3.ListTimeSeriesRequest.TimeSeriesView} request.view
+   *   Required. Specifies which information is returned about the time series.
+   * @param {number} request.pageSize
+   *   A positive number that is the maximum number of results to return. If
+   *   `page_size` is empty or more than 100,000 results, the effective
+   *   `page_size` is 100,000 results. If `view` is set to `FULL`, this is the
+   *   maximum number of `Points` returned. If `view` is set to `HEADERS`, this is
+   *   the maximum number of `TimeSeries` returned.
+   * @param {string} request.pageToken
+   *   If this field is not empty then it must contain the `nextPageToken` value
+   *   returned by a previous call to this method.  Using this field causes the
+   *   method to return additional results from the previous method call.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Object}
+   *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
+   */
   listTimeSeriesAsync(
-      request?: protos.google.monitoring.v3.IListTimeSeriesRequest,
-      options?: gax.CallOptions):
-    AsyncIterable<protos.google.monitoring.v3.ITimeSeries>{
+    request?: protos.google.monitoring.v3.IListTimeSeriesRequest,
+    options?: gax.CallOptions
+  ): AsyncIterable<protos.google.monitoring.v3.ITimeSeries> {
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1418,14 +1632,14 @@ export class MetricServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     options = options || {};
     const callSettings = new gax.CallSettings(options);
     this.initialize();
     return this.descriptors.page.listTimeSeries.asyncIterate(
       this.innerApiCalls['listTimeSeries'] as GaxCall,
-      request as unknown as RequestType,
+      (request as unknown) as RequestType,
       callSettings
     ) as AsyncIterable<protos.google.monitoring.v3.ITimeSeries>;
   }
@@ -1440,7 +1654,7 @@ export class MetricServiceClient {
    * @param {string} alert_policy
    * @returns {string} Resource name string.
    */
-  folderAlertPolicyPath(folder:string,alertPolicy:string) {
+  folderAlertPolicyPath(folder: string, alertPolicy: string) {
     return this.pathTemplates.folderAlertPolicyPathTemplate.render({
       folder: folder,
       alert_policy: alertPolicy,
@@ -1455,7 +1669,9 @@ export class MetricServiceClient {
    * @returns {string} A string representing the folder.
    */
   matchFolderFromFolderAlertPolicyName(folderAlertPolicyName: string) {
-    return this.pathTemplates.folderAlertPolicyPathTemplate.match(folderAlertPolicyName).folder;
+    return this.pathTemplates.folderAlertPolicyPathTemplate.match(
+      folderAlertPolicyName
+    ).folder;
   }
 
   /**
@@ -1466,7 +1682,9 @@ export class MetricServiceClient {
    * @returns {string} A string representing the alert_policy.
    */
   matchAlertPolicyFromFolderAlertPolicyName(folderAlertPolicyName: string) {
-    return this.pathTemplates.folderAlertPolicyPathTemplate.match(folderAlertPolicyName).alert_policy;
+    return this.pathTemplates.folderAlertPolicyPathTemplate.match(
+      folderAlertPolicyName
+    ).alert_policy;
   }
 
   /**
@@ -1477,7 +1695,11 @@ export class MetricServiceClient {
    * @param {string} condition
    * @returns {string} Resource name string.
    */
-  folderAlertPolicyConditionPath(folder:string,alertPolicy:string,condition:string) {
+  folderAlertPolicyConditionPath(
+    folder: string,
+    alertPolicy: string,
+    condition: string
+  ) {
     return this.pathTemplates.folderAlertPolicyConditionPathTemplate.render({
       folder: folder,
       alert_policy: alertPolicy,
@@ -1492,8 +1714,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing folder_alert_policy_condition resource.
    * @returns {string} A string representing the folder.
    */
-  matchFolderFromFolderAlertPolicyConditionName(folderAlertPolicyConditionName: string) {
-    return this.pathTemplates.folderAlertPolicyConditionPathTemplate.match(folderAlertPolicyConditionName).folder;
+  matchFolderFromFolderAlertPolicyConditionName(
+    folderAlertPolicyConditionName: string
+  ) {
+    return this.pathTemplates.folderAlertPolicyConditionPathTemplate.match(
+      folderAlertPolicyConditionName
+    ).folder;
   }
 
   /**
@@ -1503,8 +1729,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing folder_alert_policy_condition resource.
    * @returns {string} A string representing the alert_policy.
    */
-  matchAlertPolicyFromFolderAlertPolicyConditionName(folderAlertPolicyConditionName: string) {
-    return this.pathTemplates.folderAlertPolicyConditionPathTemplate.match(folderAlertPolicyConditionName).alert_policy;
+  matchAlertPolicyFromFolderAlertPolicyConditionName(
+    folderAlertPolicyConditionName: string
+  ) {
+    return this.pathTemplates.folderAlertPolicyConditionPathTemplate.match(
+      folderAlertPolicyConditionName
+    ).alert_policy;
   }
 
   /**
@@ -1514,8 +1744,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing folder_alert_policy_condition resource.
    * @returns {string} A string representing the condition.
    */
-  matchConditionFromFolderAlertPolicyConditionName(folderAlertPolicyConditionName: string) {
-    return this.pathTemplates.folderAlertPolicyConditionPathTemplate.match(folderAlertPolicyConditionName).condition;
+  matchConditionFromFolderAlertPolicyConditionName(
+    folderAlertPolicyConditionName: string
+  ) {
+    return this.pathTemplates.folderAlertPolicyConditionPathTemplate.match(
+      folderAlertPolicyConditionName
+    ).condition;
   }
 
   /**
@@ -1525,7 +1759,7 @@ export class MetricServiceClient {
    * @param {string} channel_descriptor
    * @returns {string} Resource name string.
    */
-  folderChannelDescriptorPath(folder:string,channelDescriptor:string) {
+  folderChannelDescriptorPath(folder: string, channelDescriptor: string) {
     return this.pathTemplates.folderChannelDescriptorPathTemplate.render({
       folder: folder,
       channel_descriptor: channelDescriptor,
@@ -1539,8 +1773,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing folder_channel_descriptor resource.
    * @returns {string} A string representing the folder.
    */
-  matchFolderFromFolderChannelDescriptorName(folderChannelDescriptorName: string) {
-    return this.pathTemplates.folderChannelDescriptorPathTemplate.match(folderChannelDescriptorName).folder;
+  matchFolderFromFolderChannelDescriptorName(
+    folderChannelDescriptorName: string
+  ) {
+    return this.pathTemplates.folderChannelDescriptorPathTemplate.match(
+      folderChannelDescriptorName
+    ).folder;
   }
 
   /**
@@ -1550,8 +1788,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing folder_channel_descriptor resource.
    * @returns {string} A string representing the channel_descriptor.
    */
-  matchChannelDescriptorFromFolderChannelDescriptorName(folderChannelDescriptorName: string) {
-    return this.pathTemplates.folderChannelDescriptorPathTemplate.match(folderChannelDescriptorName).channel_descriptor;
+  matchChannelDescriptorFromFolderChannelDescriptorName(
+    folderChannelDescriptorName: string
+  ) {
+    return this.pathTemplates.folderChannelDescriptorPathTemplate.match(
+      folderChannelDescriptorName
+    ).channel_descriptor;
   }
 
   /**
@@ -1561,7 +1803,7 @@ export class MetricServiceClient {
    * @param {string} group
    * @returns {string} Resource name string.
    */
-  folderGroupPath(folder:string,group:string) {
+  folderGroupPath(folder: string, group: string) {
     return this.pathTemplates.folderGroupPathTemplate.render({
       folder: folder,
       group: group,
@@ -1576,7 +1818,8 @@ export class MetricServiceClient {
    * @returns {string} A string representing the folder.
    */
   matchFolderFromFolderGroupName(folderGroupName: string) {
-    return this.pathTemplates.folderGroupPathTemplate.match(folderGroupName).folder;
+    return this.pathTemplates.folderGroupPathTemplate.match(folderGroupName)
+      .folder;
   }
 
   /**
@@ -1587,7 +1830,8 @@ export class MetricServiceClient {
    * @returns {string} A string representing the group.
    */
   matchGroupFromFolderGroupName(folderGroupName: string) {
-    return this.pathTemplates.folderGroupPathTemplate.match(folderGroupName).group;
+    return this.pathTemplates.folderGroupPathTemplate.match(folderGroupName)
+      .group;
   }
 
   /**
@@ -1597,7 +1841,7 @@ export class MetricServiceClient {
    * @param {string} metric_descriptor
    * @returns {string} Resource name string.
    */
-  folderMetricDescriptorPath(folder:string,metricDescriptor:string) {
+  folderMetricDescriptorPath(folder: string, metricDescriptor: string) {
     return this.pathTemplates.folderMetricDescriptorPathTemplate.render({
       folder: folder,
       metric_descriptor: metricDescriptor,
@@ -1611,8 +1855,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing folder_metric_descriptor resource.
    * @returns {string} A string representing the folder.
    */
-  matchFolderFromFolderMetricDescriptorName(folderMetricDescriptorName: string) {
-    return this.pathTemplates.folderMetricDescriptorPathTemplate.match(folderMetricDescriptorName).folder;
+  matchFolderFromFolderMetricDescriptorName(
+    folderMetricDescriptorName: string
+  ) {
+    return this.pathTemplates.folderMetricDescriptorPathTemplate.match(
+      folderMetricDescriptorName
+    ).folder;
   }
 
   /**
@@ -1622,8 +1870,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing folder_metric_descriptor resource.
    * @returns {string} A string representing the metric_descriptor.
    */
-  matchMetricDescriptorFromFolderMetricDescriptorName(folderMetricDescriptorName: string) {
-    return this.pathTemplates.folderMetricDescriptorPathTemplate.match(folderMetricDescriptorName).metric_descriptor;
+  matchMetricDescriptorFromFolderMetricDescriptorName(
+    folderMetricDescriptorName: string
+  ) {
+    return this.pathTemplates.folderMetricDescriptorPathTemplate.match(
+      folderMetricDescriptorName
+    ).metric_descriptor;
   }
 
   /**
@@ -1633,11 +1885,16 @@ export class MetricServiceClient {
    * @param {string} monitored_resource_descriptor
    * @returns {string} Resource name string.
    */
-  folderMonitoredResourceDescriptorPath(folder:string,monitoredResourceDescriptor:string) {
-    return this.pathTemplates.folderMonitoredResourceDescriptorPathTemplate.render({
-      folder: folder,
-      monitored_resource_descriptor: monitoredResourceDescriptor,
-    });
+  folderMonitoredResourceDescriptorPath(
+    folder: string,
+    monitoredResourceDescriptor: string
+  ) {
+    return this.pathTemplates.folderMonitoredResourceDescriptorPathTemplate.render(
+      {
+        folder: folder,
+        monitored_resource_descriptor: monitoredResourceDescriptor,
+      }
+    );
   }
 
   /**
@@ -1647,8 +1904,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing folder_monitored_resource_descriptor resource.
    * @returns {string} A string representing the folder.
    */
-  matchFolderFromFolderMonitoredResourceDescriptorName(folderMonitoredResourceDescriptorName: string) {
-    return this.pathTemplates.folderMonitoredResourceDescriptorPathTemplate.match(folderMonitoredResourceDescriptorName).folder;
+  matchFolderFromFolderMonitoredResourceDescriptorName(
+    folderMonitoredResourceDescriptorName: string
+  ) {
+    return this.pathTemplates.folderMonitoredResourceDescriptorPathTemplate.match(
+      folderMonitoredResourceDescriptorName
+    ).folder;
   }
 
   /**
@@ -1658,8 +1919,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing folder_monitored_resource_descriptor resource.
    * @returns {string} A string representing the monitored_resource_descriptor.
    */
-  matchMonitoredResourceDescriptorFromFolderMonitoredResourceDescriptorName(folderMonitoredResourceDescriptorName: string) {
-    return this.pathTemplates.folderMonitoredResourceDescriptorPathTemplate.match(folderMonitoredResourceDescriptorName).monitored_resource_descriptor;
+  matchMonitoredResourceDescriptorFromFolderMonitoredResourceDescriptorName(
+    folderMonitoredResourceDescriptorName: string
+  ) {
+    return this.pathTemplates.folderMonitoredResourceDescriptorPathTemplate.match(
+      folderMonitoredResourceDescriptorName
+    ).monitored_resource_descriptor;
   }
 
   /**
@@ -1669,7 +1934,7 @@ export class MetricServiceClient {
    * @param {string} notification_channel
    * @returns {string} Resource name string.
    */
-  folderNotificationChannelPath(folder:string,notificationChannel:string) {
+  folderNotificationChannelPath(folder: string, notificationChannel: string) {
     return this.pathTemplates.folderNotificationChannelPathTemplate.render({
       folder: folder,
       notification_channel: notificationChannel,
@@ -1683,8 +1948,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing folder_notification_channel resource.
    * @returns {string} A string representing the folder.
    */
-  matchFolderFromFolderNotificationChannelName(folderNotificationChannelName: string) {
-    return this.pathTemplates.folderNotificationChannelPathTemplate.match(folderNotificationChannelName).folder;
+  matchFolderFromFolderNotificationChannelName(
+    folderNotificationChannelName: string
+  ) {
+    return this.pathTemplates.folderNotificationChannelPathTemplate.match(
+      folderNotificationChannelName
+    ).folder;
   }
 
   /**
@@ -1694,8 +1963,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing folder_notification_channel resource.
    * @returns {string} A string representing the notification_channel.
    */
-  matchNotificationChannelFromFolderNotificationChannelName(folderNotificationChannelName: string) {
-    return this.pathTemplates.folderNotificationChannelPathTemplate.match(folderNotificationChannelName).notification_channel;
+  matchNotificationChannelFromFolderNotificationChannelName(
+    folderNotificationChannelName: string
+  ) {
+    return this.pathTemplates.folderNotificationChannelPathTemplate.match(
+      folderNotificationChannelName
+    ).notification_channel;
   }
 
   /**
@@ -1705,7 +1978,7 @@ export class MetricServiceClient {
    * @param {string} service
    * @returns {string} Resource name string.
    */
-  folderServicePath(folder:string,service:string) {
+  folderServicePath(folder: string, service: string) {
     return this.pathTemplates.folderServicePathTemplate.render({
       folder: folder,
       service: service,
@@ -1720,7 +1993,8 @@ export class MetricServiceClient {
    * @returns {string} A string representing the folder.
    */
   matchFolderFromFolderServiceName(folderServiceName: string) {
-    return this.pathTemplates.folderServicePathTemplate.match(folderServiceName).folder;
+    return this.pathTemplates.folderServicePathTemplate.match(folderServiceName)
+      .folder;
   }
 
   /**
@@ -1731,7 +2005,8 @@ export class MetricServiceClient {
    * @returns {string} A string representing the service.
    */
   matchServiceFromFolderServiceName(folderServiceName: string) {
-    return this.pathTemplates.folderServicePathTemplate.match(folderServiceName).service;
+    return this.pathTemplates.folderServicePathTemplate.match(folderServiceName)
+      .service;
   }
 
   /**
@@ -1742,12 +2017,18 @@ export class MetricServiceClient {
    * @param {string} service_level_objective
    * @returns {string} Resource name string.
    */
-  folderServiceServiceLevelObjectivePath(folder:string,service:string,serviceLevelObjective:string) {
-    return this.pathTemplates.folderServiceServiceLevelObjectivePathTemplate.render({
-      folder: folder,
-      service: service,
-      service_level_objective: serviceLevelObjective,
-    });
+  folderServiceServiceLevelObjectivePath(
+    folder: string,
+    service: string,
+    serviceLevelObjective: string
+  ) {
+    return this.pathTemplates.folderServiceServiceLevelObjectivePathTemplate.render(
+      {
+        folder: folder,
+        service: service,
+        service_level_objective: serviceLevelObjective,
+      }
+    );
   }
 
   /**
@@ -1757,8 +2038,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing folder_service_service_level_objective resource.
    * @returns {string} A string representing the folder.
    */
-  matchFolderFromFolderServiceServiceLevelObjectiveName(folderServiceServiceLevelObjectiveName: string) {
-    return this.pathTemplates.folderServiceServiceLevelObjectivePathTemplate.match(folderServiceServiceLevelObjectiveName).folder;
+  matchFolderFromFolderServiceServiceLevelObjectiveName(
+    folderServiceServiceLevelObjectiveName: string
+  ) {
+    return this.pathTemplates.folderServiceServiceLevelObjectivePathTemplate.match(
+      folderServiceServiceLevelObjectiveName
+    ).folder;
   }
 
   /**
@@ -1768,8 +2053,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing folder_service_service_level_objective resource.
    * @returns {string} A string representing the service.
    */
-  matchServiceFromFolderServiceServiceLevelObjectiveName(folderServiceServiceLevelObjectiveName: string) {
-    return this.pathTemplates.folderServiceServiceLevelObjectivePathTemplate.match(folderServiceServiceLevelObjectiveName).service;
+  matchServiceFromFolderServiceServiceLevelObjectiveName(
+    folderServiceServiceLevelObjectiveName: string
+  ) {
+    return this.pathTemplates.folderServiceServiceLevelObjectivePathTemplate.match(
+      folderServiceServiceLevelObjectiveName
+    ).service;
   }
 
   /**
@@ -1779,8 +2068,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing folder_service_service_level_objective resource.
    * @returns {string} A string representing the service_level_objective.
    */
-  matchServiceLevelObjectiveFromFolderServiceServiceLevelObjectiveName(folderServiceServiceLevelObjectiveName: string) {
-    return this.pathTemplates.folderServiceServiceLevelObjectivePathTemplate.match(folderServiceServiceLevelObjectiveName).service_level_objective;
+  matchServiceLevelObjectiveFromFolderServiceServiceLevelObjectiveName(
+    folderServiceServiceLevelObjectiveName: string
+  ) {
+    return this.pathTemplates.folderServiceServiceLevelObjectivePathTemplate.match(
+      folderServiceServiceLevelObjectiveName
+    ).service_level_objective;
   }
 
   /**
@@ -1790,7 +2083,7 @@ export class MetricServiceClient {
    * @param {string} uptime_check_config
    * @returns {string} Resource name string.
    */
-  folderUptimeCheckConfigPath(folder:string,uptimeCheckConfig:string) {
+  folderUptimeCheckConfigPath(folder: string, uptimeCheckConfig: string) {
     return this.pathTemplates.folderUptimeCheckConfigPathTemplate.render({
       folder: folder,
       uptime_check_config: uptimeCheckConfig,
@@ -1804,8 +2097,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing folder_uptime_check_config resource.
    * @returns {string} A string representing the folder.
    */
-  matchFolderFromFolderUptimeCheckConfigName(folderUptimeCheckConfigName: string) {
-    return this.pathTemplates.folderUptimeCheckConfigPathTemplate.match(folderUptimeCheckConfigName).folder;
+  matchFolderFromFolderUptimeCheckConfigName(
+    folderUptimeCheckConfigName: string
+  ) {
+    return this.pathTemplates.folderUptimeCheckConfigPathTemplate.match(
+      folderUptimeCheckConfigName
+    ).folder;
   }
 
   /**
@@ -1815,8 +2112,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing folder_uptime_check_config resource.
    * @returns {string} A string representing the uptime_check_config.
    */
-  matchUptimeCheckConfigFromFolderUptimeCheckConfigName(folderUptimeCheckConfigName: string) {
-    return this.pathTemplates.folderUptimeCheckConfigPathTemplate.match(folderUptimeCheckConfigName).uptime_check_config;
+  matchUptimeCheckConfigFromFolderUptimeCheckConfigName(
+    folderUptimeCheckConfigName: string
+  ) {
+    return this.pathTemplates.folderUptimeCheckConfigPathTemplate.match(
+      folderUptimeCheckConfigName
+    ).uptime_check_config;
   }
 
   /**
@@ -1826,7 +2127,7 @@ export class MetricServiceClient {
    * @param {string} alert_policy
    * @returns {string} Resource name string.
    */
-  organizationAlertPolicyPath(organization:string,alertPolicy:string) {
+  organizationAlertPolicyPath(organization: string, alertPolicy: string) {
     return this.pathTemplates.organizationAlertPolicyPathTemplate.render({
       organization: organization,
       alert_policy: alertPolicy,
@@ -1840,8 +2141,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_alert_policy resource.
    * @returns {string} A string representing the organization.
    */
-  matchOrganizationFromOrganizationAlertPolicyName(organizationAlertPolicyName: string) {
-    return this.pathTemplates.organizationAlertPolicyPathTemplate.match(organizationAlertPolicyName).organization;
+  matchOrganizationFromOrganizationAlertPolicyName(
+    organizationAlertPolicyName: string
+  ) {
+    return this.pathTemplates.organizationAlertPolicyPathTemplate.match(
+      organizationAlertPolicyName
+    ).organization;
   }
 
   /**
@@ -1851,8 +2156,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_alert_policy resource.
    * @returns {string} A string representing the alert_policy.
    */
-  matchAlertPolicyFromOrganizationAlertPolicyName(organizationAlertPolicyName: string) {
-    return this.pathTemplates.organizationAlertPolicyPathTemplate.match(organizationAlertPolicyName).alert_policy;
+  matchAlertPolicyFromOrganizationAlertPolicyName(
+    organizationAlertPolicyName: string
+  ) {
+    return this.pathTemplates.organizationAlertPolicyPathTemplate.match(
+      organizationAlertPolicyName
+    ).alert_policy;
   }
 
   /**
@@ -1863,12 +2172,18 @@ export class MetricServiceClient {
    * @param {string} condition
    * @returns {string} Resource name string.
    */
-  organizationAlertPolicyConditionPath(organization:string,alertPolicy:string,condition:string) {
-    return this.pathTemplates.organizationAlertPolicyConditionPathTemplate.render({
-      organization: organization,
-      alert_policy: alertPolicy,
-      condition: condition,
-    });
+  organizationAlertPolicyConditionPath(
+    organization: string,
+    alertPolicy: string,
+    condition: string
+  ) {
+    return this.pathTemplates.organizationAlertPolicyConditionPathTemplate.render(
+      {
+        organization: organization,
+        alert_policy: alertPolicy,
+        condition: condition,
+      }
+    );
   }
 
   /**
@@ -1878,8 +2193,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_alert_policy_condition resource.
    * @returns {string} A string representing the organization.
    */
-  matchOrganizationFromOrganizationAlertPolicyConditionName(organizationAlertPolicyConditionName: string) {
-    return this.pathTemplates.organizationAlertPolicyConditionPathTemplate.match(organizationAlertPolicyConditionName).organization;
+  matchOrganizationFromOrganizationAlertPolicyConditionName(
+    organizationAlertPolicyConditionName: string
+  ) {
+    return this.pathTemplates.organizationAlertPolicyConditionPathTemplate.match(
+      organizationAlertPolicyConditionName
+    ).organization;
   }
 
   /**
@@ -1889,8 +2208,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_alert_policy_condition resource.
    * @returns {string} A string representing the alert_policy.
    */
-  matchAlertPolicyFromOrganizationAlertPolicyConditionName(organizationAlertPolicyConditionName: string) {
-    return this.pathTemplates.organizationAlertPolicyConditionPathTemplate.match(organizationAlertPolicyConditionName).alert_policy;
+  matchAlertPolicyFromOrganizationAlertPolicyConditionName(
+    organizationAlertPolicyConditionName: string
+  ) {
+    return this.pathTemplates.organizationAlertPolicyConditionPathTemplate.match(
+      organizationAlertPolicyConditionName
+    ).alert_policy;
   }
 
   /**
@@ -1900,8 +2223,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_alert_policy_condition resource.
    * @returns {string} A string representing the condition.
    */
-  matchConditionFromOrganizationAlertPolicyConditionName(organizationAlertPolicyConditionName: string) {
-    return this.pathTemplates.organizationAlertPolicyConditionPathTemplate.match(organizationAlertPolicyConditionName).condition;
+  matchConditionFromOrganizationAlertPolicyConditionName(
+    organizationAlertPolicyConditionName: string
+  ) {
+    return this.pathTemplates.organizationAlertPolicyConditionPathTemplate.match(
+      organizationAlertPolicyConditionName
+    ).condition;
   }
 
   /**
@@ -1911,7 +2238,10 @@ export class MetricServiceClient {
    * @param {string} channel_descriptor
    * @returns {string} Resource name string.
    */
-  organizationChannelDescriptorPath(organization:string,channelDescriptor:string) {
+  organizationChannelDescriptorPath(
+    organization: string,
+    channelDescriptor: string
+  ) {
     return this.pathTemplates.organizationChannelDescriptorPathTemplate.render({
       organization: organization,
       channel_descriptor: channelDescriptor,
@@ -1925,8 +2255,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_channel_descriptor resource.
    * @returns {string} A string representing the organization.
    */
-  matchOrganizationFromOrganizationChannelDescriptorName(organizationChannelDescriptorName: string) {
-    return this.pathTemplates.organizationChannelDescriptorPathTemplate.match(organizationChannelDescriptorName).organization;
+  matchOrganizationFromOrganizationChannelDescriptorName(
+    organizationChannelDescriptorName: string
+  ) {
+    return this.pathTemplates.organizationChannelDescriptorPathTemplate.match(
+      organizationChannelDescriptorName
+    ).organization;
   }
 
   /**
@@ -1936,8 +2270,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_channel_descriptor resource.
    * @returns {string} A string representing the channel_descriptor.
    */
-  matchChannelDescriptorFromOrganizationChannelDescriptorName(organizationChannelDescriptorName: string) {
-    return this.pathTemplates.organizationChannelDescriptorPathTemplate.match(organizationChannelDescriptorName).channel_descriptor;
+  matchChannelDescriptorFromOrganizationChannelDescriptorName(
+    organizationChannelDescriptorName: string
+  ) {
+    return this.pathTemplates.organizationChannelDescriptorPathTemplate.match(
+      organizationChannelDescriptorName
+    ).channel_descriptor;
   }
 
   /**
@@ -1947,7 +2285,7 @@ export class MetricServiceClient {
    * @param {string} group
    * @returns {string} Resource name string.
    */
-  organizationGroupPath(organization:string,group:string) {
+  organizationGroupPath(organization: string, group: string) {
     return this.pathTemplates.organizationGroupPathTemplate.render({
       organization: organization,
       group: group,
@@ -1962,7 +2300,9 @@ export class MetricServiceClient {
    * @returns {string} A string representing the organization.
    */
   matchOrganizationFromOrganizationGroupName(organizationGroupName: string) {
-    return this.pathTemplates.organizationGroupPathTemplate.match(organizationGroupName).organization;
+    return this.pathTemplates.organizationGroupPathTemplate.match(
+      organizationGroupName
+    ).organization;
   }
 
   /**
@@ -1973,7 +2313,9 @@ export class MetricServiceClient {
    * @returns {string} A string representing the group.
    */
   matchGroupFromOrganizationGroupName(organizationGroupName: string) {
-    return this.pathTemplates.organizationGroupPathTemplate.match(organizationGroupName).group;
+    return this.pathTemplates.organizationGroupPathTemplate.match(
+      organizationGroupName
+    ).group;
   }
 
   /**
@@ -1983,7 +2325,10 @@ export class MetricServiceClient {
    * @param {string} metric_descriptor
    * @returns {string} Resource name string.
    */
-  organizationMetricDescriptorPath(organization:string,metricDescriptor:string) {
+  organizationMetricDescriptorPath(
+    organization: string,
+    metricDescriptor: string
+  ) {
     return this.pathTemplates.organizationMetricDescriptorPathTemplate.render({
       organization: organization,
       metric_descriptor: metricDescriptor,
@@ -1997,8 +2342,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_metric_descriptor resource.
    * @returns {string} A string representing the organization.
    */
-  matchOrganizationFromOrganizationMetricDescriptorName(organizationMetricDescriptorName: string) {
-    return this.pathTemplates.organizationMetricDescriptorPathTemplate.match(organizationMetricDescriptorName).organization;
+  matchOrganizationFromOrganizationMetricDescriptorName(
+    organizationMetricDescriptorName: string
+  ) {
+    return this.pathTemplates.organizationMetricDescriptorPathTemplate.match(
+      organizationMetricDescriptorName
+    ).organization;
   }
 
   /**
@@ -2008,8 +2357,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_metric_descriptor resource.
    * @returns {string} A string representing the metric_descriptor.
    */
-  matchMetricDescriptorFromOrganizationMetricDescriptorName(organizationMetricDescriptorName: string) {
-    return this.pathTemplates.organizationMetricDescriptorPathTemplate.match(organizationMetricDescriptorName).metric_descriptor;
+  matchMetricDescriptorFromOrganizationMetricDescriptorName(
+    organizationMetricDescriptorName: string
+  ) {
+    return this.pathTemplates.organizationMetricDescriptorPathTemplate.match(
+      organizationMetricDescriptorName
+    ).metric_descriptor;
   }
 
   /**
@@ -2019,11 +2372,16 @@ export class MetricServiceClient {
    * @param {string} monitored_resource_descriptor
    * @returns {string} Resource name string.
    */
-  organizationMonitoredResourceDescriptorPath(organization:string,monitoredResourceDescriptor:string) {
-    return this.pathTemplates.organizationMonitoredResourceDescriptorPathTemplate.render({
-      organization: organization,
-      monitored_resource_descriptor: monitoredResourceDescriptor,
-    });
+  organizationMonitoredResourceDescriptorPath(
+    organization: string,
+    monitoredResourceDescriptor: string
+  ) {
+    return this.pathTemplates.organizationMonitoredResourceDescriptorPathTemplate.render(
+      {
+        organization: organization,
+        monitored_resource_descriptor: monitoredResourceDescriptor,
+      }
+    );
   }
 
   /**
@@ -2033,8 +2391,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_monitored_resource_descriptor resource.
    * @returns {string} A string representing the organization.
    */
-  matchOrganizationFromOrganizationMonitoredResourceDescriptorName(organizationMonitoredResourceDescriptorName: string) {
-    return this.pathTemplates.organizationMonitoredResourceDescriptorPathTemplate.match(organizationMonitoredResourceDescriptorName).organization;
+  matchOrganizationFromOrganizationMonitoredResourceDescriptorName(
+    organizationMonitoredResourceDescriptorName: string
+  ) {
+    return this.pathTemplates.organizationMonitoredResourceDescriptorPathTemplate.match(
+      organizationMonitoredResourceDescriptorName
+    ).organization;
   }
 
   /**
@@ -2044,8 +2406,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_monitored_resource_descriptor resource.
    * @returns {string} A string representing the monitored_resource_descriptor.
    */
-  matchMonitoredResourceDescriptorFromOrganizationMonitoredResourceDescriptorName(organizationMonitoredResourceDescriptorName: string) {
-    return this.pathTemplates.organizationMonitoredResourceDescriptorPathTemplate.match(organizationMonitoredResourceDescriptorName).monitored_resource_descriptor;
+  matchMonitoredResourceDescriptorFromOrganizationMonitoredResourceDescriptorName(
+    organizationMonitoredResourceDescriptorName: string
+  ) {
+    return this.pathTemplates.organizationMonitoredResourceDescriptorPathTemplate.match(
+      organizationMonitoredResourceDescriptorName
+    ).monitored_resource_descriptor;
   }
 
   /**
@@ -2055,11 +2421,16 @@ export class MetricServiceClient {
    * @param {string} notification_channel
    * @returns {string} Resource name string.
    */
-  organizationNotificationChannelPath(organization:string,notificationChannel:string) {
-    return this.pathTemplates.organizationNotificationChannelPathTemplate.render({
-      organization: organization,
-      notification_channel: notificationChannel,
-    });
+  organizationNotificationChannelPath(
+    organization: string,
+    notificationChannel: string
+  ) {
+    return this.pathTemplates.organizationNotificationChannelPathTemplate.render(
+      {
+        organization: organization,
+        notification_channel: notificationChannel,
+      }
+    );
   }
 
   /**
@@ -2069,8 +2440,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_notification_channel resource.
    * @returns {string} A string representing the organization.
    */
-  matchOrganizationFromOrganizationNotificationChannelName(organizationNotificationChannelName: string) {
-    return this.pathTemplates.organizationNotificationChannelPathTemplate.match(organizationNotificationChannelName).organization;
+  matchOrganizationFromOrganizationNotificationChannelName(
+    organizationNotificationChannelName: string
+  ) {
+    return this.pathTemplates.organizationNotificationChannelPathTemplate.match(
+      organizationNotificationChannelName
+    ).organization;
   }
 
   /**
@@ -2080,8 +2455,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_notification_channel resource.
    * @returns {string} A string representing the notification_channel.
    */
-  matchNotificationChannelFromOrganizationNotificationChannelName(organizationNotificationChannelName: string) {
-    return this.pathTemplates.organizationNotificationChannelPathTemplate.match(organizationNotificationChannelName).notification_channel;
+  matchNotificationChannelFromOrganizationNotificationChannelName(
+    organizationNotificationChannelName: string
+  ) {
+    return this.pathTemplates.organizationNotificationChannelPathTemplate.match(
+      organizationNotificationChannelName
+    ).notification_channel;
   }
 
   /**
@@ -2091,7 +2470,7 @@ export class MetricServiceClient {
    * @param {string} service
    * @returns {string} Resource name string.
    */
-  organizationServicePath(organization:string,service:string) {
+  organizationServicePath(organization: string, service: string) {
     return this.pathTemplates.organizationServicePathTemplate.render({
       organization: organization,
       service: service,
@@ -2105,8 +2484,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_service resource.
    * @returns {string} A string representing the organization.
    */
-  matchOrganizationFromOrganizationServiceName(organizationServiceName: string) {
-    return this.pathTemplates.organizationServicePathTemplate.match(organizationServiceName).organization;
+  matchOrganizationFromOrganizationServiceName(
+    organizationServiceName: string
+  ) {
+    return this.pathTemplates.organizationServicePathTemplate.match(
+      organizationServiceName
+    ).organization;
   }
 
   /**
@@ -2117,7 +2500,9 @@ export class MetricServiceClient {
    * @returns {string} A string representing the service.
    */
   matchServiceFromOrganizationServiceName(organizationServiceName: string) {
-    return this.pathTemplates.organizationServicePathTemplate.match(organizationServiceName).service;
+    return this.pathTemplates.organizationServicePathTemplate.match(
+      organizationServiceName
+    ).service;
   }
 
   /**
@@ -2128,12 +2513,18 @@ export class MetricServiceClient {
    * @param {string} service_level_objective
    * @returns {string} Resource name string.
    */
-  organizationServiceServiceLevelObjectivePath(organization:string,service:string,serviceLevelObjective:string) {
-    return this.pathTemplates.organizationServiceServiceLevelObjectivePathTemplate.render({
-      organization: organization,
-      service: service,
-      service_level_objective: serviceLevelObjective,
-    });
+  organizationServiceServiceLevelObjectivePath(
+    organization: string,
+    service: string,
+    serviceLevelObjective: string
+  ) {
+    return this.pathTemplates.organizationServiceServiceLevelObjectivePathTemplate.render(
+      {
+        organization: organization,
+        service: service,
+        service_level_objective: serviceLevelObjective,
+      }
+    );
   }
 
   /**
@@ -2143,8 +2534,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_service_service_level_objective resource.
    * @returns {string} A string representing the organization.
    */
-  matchOrganizationFromOrganizationServiceServiceLevelObjectiveName(organizationServiceServiceLevelObjectiveName: string) {
-    return this.pathTemplates.organizationServiceServiceLevelObjectivePathTemplate.match(organizationServiceServiceLevelObjectiveName).organization;
+  matchOrganizationFromOrganizationServiceServiceLevelObjectiveName(
+    organizationServiceServiceLevelObjectiveName: string
+  ) {
+    return this.pathTemplates.organizationServiceServiceLevelObjectivePathTemplate.match(
+      organizationServiceServiceLevelObjectiveName
+    ).organization;
   }
 
   /**
@@ -2154,8 +2549,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_service_service_level_objective resource.
    * @returns {string} A string representing the service.
    */
-  matchServiceFromOrganizationServiceServiceLevelObjectiveName(organizationServiceServiceLevelObjectiveName: string) {
-    return this.pathTemplates.organizationServiceServiceLevelObjectivePathTemplate.match(organizationServiceServiceLevelObjectiveName).service;
+  matchServiceFromOrganizationServiceServiceLevelObjectiveName(
+    organizationServiceServiceLevelObjectiveName: string
+  ) {
+    return this.pathTemplates.organizationServiceServiceLevelObjectivePathTemplate.match(
+      organizationServiceServiceLevelObjectiveName
+    ).service;
   }
 
   /**
@@ -2165,8 +2564,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_service_service_level_objective resource.
    * @returns {string} A string representing the service_level_objective.
    */
-  matchServiceLevelObjectiveFromOrganizationServiceServiceLevelObjectiveName(organizationServiceServiceLevelObjectiveName: string) {
-    return this.pathTemplates.organizationServiceServiceLevelObjectivePathTemplate.match(organizationServiceServiceLevelObjectiveName).service_level_objective;
+  matchServiceLevelObjectiveFromOrganizationServiceServiceLevelObjectiveName(
+    organizationServiceServiceLevelObjectiveName: string
+  ) {
+    return this.pathTemplates.organizationServiceServiceLevelObjectivePathTemplate.match(
+      organizationServiceServiceLevelObjectiveName
+    ).service_level_objective;
   }
 
   /**
@@ -2176,7 +2579,10 @@ export class MetricServiceClient {
    * @param {string} uptime_check_config
    * @returns {string} Resource name string.
    */
-  organizationUptimeCheckConfigPath(organization:string,uptimeCheckConfig:string) {
+  organizationUptimeCheckConfigPath(
+    organization: string,
+    uptimeCheckConfig: string
+  ) {
     return this.pathTemplates.organizationUptimeCheckConfigPathTemplate.render({
       organization: organization,
       uptime_check_config: uptimeCheckConfig,
@@ -2190,8 +2596,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_uptime_check_config resource.
    * @returns {string} A string representing the organization.
    */
-  matchOrganizationFromOrganizationUptimeCheckConfigName(organizationUptimeCheckConfigName: string) {
-    return this.pathTemplates.organizationUptimeCheckConfigPathTemplate.match(organizationUptimeCheckConfigName).organization;
+  matchOrganizationFromOrganizationUptimeCheckConfigName(
+    organizationUptimeCheckConfigName: string
+  ) {
+    return this.pathTemplates.organizationUptimeCheckConfigPathTemplate.match(
+      organizationUptimeCheckConfigName
+    ).organization;
   }
 
   /**
@@ -2201,8 +2611,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing organization_uptime_check_config resource.
    * @returns {string} A string representing the uptime_check_config.
    */
-  matchUptimeCheckConfigFromOrganizationUptimeCheckConfigName(organizationUptimeCheckConfigName: string) {
-    return this.pathTemplates.organizationUptimeCheckConfigPathTemplate.match(organizationUptimeCheckConfigName).uptime_check_config;
+  matchUptimeCheckConfigFromOrganizationUptimeCheckConfigName(
+    organizationUptimeCheckConfigName: string
+  ) {
+    return this.pathTemplates.organizationUptimeCheckConfigPathTemplate.match(
+      organizationUptimeCheckConfigName
+    ).uptime_check_config;
   }
 
   /**
@@ -2211,7 +2625,7 @@ export class MetricServiceClient {
    * @param {string} project
    * @returns {string} Resource name string.
    */
-  projectPath(project:string) {
+  projectPath(project: string) {
     return this.pathTemplates.projectPathTemplate.render({
       project: project,
     });
@@ -2235,7 +2649,7 @@ export class MetricServiceClient {
    * @param {string} alert_policy
    * @returns {string} Resource name string.
    */
-  projectAlertPolicyPath(project:string,alertPolicy:string) {
+  projectAlertPolicyPath(project: string, alertPolicy: string) {
     return this.pathTemplates.projectAlertPolicyPathTemplate.render({
       project: project,
       alert_policy: alertPolicy,
@@ -2250,7 +2664,9 @@ export class MetricServiceClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectAlertPolicyName(projectAlertPolicyName: string) {
-    return this.pathTemplates.projectAlertPolicyPathTemplate.match(projectAlertPolicyName).project;
+    return this.pathTemplates.projectAlertPolicyPathTemplate.match(
+      projectAlertPolicyName
+    ).project;
   }
 
   /**
@@ -2261,7 +2677,9 @@ export class MetricServiceClient {
    * @returns {string} A string representing the alert_policy.
    */
   matchAlertPolicyFromProjectAlertPolicyName(projectAlertPolicyName: string) {
-    return this.pathTemplates.projectAlertPolicyPathTemplate.match(projectAlertPolicyName).alert_policy;
+    return this.pathTemplates.projectAlertPolicyPathTemplate.match(
+      projectAlertPolicyName
+    ).alert_policy;
   }
 
   /**
@@ -2272,7 +2690,11 @@ export class MetricServiceClient {
    * @param {string} condition
    * @returns {string} Resource name string.
    */
-  projectAlertPolicyConditionPath(project:string,alertPolicy:string,condition:string) {
+  projectAlertPolicyConditionPath(
+    project: string,
+    alertPolicy: string,
+    condition: string
+  ) {
     return this.pathTemplates.projectAlertPolicyConditionPathTemplate.render({
       project: project,
       alert_policy: alertPolicy,
@@ -2287,8 +2709,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing project_alert_policy_condition resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectAlertPolicyConditionName(projectAlertPolicyConditionName: string) {
-    return this.pathTemplates.projectAlertPolicyConditionPathTemplate.match(projectAlertPolicyConditionName).project;
+  matchProjectFromProjectAlertPolicyConditionName(
+    projectAlertPolicyConditionName: string
+  ) {
+    return this.pathTemplates.projectAlertPolicyConditionPathTemplate.match(
+      projectAlertPolicyConditionName
+    ).project;
   }
 
   /**
@@ -2298,8 +2724,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing project_alert_policy_condition resource.
    * @returns {string} A string representing the alert_policy.
    */
-  matchAlertPolicyFromProjectAlertPolicyConditionName(projectAlertPolicyConditionName: string) {
-    return this.pathTemplates.projectAlertPolicyConditionPathTemplate.match(projectAlertPolicyConditionName).alert_policy;
+  matchAlertPolicyFromProjectAlertPolicyConditionName(
+    projectAlertPolicyConditionName: string
+  ) {
+    return this.pathTemplates.projectAlertPolicyConditionPathTemplate.match(
+      projectAlertPolicyConditionName
+    ).alert_policy;
   }
 
   /**
@@ -2309,8 +2739,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing project_alert_policy_condition resource.
    * @returns {string} A string representing the condition.
    */
-  matchConditionFromProjectAlertPolicyConditionName(projectAlertPolicyConditionName: string) {
-    return this.pathTemplates.projectAlertPolicyConditionPathTemplate.match(projectAlertPolicyConditionName).condition;
+  matchConditionFromProjectAlertPolicyConditionName(
+    projectAlertPolicyConditionName: string
+  ) {
+    return this.pathTemplates.projectAlertPolicyConditionPathTemplate.match(
+      projectAlertPolicyConditionName
+    ).condition;
   }
 
   /**
@@ -2320,7 +2754,7 @@ export class MetricServiceClient {
    * @param {string} channel_descriptor
    * @returns {string} Resource name string.
    */
-  projectChannelDescriptorPath(project:string,channelDescriptor:string) {
+  projectChannelDescriptorPath(project: string, channelDescriptor: string) {
     return this.pathTemplates.projectChannelDescriptorPathTemplate.render({
       project: project,
       channel_descriptor: channelDescriptor,
@@ -2334,8 +2768,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing project_channel_descriptor resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectChannelDescriptorName(projectChannelDescriptorName: string) {
-    return this.pathTemplates.projectChannelDescriptorPathTemplate.match(projectChannelDescriptorName).project;
+  matchProjectFromProjectChannelDescriptorName(
+    projectChannelDescriptorName: string
+  ) {
+    return this.pathTemplates.projectChannelDescriptorPathTemplate.match(
+      projectChannelDescriptorName
+    ).project;
   }
 
   /**
@@ -2345,8 +2783,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing project_channel_descriptor resource.
    * @returns {string} A string representing the channel_descriptor.
    */
-  matchChannelDescriptorFromProjectChannelDescriptorName(projectChannelDescriptorName: string) {
-    return this.pathTemplates.projectChannelDescriptorPathTemplate.match(projectChannelDescriptorName).channel_descriptor;
+  matchChannelDescriptorFromProjectChannelDescriptorName(
+    projectChannelDescriptorName: string
+  ) {
+    return this.pathTemplates.projectChannelDescriptorPathTemplate.match(
+      projectChannelDescriptorName
+    ).channel_descriptor;
   }
 
   /**
@@ -2356,7 +2798,7 @@ export class MetricServiceClient {
    * @param {string} group
    * @returns {string} Resource name string.
    */
-  projectGroupPath(project:string,group:string) {
+  projectGroupPath(project: string, group: string) {
     return this.pathTemplates.projectGroupPathTemplate.render({
       project: project,
       group: group,
@@ -2371,7 +2813,8 @@ export class MetricServiceClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectGroupName(projectGroupName: string) {
-    return this.pathTemplates.projectGroupPathTemplate.match(projectGroupName).project;
+    return this.pathTemplates.projectGroupPathTemplate.match(projectGroupName)
+      .project;
   }
 
   /**
@@ -2382,7 +2825,8 @@ export class MetricServiceClient {
    * @returns {string} A string representing the group.
    */
   matchGroupFromProjectGroupName(projectGroupName: string) {
-    return this.pathTemplates.projectGroupPathTemplate.match(projectGroupName).group;
+    return this.pathTemplates.projectGroupPathTemplate.match(projectGroupName)
+      .group;
   }
 
   /**
@@ -2392,7 +2836,7 @@ export class MetricServiceClient {
    * @param {string} metric_descriptor
    * @returns {string} Resource name string.
    */
-  projectMetricDescriptorPath(project:string,metricDescriptor:string) {
+  projectMetricDescriptorPath(project: string, metricDescriptor: string) {
     return this.pathTemplates.projectMetricDescriptorPathTemplate.render({
       project: project,
       metric_descriptor: metricDescriptor,
@@ -2406,8 +2850,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing project_metric_descriptor resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectMetricDescriptorName(projectMetricDescriptorName: string) {
-    return this.pathTemplates.projectMetricDescriptorPathTemplate.match(projectMetricDescriptorName).project;
+  matchProjectFromProjectMetricDescriptorName(
+    projectMetricDescriptorName: string
+  ) {
+    return this.pathTemplates.projectMetricDescriptorPathTemplate.match(
+      projectMetricDescriptorName
+    ).project;
   }
 
   /**
@@ -2417,8 +2865,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing project_metric_descriptor resource.
    * @returns {string} A string representing the metric_descriptor.
    */
-  matchMetricDescriptorFromProjectMetricDescriptorName(projectMetricDescriptorName: string) {
-    return this.pathTemplates.projectMetricDescriptorPathTemplate.match(projectMetricDescriptorName).metric_descriptor;
+  matchMetricDescriptorFromProjectMetricDescriptorName(
+    projectMetricDescriptorName: string
+  ) {
+    return this.pathTemplates.projectMetricDescriptorPathTemplate.match(
+      projectMetricDescriptorName
+    ).metric_descriptor;
   }
 
   /**
@@ -2428,11 +2880,16 @@ export class MetricServiceClient {
    * @param {string} monitored_resource_descriptor
    * @returns {string} Resource name string.
    */
-  projectMonitoredResourceDescriptorPath(project:string,monitoredResourceDescriptor:string) {
-    return this.pathTemplates.projectMonitoredResourceDescriptorPathTemplate.render({
-      project: project,
-      monitored_resource_descriptor: monitoredResourceDescriptor,
-    });
+  projectMonitoredResourceDescriptorPath(
+    project: string,
+    monitoredResourceDescriptor: string
+  ) {
+    return this.pathTemplates.projectMonitoredResourceDescriptorPathTemplate.render(
+      {
+        project: project,
+        monitored_resource_descriptor: monitoredResourceDescriptor,
+      }
+    );
   }
 
   /**
@@ -2442,8 +2899,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing project_monitored_resource_descriptor resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectMonitoredResourceDescriptorName(projectMonitoredResourceDescriptorName: string) {
-    return this.pathTemplates.projectMonitoredResourceDescriptorPathTemplate.match(projectMonitoredResourceDescriptorName).project;
+  matchProjectFromProjectMonitoredResourceDescriptorName(
+    projectMonitoredResourceDescriptorName: string
+  ) {
+    return this.pathTemplates.projectMonitoredResourceDescriptorPathTemplate.match(
+      projectMonitoredResourceDescriptorName
+    ).project;
   }
 
   /**
@@ -2453,8 +2914,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing project_monitored_resource_descriptor resource.
    * @returns {string} A string representing the monitored_resource_descriptor.
    */
-  matchMonitoredResourceDescriptorFromProjectMonitoredResourceDescriptorName(projectMonitoredResourceDescriptorName: string) {
-    return this.pathTemplates.projectMonitoredResourceDescriptorPathTemplate.match(projectMonitoredResourceDescriptorName).monitored_resource_descriptor;
+  matchMonitoredResourceDescriptorFromProjectMonitoredResourceDescriptorName(
+    projectMonitoredResourceDescriptorName: string
+  ) {
+    return this.pathTemplates.projectMonitoredResourceDescriptorPathTemplate.match(
+      projectMonitoredResourceDescriptorName
+    ).monitored_resource_descriptor;
   }
 
   /**
@@ -2464,7 +2929,7 @@ export class MetricServiceClient {
    * @param {string} notification_channel
    * @returns {string} Resource name string.
    */
-  projectNotificationChannelPath(project:string,notificationChannel:string) {
+  projectNotificationChannelPath(project: string, notificationChannel: string) {
     return this.pathTemplates.projectNotificationChannelPathTemplate.render({
       project: project,
       notification_channel: notificationChannel,
@@ -2478,8 +2943,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing project_notification_channel resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectNotificationChannelName(projectNotificationChannelName: string) {
-    return this.pathTemplates.projectNotificationChannelPathTemplate.match(projectNotificationChannelName).project;
+  matchProjectFromProjectNotificationChannelName(
+    projectNotificationChannelName: string
+  ) {
+    return this.pathTemplates.projectNotificationChannelPathTemplate.match(
+      projectNotificationChannelName
+    ).project;
   }
 
   /**
@@ -2489,8 +2958,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing project_notification_channel resource.
    * @returns {string} A string representing the notification_channel.
    */
-  matchNotificationChannelFromProjectNotificationChannelName(projectNotificationChannelName: string) {
-    return this.pathTemplates.projectNotificationChannelPathTemplate.match(projectNotificationChannelName).notification_channel;
+  matchNotificationChannelFromProjectNotificationChannelName(
+    projectNotificationChannelName: string
+  ) {
+    return this.pathTemplates.projectNotificationChannelPathTemplate.match(
+      projectNotificationChannelName
+    ).notification_channel;
   }
 
   /**
@@ -2500,7 +2973,7 @@ export class MetricServiceClient {
    * @param {string} service
    * @returns {string} Resource name string.
    */
-  projectServicePath(project:string,service:string) {
+  projectServicePath(project: string, service: string) {
     return this.pathTemplates.projectServicePathTemplate.render({
       project: project,
       service: service,
@@ -2515,7 +2988,9 @@ export class MetricServiceClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromProjectServiceName(projectServiceName: string) {
-    return this.pathTemplates.projectServicePathTemplate.match(projectServiceName).project;
+    return this.pathTemplates.projectServicePathTemplate.match(
+      projectServiceName
+    ).project;
   }
 
   /**
@@ -2526,7 +3001,9 @@ export class MetricServiceClient {
    * @returns {string} A string representing the service.
    */
   matchServiceFromProjectServiceName(projectServiceName: string) {
-    return this.pathTemplates.projectServicePathTemplate.match(projectServiceName).service;
+    return this.pathTemplates.projectServicePathTemplate.match(
+      projectServiceName
+    ).service;
   }
 
   /**
@@ -2537,12 +3014,18 @@ export class MetricServiceClient {
    * @param {string} service_level_objective
    * @returns {string} Resource name string.
    */
-  projectServiceServiceLevelObjectivePath(project:string,service:string,serviceLevelObjective:string) {
-    return this.pathTemplates.projectServiceServiceLevelObjectivePathTemplate.render({
-      project: project,
-      service: service,
-      service_level_objective: serviceLevelObjective,
-    });
+  projectServiceServiceLevelObjectivePath(
+    project: string,
+    service: string,
+    serviceLevelObjective: string
+  ) {
+    return this.pathTemplates.projectServiceServiceLevelObjectivePathTemplate.render(
+      {
+        project: project,
+        service: service,
+        service_level_objective: serviceLevelObjective,
+      }
+    );
   }
 
   /**
@@ -2552,8 +3035,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing project_service_service_level_objective resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectServiceServiceLevelObjectiveName(projectServiceServiceLevelObjectiveName: string) {
-    return this.pathTemplates.projectServiceServiceLevelObjectivePathTemplate.match(projectServiceServiceLevelObjectiveName).project;
+  matchProjectFromProjectServiceServiceLevelObjectiveName(
+    projectServiceServiceLevelObjectiveName: string
+  ) {
+    return this.pathTemplates.projectServiceServiceLevelObjectivePathTemplate.match(
+      projectServiceServiceLevelObjectiveName
+    ).project;
   }
 
   /**
@@ -2563,8 +3050,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing project_service_service_level_objective resource.
    * @returns {string} A string representing the service.
    */
-  matchServiceFromProjectServiceServiceLevelObjectiveName(projectServiceServiceLevelObjectiveName: string) {
-    return this.pathTemplates.projectServiceServiceLevelObjectivePathTemplate.match(projectServiceServiceLevelObjectiveName).service;
+  matchServiceFromProjectServiceServiceLevelObjectiveName(
+    projectServiceServiceLevelObjectiveName: string
+  ) {
+    return this.pathTemplates.projectServiceServiceLevelObjectivePathTemplate.match(
+      projectServiceServiceLevelObjectiveName
+    ).service;
   }
 
   /**
@@ -2574,8 +3065,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing project_service_service_level_objective resource.
    * @returns {string} A string representing the service_level_objective.
    */
-  matchServiceLevelObjectiveFromProjectServiceServiceLevelObjectiveName(projectServiceServiceLevelObjectiveName: string) {
-    return this.pathTemplates.projectServiceServiceLevelObjectivePathTemplate.match(projectServiceServiceLevelObjectiveName).service_level_objective;
+  matchServiceLevelObjectiveFromProjectServiceServiceLevelObjectiveName(
+    projectServiceServiceLevelObjectiveName: string
+  ) {
+    return this.pathTemplates.projectServiceServiceLevelObjectivePathTemplate.match(
+      projectServiceServiceLevelObjectiveName
+    ).service_level_objective;
   }
 
   /**
@@ -2585,7 +3080,7 @@ export class MetricServiceClient {
    * @param {string} uptime_check_config
    * @returns {string} Resource name string.
    */
-  projectUptimeCheckConfigPath(project:string,uptimeCheckConfig:string) {
+  projectUptimeCheckConfigPath(project: string, uptimeCheckConfig: string) {
     return this.pathTemplates.projectUptimeCheckConfigPathTemplate.render({
       project: project,
       uptime_check_config: uptimeCheckConfig,
@@ -2599,8 +3094,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing project_uptime_check_config resource.
    * @returns {string} A string representing the project.
    */
-  matchProjectFromProjectUptimeCheckConfigName(projectUptimeCheckConfigName: string) {
-    return this.pathTemplates.projectUptimeCheckConfigPathTemplate.match(projectUptimeCheckConfigName).project;
+  matchProjectFromProjectUptimeCheckConfigName(
+    projectUptimeCheckConfigName: string
+  ) {
+    return this.pathTemplates.projectUptimeCheckConfigPathTemplate.match(
+      projectUptimeCheckConfigName
+    ).project;
   }
 
   /**
@@ -2610,8 +3109,12 @@ export class MetricServiceClient {
    *   A fully-qualified path representing project_uptime_check_config resource.
    * @returns {string} A string representing the uptime_check_config.
    */
-  matchUptimeCheckConfigFromProjectUptimeCheckConfigName(projectUptimeCheckConfigName: string) {
-    return this.pathTemplates.projectUptimeCheckConfigPathTemplate.match(projectUptimeCheckConfigName).uptime_check_config;
+  matchUptimeCheckConfigFromProjectUptimeCheckConfigName(
+    projectUptimeCheckConfigName: string
+  ) {
+    return this.pathTemplates.projectUptimeCheckConfigPathTemplate.match(
+      projectUptimeCheckConfigName
+    ).uptime_check_config;
   }
 
   /**
