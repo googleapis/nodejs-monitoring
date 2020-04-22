@@ -1,6 +1,12 @@
 {
-  "updateTime": "2020-04-11T01:36:38.708200Z",
   "sources": [
+    {
+      "git": {
+        "name": ".",
+        "remote": "https://github.com/googleapis/nodejs-monitoring.git",
+        "sha": "c956dade7f103dc785ccb4d3c65b09e287f49199"
+      }
+    },
     {
       "git": {
         "name": "googleapis",
