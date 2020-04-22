@@ -26873,26 +26873,6 @@
                     return SpanContext;
                 })();
     
-                /**
-                 * UptimeCheckRegion enum.
-                 * @name google.monitoring.v3.UptimeCheckRegion
-                 * @enum {number}
-                 * @property {number} REGION_UNSPECIFIED=0 REGION_UNSPECIFIED value
-                 * @property {number} USA=1 USA value
-                 * @property {number} EUROPE=2 EUROPE value
-                 * @property {number} SOUTH_AMERICA=3 SOUTH_AMERICA value
-                 * @property {number} ASIA_PACIFIC=4 ASIA_PACIFIC value
-                 */
-                v3.UptimeCheckRegion = (function() {
-                    var valuesById = {}, values = Object.create(valuesById);
-                    values[valuesById[0] = "REGION_UNSPECIFIED"] = 0;
-                    values[valuesById[1] = "USA"] = 1;
-                    values[valuesById[2] = "EUROPE"] = 2;
-                    values[valuesById[3] = "SOUTH_AMERICA"] = 3;
-                    values[valuesById[4] = "ASIA_PACIFIC"] = 4;
-                    return values;
-                })();
-    
                 v3.InternalChecker = (function() {
     
                     /**
@@ -27223,6 +27203,26 @@
                     })();
     
                     return InternalChecker;
+                })();
+    
+                /**
+                 * UptimeCheckRegion enum.
+                 * @name google.monitoring.v3.UptimeCheckRegion
+                 * @enum {number}
+                 * @property {number} REGION_UNSPECIFIED=0 REGION_UNSPECIFIED value
+                 * @property {number} USA=1 USA value
+                 * @property {number} EUROPE=2 EUROPE value
+                 * @property {number} SOUTH_AMERICA=3 SOUTH_AMERICA value
+                 * @property {number} ASIA_PACIFIC=4 ASIA_PACIFIC value
+                 */
+                v3.UptimeCheckRegion = (function() {
+                    var valuesById = {}, values = Object.create(valuesById);
+                    values[valuesById[0] = "REGION_UNSPECIFIED"] = 0;
+                    values[valuesById[1] = "USA"] = 1;
+                    values[valuesById[2] = "EUROPE"] = 2;
+                    values[valuesById[3] = "SOUTH_AMERICA"] = 3;
+                    values[valuesById[4] = "ASIA_PACIFIC"] = 4;
+                    return values;
                 })();
     
                 v3.UptimeCheckConfig = (function() {
@@ -28064,13 +28064,16 @@
                          * Properties of a HttpCheck.
                          * @memberof google.monitoring.v3.UptimeCheckConfig
                          * @interface IHttpCheck
+                         * @property {google.monitoring.v3.UptimeCheckConfig.HttpCheck.RequestMethod|null} [requestMethod] HttpCheck requestMethod
                          * @property {boolean|null} [useSsl] HttpCheck useSsl
                          * @property {string|null} [path] HttpCheck path
                          * @property {number|null} [port] HttpCheck port
                          * @property {google.monitoring.v3.UptimeCheckConfig.HttpCheck.IBasicAuthentication|null} [authInfo] HttpCheck authInfo
                          * @property {boolean|null} [maskHeaders] HttpCheck maskHeaders
                          * @property {Object.<string,string>|null} [headers] HttpCheck headers
+                         * @property {google.monitoring.v3.UptimeCheckConfig.HttpCheck.ContentType|null} [contentType] HttpCheck contentType
                          * @property {boolean|null} [validateSsl] HttpCheck validateSsl
+                         * @property {Uint8Array|null} [body] HttpCheck body
                          */
     
                         /**
@@ -28088,6 +28091,14 @@
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
+    
+                        /**
+                         * HttpCheck requestMethod.
+                         * @member {google.monitoring.v3.UptimeCheckConfig.HttpCheck.RequestMethod} requestMethod
+                         * @memberof google.monitoring.v3.UptimeCheckConfig.HttpCheck
+                         * @instance
+                         */
+                        HttpCheck.prototype.requestMethod = 0;
     
                         /**
                          * HttpCheck useSsl.
@@ -28138,12 +28149,28 @@
                         HttpCheck.prototype.headers = $util.emptyObject;
     
                         /**
+                         * HttpCheck contentType.
+                         * @member {google.monitoring.v3.UptimeCheckConfig.HttpCheck.ContentType} contentType
+                         * @memberof google.monitoring.v3.UptimeCheckConfig.HttpCheck
+                         * @instance
+                         */
+                        HttpCheck.prototype.contentType = 0;
+    
+                        /**
                          * HttpCheck validateSsl.
                          * @member {boolean} validateSsl
                          * @memberof google.monitoring.v3.UptimeCheckConfig.HttpCheck
                          * @instance
                          */
                         HttpCheck.prototype.validateSsl = false;
+    
+                        /**
+                         * HttpCheck body.
+                         * @member {Uint8Array} body
+                         * @memberof google.monitoring.v3.UptimeCheckConfig.HttpCheck
+                         * @instance
+                         */
+                        HttpCheck.prototype.body = $util.newBuffer([]);
     
                         /**
                          * Creates a new HttpCheck instance using the specified properties.
@@ -28184,6 +28211,12 @@
                                     writer.uint32(/* id 6, wireType 2 =*/50).fork().uint32(/* id 1, wireType 2 =*/10).string(keys[i]).uint32(/* id 2, wireType 2 =*/18).string(message.headers[keys[i]]).ldelim();
                             if (message.validateSsl != null && Object.hasOwnProperty.call(message, "validateSsl"))
                                 writer.uint32(/* id 7, wireType 0 =*/56).bool(message.validateSsl);
+                            if (message.requestMethod != null && Object.hasOwnProperty.call(message, "requestMethod"))
+                                writer.uint32(/* id 8, wireType 0 =*/64).int32(message.requestMethod);
+                            if (message.contentType != null && Object.hasOwnProperty.call(message, "contentType"))
+                                writer.uint32(/* id 9, wireType 0 =*/72).int32(message.contentType);
+                            if (message.body != null && Object.hasOwnProperty.call(message, "body"))
+                                writer.uint32(/* id 10, wireType 2 =*/82).bytes(message.body);
                             return writer;
                         };
     
@@ -28218,6 +28251,9 @@
                             while (reader.pos < end) {
                                 var tag = reader.uint32();
                                 switch (tag >>> 3) {
+                                case 8:
+                                    message.requestMethod = reader.int32();
+                                    break;
                                 case 1:
                                     message.useSsl = reader.bool();
                                     break;
@@ -28241,8 +28277,14 @@
                                     reader.pos++;
                                     message.headers[key] = reader.string();
                                     break;
+                                case 9:
+                                    message.contentType = reader.int32();
+                                    break;
                                 case 7:
                                     message.validateSsl = reader.bool();
+                                    break;
+                                case 10:
+                                    message.body = reader.bytes();
                                     break;
                                 default:
                                     reader.skipType(tag & 7);
@@ -28279,6 +28321,15 @@
                         HttpCheck.verify = function verify(message) {
                             if (typeof message !== "object" || message === null)
                                 return "object expected";
+                            if (message.requestMethod != null && message.hasOwnProperty("requestMethod"))
+                                switch (message.requestMethod) {
+                                default:
+                                    return "requestMethod: enum value expected";
+                                case 0:
+                                case 1:
+                                case 2:
+                                    break;
+                                }
                             if (message.useSsl != null && message.hasOwnProperty("useSsl"))
                                 if (typeof message.useSsl !== "boolean")
                                     return "useSsl: boolean expected";
@@ -28304,9 +28355,20 @@
                                     if (!$util.isString(message.headers[key[i]]))
                                         return "headers: string{k:string} expected";
                             }
+                            if (message.contentType != null && message.hasOwnProperty("contentType"))
+                                switch (message.contentType) {
+                                default:
+                                    return "contentType: enum value expected";
+                                case 0:
+                                case 1:
+                                    break;
+                                }
                             if (message.validateSsl != null && message.hasOwnProperty("validateSsl"))
                                 if (typeof message.validateSsl !== "boolean")
                                     return "validateSsl: boolean expected";
+                            if (message.body != null && message.hasOwnProperty("body"))
+                                if (!(message.body && typeof message.body.length === "number" || $util.isString(message.body)))
+                                    return "body: buffer expected";
                             return null;
                         };
     
@@ -28322,6 +28384,20 @@
                             if (object instanceof $root.google.monitoring.v3.UptimeCheckConfig.HttpCheck)
                                 return object;
                             var message = new $root.google.monitoring.v3.UptimeCheckConfig.HttpCheck();
+                            switch (object.requestMethod) {
+                            case "METHOD_UNSPECIFIED":
+                            case 0:
+                                message.requestMethod = 0;
+                                break;
+                            case "GET":
+                            case 1:
+                                message.requestMethod = 1;
+                                break;
+                            case "POST":
+                            case 2:
+                                message.requestMethod = 2;
+                                break;
+                            }
                             if (object.useSsl != null)
                                 message.useSsl = Boolean(object.useSsl);
                             if (object.path != null)
@@ -28342,8 +28418,23 @@
                                 for (var keys = Object.keys(object.headers), i = 0; i < keys.length; ++i)
                                     message.headers[keys[i]] = String(object.headers[keys[i]]);
                             }
+                            switch (object.contentType) {
+                            case "TYPE_UNSPECIFIED":
+                            case 0:
+                                message.contentType = 0;
+                                break;
+                            case "URL_ENCODED":
+                            case 1:
+                                message.contentType = 1;
+                                break;
+                            }
                             if (object.validateSsl != null)
                                 message.validateSsl = Boolean(object.validateSsl);
+                            if (object.body != null)
+                                if (typeof object.body === "string")
+                                    $util.base64.decode(object.body, message.body = $util.newBuffer($util.base64.length(object.body)), 0);
+                                else if (object.body.length)
+                                    message.body = object.body;
                             return message;
                         };
     
@@ -28369,6 +28460,15 @@
                                 object.authInfo = null;
                                 object.maskHeaders = false;
                                 object.validateSsl = false;
+                                object.requestMethod = options.enums === String ? "METHOD_UNSPECIFIED" : 0;
+                                object.contentType = options.enums === String ? "TYPE_UNSPECIFIED" : 0;
+                                if (options.bytes === String)
+                                    object.body = "";
+                                else {
+                                    object.body = [];
+                                    if (options.bytes !== Array)
+                                        object.body = $util.newBuffer(object.body);
+                                }
                             }
                             if (message.useSsl != null && message.hasOwnProperty("useSsl"))
                                 object.useSsl = message.useSsl;
@@ -28388,6 +28488,12 @@
                             }
                             if (message.validateSsl != null && message.hasOwnProperty("validateSsl"))
                                 object.validateSsl = message.validateSsl;
+                            if (message.requestMethod != null && message.hasOwnProperty("requestMethod"))
+                                object.requestMethod = options.enums === String ? $root.google.monitoring.v3.UptimeCheckConfig.HttpCheck.RequestMethod[message.requestMethod] : message.requestMethod;
+                            if (message.contentType != null && message.hasOwnProperty("contentType"))
+                                object.contentType = options.enums === String ? $root.google.monitoring.v3.UptimeCheckConfig.HttpCheck.ContentType[message.contentType] : message.contentType;
+                            if (message.body != null && message.hasOwnProperty("body"))
+                                object.body = options.bytes === String ? $util.base64.encode(message.body, 0, message.body.length) : options.bytes === Array ? Array.prototype.slice.call(message.body) : message.body;
                             return object;
                         };
     
@@ -28610,6 +28716,36 @@
                             };
     
                             return BasicAuthentication;
+                        })();
+    
+                        /**
+                         * RequestMethod enum.
+                         * @name google.monitoring.v3.UptimeCheckConfig.HttpCheck.RequestMethod
+                         * @enum {number}
+                         * @property {number} METHOD_UNSPECIFIED=0 METHOD_UNSPECIFIED value
+                         * @property {number} GET=1 GET value
+                         * @property {number} POST=2 POST value
+                         */
+                        HttpCheck.RequestMethod = (function() {
+                            var valuesById = {}, values = Object.create(valuesById);
+                            values[valuesById[0] = "METHOD_UNSPECIFIED"] = 0;
+                            values[valuesById[1] = "GET"] = 1;
+                            values[valuesById[2] = "POST"] = 2;
+                            return values;
+                        })();
+    
+                        /**
+                         * ContentType enum.
+                         * @name google.monitoring.v3.UptimeCheckConfig.HttpCheck.ContentType
+                         * @enum {number}
+                         * @property {number} TYPE_UNSPECIFIED=0 TYPE_UNSPECIFIED value
+                         * @property {number} URL_ENCODED=1 URL_ENCODED value
+                         */
+                        HttpCheck.ContentType = (function() {
+                            var valuesById = {}, values = Object.create(valuesById);
+                            values[valuesById[0] = "TYPE_UNSPECIFIED"] = 0;
+                            values[valuesById[1] = "URL_ENCODED"] = 1;
+                            return values;
                         })();
     
                         return HttpCheck;
@@ -29063,22 +29199,6 @@
                     return UptimeCheckConfig;
                 })();
     
-                /**
-                 * GroupResourceType enum.
-                 * @name google.monitoring.v3.GroupResourceType
-                 * @enum {number}
-                 * @property {number} RESOURCE_TYPE_UNSPECIFIED=0 RESOURCE_TYPE_UNSPECIFIED value
-                 * @property {number} INSTANCE=1 INSTANCE value
-                 * @property {number} AWS_ELB_LOAD_BALANCER=2 AWS_ELB_LOAD_BALANCER value
-                 */
-                v3.GroupResourceType = (function() {
-                    var valuesById = {}, values = Object.create(valuesById);
-                    values[valuesById[0] = "RESOURCE_TYPE_UNSPECIFIED"] = 0;
-                    values[valuesById[1] = "INSTANCE"] = 1;
-                    values[valuesById[2] = "AWS_ELB_LOAD_BALANCER"] = 2;
-                    return values;
-                })();
-    
                 v3.UptimeCheckIp = (function() {
     
                     /**
@@ -29337,6 +29457,22 @@
                     };
     
                     return UptimeCheckIp;
+                })();
+    
+                /**
+                 * GroupResourceType enum.
+                 * @name google.monitoring.v3.GroupResourceType
+                 * @enum {number}
+                 * @property {number} RESOURCE_TYPE_UNSPECIFIED=0 RESOURCE_TYPE_UNSPECIFIED value
+                 * @property {number} INSTANCE=1 INSTANCE value
+                 * @property {number} AWS_ELB_LOAD_BALANCER=2 AWS_ELB_LOAD_BALANCER value
+                 */
+                v3.GroupResourceType = (function() {
+                    var valuesById = {}, values = Object.create(valuesById);
+                    values[valuesById[0] = "RESOURCE_TYPE_UNSPECIFIED"] = 0;
+                    values[valuesById[1] = "INSTANCE"] = 1;
+                    values[valuesById[2] = "AWS_ELB_LOAD_BALANCER"] = 2;
+                    return values;
                 })();
     
                 v3.UptimeCheckService = (function() {
