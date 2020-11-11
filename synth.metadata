@@ -19,7 +19,7 @@
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "ba9918cd22874245b55734f57470c719b577e591"
+        "sha": "1f1148d3c7a7a52f0c98077f976bd9b3c948ee2b"
       }
     }
   ],
@@ -87,6 +87,7 @@
     "README.md",
     "api-extractor.json",
     "linkinator.config.json",
+    "package-lock.json.592367270",
     "protos/google/monitoring/v3/alert.proto",
     "protos/google/monitoring/v3/alert_service.proto",
     "protos/google/monitoring/v3/common.proto",
@@ -108,6 +109,7 @@
     "protos/protos.json",
     "renovate.json",
     "samples/README.md",
+    "samples/package-lock.json.4124165143",
     "src/index.ts",
     "src/v3/alert_policy_service_client.ts",
     "src/v3/alert_policy_service_client_config.json",
