@@ -68,10 +68,8 @@ export class AlertPolicyServiceClient {
   /**
    * Construct an instance of AlertPolicyServiceClient.
    *
-   * @param {object} [options] - The configuration object.
-   * The options accepted by the constructor are described in detail
-   * in [this document](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#creating-the-client-instance).
-   * The common options are:
+   * @param {object} [options] - The configuration object. See the subsequent
+   *   parameters for more details.
    * @param {object} [options.credentials] - Credentials object.
    * @param {string} [options.credentials.client_email]
    * @param {string} [options.credentials.private_key]
@@ -91,33 +89,42 @@ export class AlertPolicyServiceClient {
    *     your project ID will be detected automatically.
    * @param {string} [options.apiEndpoint] - The domain name of the
    *     API remote host.
-   * @param {gax.ClientConfig} [options.clientConfig] - client configuration override.
-   *     TODO(@alexander-fenster): link to gax documentation.
-   * @param {boolean} fallback - Use HTTP fallback mode.
-   *     In fallback mode, a special browser-compatible transport implementation is used
-   *     instead of gRPC transport. In browser context (if the `window` object is defined)
-   *     the fallback mode is enabled automatically; set `options.fallback` to `false`
-   *     if you need to override this behavior.
    */
+
   constructor(opts?: ClientOptions) {
-    // Ensure that options include all the required fields.
+    // Ensure that options include the service address and port.
     const staticMembers = this.constructor as typeof AlertPolicyServiceClient;
     const servicePath =
-      opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
-    const port = opts?.port || staticMembers.port;
-    const clientConfig = opts?.clientConfig ?? {};
-    const fallback = opts?.fallback ?? typeof window !== 'undefined';
-    opts = Object.assign({servicePath, port, clientConfig, fallback}, opts);
+      opts && opts.servicePath
+        ? opts.servicePath
+        : opts && opts.apiEndpoint
+        ? opts.apiEndpoint
+        : staticMembers.servicePath;
+    const port = opts && opts.port ? opts.port : staticMembers.port;
 
-    // If scopes are unset in options and we're connecting to a non-default endpoint, set scopes just in case.
-    if (servicePath !== staticMembers.servicePath && !('scopes' in opts)) {
-      opts['scopes'] = staticMembers.scopes;
+    if (!opts) {
+      opts = {servicePath, port};
     }
+    opts.servicePath = opts.servicePath || servicePath;
+    opts.port = opts.port || port;
 
-    // Choose either gRPC or proto-over-HTTP implementation of google-gax.
+    // users can override the config from client side, like retry codes name.
+    // The detailed structure of the clientConfig can be found here: https://github.com/googleapis/gax-nodejs/blob/master/src/gax.ts#L546
+    // The way to override client config for Showcase API:
+    //
+    // const customConfig = {"interfaces": {"google.showcase.v1beta1.Echo": {"methods": {"Echo": {"retry_codes_name": "idempotent", "retry_params_name": "default"}}}}}
+    // const showcaseClient = new showcaseClient({ projectId, customConfig });
+    opts.clientConfig = opts.clientConfig || {};
+
+    // If we're running in browser, it's OK to omit `fallback` since
+    // google-gax has `browser` field in its `package.json`.
+    // For Electron (which does not respect `browser` field),
+    // pass `{fallback: true}` to the AlertPolicyServiceClient constructor.
     this._gaxModule = opts.fallback ? gax.fallback : gax;
 
-    // Create a `gaxGrpc` object, with any grpc-specific options sent to the client.
+    // Create a `gaxGrpc` object, with any grpc-specific options
+    // sent to the client.
+    opts.scopes = (this.constructor as typeof AlertPolicyServiceClient).scopes;
     this._gaxGrpc = new this._gaxModule.GrpcClient(opts);
 
     // Save options to use in initialize() method.
@@ -125,11 +132,6 @@ export class AlertPolicyServiceClient {
 
     // Save the auth object to the client, for use by other methods.
     this.auth = this._gaxGrpc.auth as gax.GoogleAuth;
-
-    // Set the default scopes in auth client if needed.
-    if (servicePath === staticMembers.servicePath) {
-      this.auth.defaultScopes = staticMembers.scopes;
-    }
 
     // Determine the client header string.
     const clientHeader = [`gax/${this._gaxModule.version}`, `gapic/${version}`];
@@ -335,7 +337,6 @@ export class AlertPolicyServiceClient {
 
   /**
    * The DNS address for this API service.
-   * @returns {string} The DNS address for this service.
    */
   static get servicePath() {
     return 'monitoring.googleapis.com';
@@ -344,7 +345,6 @@ export class AlertPolicyServiceClient {
   /**
    * The DNS address for this API service - same as servicePath(),
    * exists for compatibility reasons.
-   * @returns {string} The DNS address for this service.
    */
   static get apiEndpoint() {
     return 'monitoring.googleapis.com';
@@ -352,7 +352,6 @@ export class AlertPolicyServiceClient {
 
   /**
    * The port for this API service.
-   * @returns {number} The default port for this service.
    */
   static get port() {
     return 443;
@@ -361,7 +360,6 @@ export class AlertPolicyServiceClient {
   /**
    * The scopes needed to make gRPC calls for every method defined
    * in this service.
-   * @returns {string[]} List of default scopes.
    */
   static get scopes() {
     return [
@@ -375,7 +373,8 @@ export class AlertPolicyServiceClient {
   getProjectId(callback: Callback<string, undefined, undefined>): void;
   /**
    * Return the project ID used by this class.
-   * @returns {Promise} A promise that resolves to string containing the project ID.
+   * @param {function(Error, string)} callback - the callback to
+   *   be called with the current project Id.
    */
   getProjectId(
     callback?: Callback<string, undefined, undefined>
@@ -430,11 +429,7 @@ export class AlertPolicyServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [AlertPolicy]{@link google.monitoring.v3.AlertPolicy}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.getAlertPolicy(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   getAlertPolicy(
     request: protos.google.monitoring.v3.IGetAlertPolicyRequest,
@@ -527,11 +522,7 @@ export class AlertPolicyServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [AlertPolicy]{@link google.monitoring.v3.AlertPolicy}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.createAlertPolicy(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   createAlertPolicy(
     request: protos.google.monitoring.v3.ICreateAlertPolicyRequest,
@@ -617,11 +608,7 @@ export class AlertPolicyServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.deleteAlertPolicy(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   deleteAlertPolicy(
     request: protos.google.monitoring.v3.IDeleteAlertPolicyRequest,
@@ -731,11 +718,7 @@ export class AlertPolicyServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [AlertPolicy]{@link google.monitoring.v3.AlertPolicy}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.updateAlertPolicy(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   updateAlertPolicy(
     request: protos.google.monitoring.v3.IUpdateAlertPolicyRequest,
@@ -845,14 +828,19 @@ export class AlertPolicyServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is Array of [AlertPolicy]{@link google.monitoring.v3.AlertPolicy}.
-   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   The client library support auto-pagination by default: it will call the API as many
    *   times as needed and will merge results from all the pages into this array.
-   *   Note that it can affect your quota.
-   *   We recommend using `listAlertPoliciesAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
+   *
+   *   When autoPaginate: false is specified through options, the array has three elements.
+   *   The first element is Array of [AlertPolicy]{@link google.monitoring.v3.AlertPolicy} that corresponds to
+   *   the one page received from the API server.
+   *   If the second element is not null it contains the request object of type [ListAlertPoliciesRequest]{@link google.monitoring.v3.ListAlertPoliciesRequest}
+   *   that can be used to obtain the next page of the results.
+   *   If it is null, the next page does not exist.
+   *   The third element contains the raw response received from the API server. Its type is
+   *   [ListAlertPoliciesResponse]{@link google.monitoring.v3.ListAlertPoliciesResponse}.
+   *
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   listAlertPolicies(
     request: protos.google.monitoring.v3.IListAlertPoliciesRequest,
@@ -898,7 +886,18 @@ export class AlertPolicyServiceClient {
   }
 
   /**
-   * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
+   * Equivalent to {@link listAlertPolicies}, but returns a NodeJS Stream object.
+   *
+   * This fetches the paged responses for {@link listAlertPolicies} continuously
+   * and invokes the callback registered for 'data' event for each element in the
+   * responses.
+   *
+   * The returned object has 'end' method when no more elements are required.
+   *
+   * autoPaginate option will be ignored.
+   *
+   * @see {@link https://nodejs.org/api/stream.html}
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
@@ -934,13 +933,6 @@ export class AlertPolicyServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Stream}
    *   An object stream which emits an object representing [AlertPolicy]{@link google.monitoring.v3.AlertPolicy} on 'data' event.
-   *   The client library will perform auto-pagination by default: it will call the API as many
-   *   times as needed. Note that it can affect your quota.
-   *   We recommend using `listAlertPoliciesAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
    */
   listAlertPoliciesStream(
     request?: protos.google.monitoring.v3.IListAlertPoliciesRequest,
@@ -965,9 +957,10 @@ export class AlertPolicyServiceClient {
   }
 
   /**
-   * Equivalent to `listAlertPolicies`, but returns an iterable object.
+   * Equivalent to {@link listAlertPolicies}, but returns an iterable object.
    *
-   * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
+   * for-await-of syntax is used with the iterable to recursively get response element on-demand.
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.name
@@ -1002,18 +995,7 @@ export class AlertPolicyServiceClient {
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Object}
-   *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
-   *   When you iterate the returned iterable, each element will be an object representing
-   *   [AlertPolicy]{@link google.monitoring.v3.AlertPolicy}. The API will be called under the hood as needed, once per the page,
-   *   so you can stop the iteration when you don't need more results.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
-   * @example
-   * const iterable = client.listAlertPoliciesAsync(request);
-   * for await (const response of iterable) {
-   *   // process response
-   * }
+   *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
    */
   listAlertPoliciesAsync(
     request?: protos.google.monitoring.v3.IListAlertPoliciesRequest,
@@ -2230,10 +2212,9 @@ export class AlertPolicyServiceClient {
   }
 
   /**
-   * Terminate the gRPC channel and close the client.
+   * Terminate the GRPC channel and close the client.
    *
    * The client will no longer be usable and all future behavior is undefined.
-   * @returns {Promise} A promise that resolves when the client is closed.
    */
   close(): Promise<void> {
     this.initialize();
