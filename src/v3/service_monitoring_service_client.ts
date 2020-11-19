@@ -30,6 +30,11 @@ import * as path from 'path';
 import {Transform} from 'stream';
 import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
+/**
+ * Client JSON configuration object, loaded from
+ * `src/v3/service_monitoring_service_client_config.json`.
+ * This file defines retry strategy and timeouts for all API methods in this library.
+ */
 import * as gapicConfig from './service_monitoring_service_client_config.json';
 
 const version = require('../../../package.json').version;
@@ -86,9 +91,9 @@ export class ServiceMonitoringServiceClient {
    *     your project ID will be detected automatically.
    * @param {string} [options.apiEndpoint] - The domain name of the
    *     API remote host.
-   * @param {gax.ClientConfig} [options.clientConfig] - client configuration override.
-   *     Follows the structure of `service_monitoring_service_client_config.json`.
-   * @param {boolean} fallback - Use HTTP fallback mode.
+   * @param {gax.ClientConfig} [options.clientConfig] - Client configuration override.
+   *     Follows the structure of {@link gapicConfig}.
+   * @param {boolean} [options.fallback] - Use HTTP fallback mode.
    *     In fallback mode, a special browser-compatible transport implementation is used
    *     instead of gRPC transport. In browser context (if the `window` object is defined)
    *     the fallback mode is enabled automatically; set `options.fallback` to `false`
@@ -102,6 +107,7 @@ export class ServiceMonitoringServiceClient {
       opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
     const port = opts?.port || staticMembers.port;
     const clientConfig = opts?.clientConfig ?? {};
+    // eslint-disable-next-line no-undef
     const fallback =
       opts?.fallback ??
       (typeof window !== 'undefined' && typeof window.fetch !== 'undefined');
@@ -400,7 +406,7 @@ export class ServiceMonitoringServiceClient {
   // -------------------
   createService(
     request: protos.google.monitoring.v3.ICreateServiceRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IService,
@@ -410,7 +416,7 @@ export class ServiceMonitoringServiceClient {
   >;
   createService(
     request: protos.google.monitoring.v3.ICreateServiceRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.IService,
       protos.google.monitoring.v3.ICreateServiceRequest | null | undefined,
@@ -452,7 +458,7 @@ export class ServiceMonitoringServiceClient {
   createService(
     request: protos.google.monitoring.v3.ICreateServiceRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.IService,
           protos.google.monitoring.v3.ICreateServiceRequest | null | undefined,
@@ -471,12 +477,12 @@ export class ServiceMonitoringServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -491,7 +497,7 @@ export class ServiceMonitoringServiceClient {
   }
   getService(
     request: protos.google.monitoring.v3.IGetServiceRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IService,
@@ -501,7 +507,7 @@ export class ServiceMonitoringServiceClient {
   >;
   getService(
     request: protos.google.monitoring.v3.IGetServiceRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.IService,
       protos.google.monitoring.v3.IGetServiceRequest | null | undefined,
@@ -538,7 +544,7 @@ export class ServiceMonitoringServiceClient {
   getService(
     request: protos.google.monitoring.v3.IGetServiceRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.IService,
           protos.google.monitoring.v3.IGetServiceRequest | null | undefined,
@@ -557,12 +563,12 @@ export class ServiceMonitoringServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -577,7 +583,7 @@ export class ServiceMonitoringServiceClient {
   }
   updateService(
     request: protos.google.monitoring.v3.IUpdateServiceRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IService,
@@ -587,7 +593,7 @@ export class ServiceMonitoringServiceClient {
   >;
   updateService(
     request: protos.google.monitoring.v3.IUpdateServiceRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.IService,
       protos.google.monitoring.v3.IUpdateServiceRequest | null | undefined,
@@ -625,7 +631,7 @@ export class ServiceMonitoringServiceClient {
   updateService(
     request: protos.google.monitoring.v3.IUpdateServiceRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.IService,
           protos.google.monitoring.v3.IUpdateServiceRequest | null | undefined,
@@ -644,12 +650,12 @@ export class ServiceMonitoringServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -664,7 +670,7 @@ export class ServiceMonitoringServiceClient {
   }
   deleteService(
     request: protos.google.monitoring.v3.IDeleteServiceRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.protobuf.IEmpty,
@@ -674,7 +680,7 @@ export class ServiceMonitoringServiceClient {
   >;
   deleteService(
     request: protos.google.monitoring.v3.IDeleteServiceRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.protobuf.IEmpty,
       protos.google.monitoring.v3.IDeleteServiceRequest | null | undefined,
@@ -711,7 +717,7 @@ export class ServiceMonitoringServiceClient {
   deleteService(
     request: protos.google.monitoring.v3.IDeleteServiceRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.protobuf.IEmpty,
           protos.google.monitoring.v3.IDeleteServiceRequest | null | undefined,
@@ -730,12 +736,12 @@ export class ServiceMonitoringServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -750,7 +756,7 @@ export class ServiceMonitoringServiceClient {
   }
   createServiceLevelObjective(
     request: protos.google.monitoring.v3.ICreateServiceLevelObjectiveRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IServiceLevelObjective,
@@ -763,7 +769,7 @@ export class ServiceMonitoringServiceClient {
   >;
   createServiceLevelObjective(
     request: protos.google.monitoring.v3.ICreateServiceLevelObjectiveRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.IServiceLevelObjective,
       | protos.google.monitoring.v3.ICreateServiceLevelObjectiveRequest
@@ -812,7 +818,7 @@ export class ServiceMonitoringServiceClient {
   createServiceLevelObjective(
     request: protos.google.monitoring.v3.ICreateServiceLevelObjectiveRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.IServiceLevelObjective,
           | protos.google.monitoring.v3.ICreateServiceLevelObjectiveRequest
@@ -838,12 +844,12 @@ export class ServiceMonitoringServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -862,7 +868,7 @@ export class ServiceMonitoringServiceClient {
   }
   getServiceLevelObjective(
     request: protos.google.monitoring.v3.IGetServiceLevelObjectiveRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IServiceLevelObjective,
@@ -872,7 +878,7 @@ export class ServiceMonitoringServiceClient {
   >;
   getServiceLevelObjective(
     request: protos.google.monitoring.v3.IGetServiceLevelObjectiveRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.IServiceLevelObjective,
       | protos.google.monitoring.v3.IGetServiceLevelObjectiveRequest
@@ -918,7 +924,7 @@ export class ServiceMonitoringServiceClient {
   getServiceLevelObjective(
     request: protos.google.monitoring.v3.IGetServiceLevelObjectiveRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.IServiceLevelObjective,
           | protos.google.monitoring.v3.IGetServiceLevelObjectiveRequest
@@ -941,12 +947,12 @@ export class ServiceMonitoringServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -965,7 +971,7 @@ export class ServiceMonitoringServiceClient {
   }
   updateServiceLevelObjective(
     request: protos.google.monitoring.v3.IUpdateServiceLevelObjectiveRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IServiceLevelObjective,
@@ -978,7 +984,7 @@ export class ServiceMonitoringServiceClient {
   >;
   updateServiceLevelObjective(
     request: protos.google.monitoring.v3.IUpdateServiceLevelObjectiveRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.IServiceLevelObjective,
       | protos.google.monitoring.v3.IUpdateServiceLevelObjectiveRequest
@@ -1020,7 +1026,7 @@ export class ServiceMonitoringServiceClient {
   updateServiceLevelObjective(
     request: protos.google.monitoring.v3.IUpdateServiceLevelObjectiveRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.IServiceLevelObjective,
           | protos.google.monitoring.v3.IUpdateServiceLevelObjectiveRequest
@@ -1046,12 +1052,12 @@ export class ServiceMonitoringServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1070,7 +1076,7 @@ export class ServiceMonitoringServiceClient {
   }
   deleteServiceLevelObjective(
     request: protos.google.monitoring.v3.IDeleteServiceLevelObjectiveRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.protobuf.IEmpty,
@@ -1083,7 +1089,7 @@ export class ServiceMonitoringServiceClient {
   >;
   deleteServiceLevelObjective(
     request: protos.google.monitoring.v3.IDeleteServiceLevelObjectiveRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.protobuf.IEmpty,
       | protos.google.monitoring.v3.IDeleteServiceLevelObjectiveRequest
@@ -1124,7 +1130,7 @@ export class ServiceMonitoringServiceClient {
   deleteServiceLevelObjective(
     request: protos.google.monitoring.v3.IDeleteServiceLevelObjectiveRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.protobuf.IEmpty,
           | protos.google.monitoring.v3.IDeleteServiceLevelObjectiveRequest
@@ -1150,12 +1156,12 @@ export class ServiceMonitoringServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1175,7 +1181,7 @@ export class ServiceMonitoringServiceClient {
 
   listServices(
     request: protos.google.monitoring.v3.IListServicesRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IService[],
@@ -1185,7 +1191,7 @@ export class ServiceMonitoringServiceClient {
   >;
   listServices(
     request: protos.google.monitoring.v3.IListServicesRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: PaginationCallback<
       protos.google.monitoring.v3.IListServicesRequest,
       protos.google.monitoring.v3.IListServicesResponse | null | undefined,
@@ -1250,7 +1256,7 @@ export class ServiceMonitoringServiceClient {
   listServices(
     request: protos.google.monitoring.v3.IListServicesRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | PaginationCallback<
           protos.google.monitoring.v3.IListServicesRequest,
           protos.google.monitoring.v3.IListServicesResponse | null | undefined,
@@ -1269,12 +1275,12 @@ export class ServiceMonitoringServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1335,7 +1341,7 @@ export class ServiceMonitoringServiceClient {
    */
   listServicesStream(
     request?: protos.google.monitoring.v3.IListServicesRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Transform {
     request = request || {};
     options = options || {};
@@ -1408,7 +1414,7 @@ export class ServiceMonitoringServiceClient {
    */
   listServicesAsync(
     request?: protos.google.monitoring.v3.IListServicesRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): AsyncIterable<protos.google.monitoring.v3.IService> {
     request = request || {};
     options = options || {};
@@ -1430,7 +1436,7 @@ export class ServiceMonitoringServiceClient {
   }
   listServiceLevelObjectives(
     request: protos.google.monitoring.v3.IListServiceLevelObjectivesRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IServiceLevelObjective[],
@@ -1440,7 +1446,7 @@ export class ServiceMonitoringServiceClient {
   >;
   listServiceLevelObjectives(
     request: protos.google.monitoring.v3.IListServiceLevelObjectivesRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: PaginationCallback<
       protos.google.monitoring.v3.IListServiceLevelObjectivesRequest,
       | protos.google.monitoring.v3.IListServiceLevelObjectivesResponse
@@ -1500,7 +1506,7 @@ export class ServiceMonitoringServiceClient {
   listServiceLevelObjectives(
     request: protos.google.monitoring.v3.IListServiceLevelObjectivesRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | PaginationCallback<
           protos.google.monitoring.v3.IListServiceLevelObjectivesRequest,
           | protos.google.monitoring.v3.IListServiceLevelObjectivesResponse
@@ -1523,12 +1529,12 @@ export class ServiceMonitoringServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1584,7 +1590,7 @@ export class ServiceMonitoringServiceClient {
    */
   listServiceLevelObjectivesStream(
     request?: protos.google.monitoring.v3.IListServiceLevelObjectivesRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Transform {
     request = request || {};
     options = options || {};
@@ -1648,7 +1654,7 @@ export class ServiceMonitoringServiceClient {
    */
   listServiceLevelObjectivesAsync(
     request?: protos.google.monitoring.v3.IListServiceLevelObjectivesRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): AsyncIterable<protos.google.monitoring.v3.IServiceLevelObjective> {
     request = request || {};
     options = options || {};

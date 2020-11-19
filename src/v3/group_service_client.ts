@@ -30,6 +30,11 @@ import * as path from 'path';
 import {Transform} from 'stream';
 import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
+/**
+ * Client JSON configuration object, loaded from
+ * `src/v3/group_service_client_config.json`.
+ * This file defines retry strategy and timeouts for all API methods in this library.
+ */
 import * as gapicConfig from './group_service_client_config.json';
 
 const version = require('../../../package.json').version;
@@ -94,9 +99,9 @@ export class GroupServiceClient {
    *     your project ID will be detected automatically.
    * @param {string} [options.apiEndpoint] - The domain name of the
    *     API remote host.
-   * @param {gax.ClientConfig} [options.clientConfig] - client configuration override.
-   *     Follows the structure of `group_service_client_config.json`.
-   * @param {boolean} fallback - Use HTTP fallback mode.
+   * @param {gax.ClientConfig} [options.clientConfig] - Client configuration override.
+   *     Follows the structure of {@link gapicConfig}.
+   * @param {boolean} [options.fallback] - Use HTTP fallback mode.
    *     In fallback mode, a special browser-compatible transport implementation is used
    *     instead of gRPC transport. In browser context (if the `window` object is defined)
    *     the fallback mode is enabled automatically; set `options.fallback` to `false`
@@ -109,6 +114,7 @@ export class GroupServiceClient {
       opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
     const port = opts?.port || staticMembers.port;
     const clientConfig = opts?.clientConfig ?? {};
+    // eslint-disable-next-line no-undef
     const fallback =
       opts?.fallback ??
       (typeof window !== 'undefined' && typeof window.fetch !== 'undefined');
@@ -403,7 +409,7 @@ export class GroupServiceClient {
   // -------------------
   getGroup(
     request: protos.google.monitoring.v3.IGetGroupRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IGroup,
@@ -413,7 +419,7 @@ export class GroupServiceClient {
   >;
   getGroup(
     request: protos.google.monitoring.v3.IGetGroupRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.IGroup,
       protos.google.monitoring.v3.IGetGroupRequest | null | undefined,
@@ -450,7 +456,7 @@ export class GroupServiceClient {
   getGroup(
     request: protos.google.monitoring.v3.IGetGroupRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.IGroup,
           protos.google.monitoring.v3.IGetGroupRequest | null | undefined,
@@ -469,12 +475,12 @@ export class GroupServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -489,7 +495,7 @@ export class GroupServiceClient {
   }
   createGroup(
     request: protos.google.monitoring.v3.ICreateGroupRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IGroup,
@@ -499,7 +505,7 @@ export class GroupServiceClient {
   >;
   createGroup(
     request: protos.google.monitoring.v3.ICreateGroupRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.IGroup,
       protos.google.monitoring.v3.ICreateGroupRequest | null | undefined,
@@ -541,7 +547,7 @@ export class GroupServiceClient {
   createGroup(
     request: protos.google.monitoring.v3.ICreateGroupRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.IGroup,
           protos.google.monitoring.v3.ICreateGroupRequest | null | undefined,
@@ -560,12 +566,12 @@ export class GroupServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -580,7 +586,7 @@ export class GroupServiceClient {
   }
   updateGroup(
     request: protos.google.monitoring.v3.IUpdateGroupRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IGroup,
@@ -590,7 +596,7 @@ export class GroupServiceClient {
   >;
   updateGroup(
     request: protos.google.monitoring.v3.IUpdateGroupRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.IGroup,
       protos.google.monitoring.v3.IUpdateGroupRequest | null | undefined,
@@ -629,7 +635,7 @@ export class GroupServiceClient {
   updateGroup(
     request: protos.google.monitoring.v3.IUpdateGroupRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.IGroup,
           protos.google.monitoring.v3.IUpdateGroupRequest | null | undefined,
@@ -648,12 +654,12 @@ export class GroupServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -668,7 +674,7 @@ export class GroupServiceClient {
   }
   deleteGroup(
     request: protos.google.monitoring.v3.IDeleteGroupRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.protobuf.IEmpty,
@@ -678,7 +684,7 @@ export class GroupServiceClient {
   >;
   deleteGroup(
     request: protos.google.monitoring.v3.IDeleteGroupRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.protobuf.IEmpty,
       protos.google.monitoring.v3.IDeleteGroupRequest | null | undefined,
@@ -719,7 +725,7 @@ export class GroupServiceClient {
   deleteGroup(
     request: protos.google.monitoring.v3.IDeleteGroupRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.protobuf.IEmpty,
           protos.google.monitoring.v3.IDeleteGroupRequest | null | undefined,
@@ -738,12 +744,12 @@ export class GroupServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -759,7 +765,7 @@ export class GroupServiceClient {
 
   listGroups(
     request: protos.google.monitoring.v3.IListGroupsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IGroup[],
@@ -769,7 +775,7 @@ export class GroupServiceClient {
   >;
   listGroups(
     request: protos.google.monitoring.v3.IListGroupsRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: PaginationCallback<
       protos.google.monitoring.v3.IListGroupsRequest,
       protos.google.monitoring.v3.IListGroupsResponse | null | undefined,
@@ -839,7 +845,7 @@ export class GroupServiceClient {
   listGroups(
     request: protos.google.monitoring.v3.IListGroupsRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | PaginationCallback<
           protos.google.monitoring.v3.IListGroupsRequest,
           protos.google.monitoring.v3.IListGroupsResponse | null | undefined,
@@ -858,12 +864,12 @@ export class GroupServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -929,7 +935,7 @@ export class GroupServiceClient {
    */
   listGroupsStream(
     request?: protos.google.monitoring.v3.IListGroupsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Transform {
     request = request || {};
     options = options || {};
@@ -1007,7 +1013,7 @@ export class GroupServiceClient {
    */
   listGroupsAsync(
     request?: protos.google.monitoring.v3.IListGroupsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): AsyncIterable<protos.google.monitoring.v3.IGroup> {
     request = request || {};
     options = options || {};
@@ -1029,7 +1035,7 @@ export class GroupServiceClient {
   }
   listGroupMembers(
     request: protos.google.monitoring.v3.IListGroupMembersRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.api.IMonitoredResource[],
@@ -1039,7 +1045,7 @@ export class GroupServiceClient {
   >;
   listGroupMembers(
     request: protos.google.monitoring.v3.IListGroupMembersRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: PaginationCallback<
       protos.google.monitoring.v3.IListGroupMembersRequest,
       protos.google.monitoring.v3.IListGroupMembersResponse | null | undefined,
@@ -1099,7 +1105,7 @@ export class GroupServiceClient {
   listGroupMembers(
     request: protos.google.monitoring.v3.IListGroupMembersRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | PaginationCallback<
           protos.google.monitoring.v3.IListGroupMembersRequest,
           | protos.google.monitoring.v3.IListGroupMembersResponse
@@ -1120,12 +1126,12 @@ export class GroupServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1181,7 +1187,7 @@ export class GroupServiceClient {
    */
   listGroupMembersStream(
     request?: protos.google.monitoring.v3.IListGroupMembersRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Transform {
     request = request || {};
     options = options || {};
@@ -1249,7 +1255,7 @@ export class GroupServiceClient {
    */
   listGroupMembersAsync(
     request?: protos.google.monitoring.v3.IListGroupMembersRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): AsyncIterable<protos.google.api.IMonitoredResource> {
     request = request || {};
     options = options || {};

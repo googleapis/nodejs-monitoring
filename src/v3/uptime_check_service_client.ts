@@ -30,6 +30,11 @@ import * as path from 'path';
 import {Transform} from 'stream';
 import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
+/**
+ * Client JSON configuration object, loaded from
+ * `src/v3/uptime_check_service_client_config.json`.
+ * This file defines retry strategy and timeouts for all API methods in this library.
+ */
 import * as gapicConfig from './uptime_check_service_client_config.json';
 
 const version = require('../../../package.json').version;
@@ -90,9 +95,9 @@ export class UptimeCheckServiceClient {
    *     your project ID will be detected automatically.
    * @param {string} [options.apiEndpoint] - The domain name of the
    *     API remote host.
-   * @param {gax.ClientConfig} [options.clientConfig] - client configuration override.
-   *     Follows the structure of `uptime_check_service_client_config.json`.
-   * @param {boolean} fallback - Use HTTP fallback mode.
+   * @param {gax.ClientConfig} [options.clientConfig] - Client configuration override.
+   *     Follows the structure of {@link gapicConfig}.
+   * @param {boolean} [options.fallback] - Use HTTP fallback mode.
    *     In fallback mode, a special browser-compatible transport implementation is used
    *     instead of gRPC transport. In browser context (if the `window` object is defined)
    *     the fallback mode is enabled automatically; set `options.fallback` to `false`
@@ -105,6 +110,7 @@ export class UptimeCheckServiceClient {
       opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
     const port = opts?.port || staticMembers.port;
     const clientConfig = opts?.clientConfig ?? {};
+    // eslint-disable-next-line no-undef
     const fallback =
       opts?.fallback ??
       (typeof window !== 'undefined' && typeof window.fetch !== 'undefined');
@@ -399,7 +405,7 @@ export class UptimeCheckServiceClient {
   // -------------------
   getUptimeCheckConfig(
     request: protos.google.monitoring.v3.IGetUptimeCheckConfigRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IUptimeCheckConfig,
@@ -409,7 +415,7 @@ export class UptimeCheckServiceClient {
   >;
   getUptimeCheckConfig(
     request: protos.google.monitoring.v3.IGetUptimeCheckConfigRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.IUptimeCheckConfig,
       | protos.google.monitoring.v3.IGetUptimeCheckConfigRequest
@@ -450,7 +456,7 @@ export class UptimeCheckServiceClient {
   getUptimeCheckConfig(
     request: protos.google.monitoring.v3.IGetUptimeCheckConfigRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.IUptimeCheckConfig,
           | protos.google.monitoring.v3.IGetUptimeCheckConfigRequest
@@ -473,12 +479,12 @@ export class UptimeCheckServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -493,7 +499,7 @@ export class UptimeCheckServiceClient {
   }
   createUptimeCheckConfig(
     request: protos.google.monitoring.v3.ICreateUptimeCheckConfigRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IUptimeCheckConfig,
@@ -503,7 +509,7 @@ export class UptimeCheckServiceClient {
   >;
   createUptimeCheckConfig(
     request: protos.google.monitoring.v3.ICreateUptimeCheckConfigRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.IUptimeCheckConfig,
       | protos.google.monitoring.v3.ICreateUptimeCheckConfigRequest
@@ -546,7 +552,7 @@ export class UptimeCheckServiceClient {
   createUptimeCheckConfig(
     request: protos.google.monitoring.v3.ICreateUptimeCheckConfigRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.IUptimeCheckConfig,
           | protos.google.monitoring.v3.ICreateUptimeCheckConfigRequest
@@ -569,12 +575,12 @@ export class UptimeCheckServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -593,7 +599,7 @@ export class UptimeCheckServiceClient {
   }
   updateUptimeCheckConfig(
     request: protos.google.monitoring.v3.IUpdateUptimeCheckConfigRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IUptimeCheckConfig,
@@ -603,7 +609,7 @@ export class UptimeCheckServiceClient {
   >;
   updateUptimeCheckConfig(
     request: protos.google.monitoring.v3.IUpdateUptimeCheckConfigRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.IUptimeCheckConfig,
       | protos.google.monitoring.v3.IUpdateUptimeCheckConfigRequest
@@ -660,7 +666,7 @@ export class UptimeCheckServiceClient {
   updateUptimeCheckConfig(
     request: protos.google.monitoring.v3.IUpdateUptimeCheckConfigRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.IUptimeCheckConfig,
           | protos.google.monitoring.v3.IUpdateUptimeCheckConfigRequest
@@ -683,12 +689,12 @@ export class UptimeCheckServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -707,7 +713,7 @@ export class UptimeCheckServiceClient {
   }
   deleteUptimeCheckConfig(
     request: protos.google.monitoring.v3.IDeleteUptimeCheckConfigRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.protobuf.IEmpty,
@@ -717,7 +723,7 @@ export class UptimeCheckServiceClient {
   >;
   deleteUptimeCheckConfig(
     request: protos.google.monitoring.v3.IDeleteUptimeCheckConfigRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.protobuf.IEmpty,
       | protos.google.monitoring.v3.IDeleteUptimeCheckConfigRequest
@@ -760,7 +766,7 @@ export class UptimeCheckServiceClient {
   deleteUptimeCheckConfig(
     request: protos.google.monitoring.v3.IDeleteUptimeCheckConfigRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.protobuf.IEmpty,
           | protos.google.monitoring.v3.IDeleteUptimeCheckConfigRequest
@@ -783,12 +789,12 @@ export class UptimeCheckServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -808,7 +814,7 @@ export class UptimeCheckServiceClient {
 
   listUptimeCheckConfigs(
     request: protos.google.monitoring.v3.IListUptimeCheckConfigsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IUptimeCheckConfig[],
@@ -818,7 +824,7 @@ export class UptimeCheckServiceClient {
   >;
   listUptimeCheckConfigs(
     request: protos.google.monitoring.v3.IListUptimeCheckConfigsRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: PaginationCallback<
       protos.google.monitoring.v3.IListUptimeCheckConfigsRequest,
       | protos.google.monitoring.v3.IListUptimeCheckConfigsResponse
@@ -872,7 +878,7 @@ export class UptimeCheckServiceClient {
   listUptimeCheckConfigs(
     request: protos.google.monitoring.v3.IListUptimeCheckConfigsRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | PaginationCallback<
           protos.google.monitoring.v3.IListUptimeCheckConfigsRequest,
           | protos.google.monitoring.v3.IListUptimeCheckConfigsResponse
@@ -895,12 +901,12 @@ export class UptimeCheckServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -949,7 +955,7 @@ export class UptimeCheckServiceClient {
    */
   listUptimeCheckConfigsStream(
     request?: protos.google.monitoring.v3.IListUptimeCheckConfigsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Transform {
     request = request || {};
     options = options || {};
@@ -1006,7 +1012,7 @@ export class UptimeCheckServiceClient {
    */
   listUptimeCheckConfigsAsync(
     request?: protos.google.monitoring.v3.IListUptimeCheckConfigsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): AsyncIterable<protos.google.monitoring.v3.IUptimeCheckConfig> {
     request = request || {};
     options = options || {};
@@ -1028,7 +1034,7 @@ export class UptimeCheckServiceClient {
   }
   listUptimeCheckIps(
     request: protos.google.monitoring.v3.IListUptimeCheckIpsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IUptimeCheckIp[],
@@ -1038,7 +1044,7 @@ export class UptimeCheckServiceClient {
   >;
   listUptimeCheckIps(
     request: protos.google.monitoring.v3.IListUptimeCheckIpsRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: PaginationCallback<
       protos.google.monitoring.v3.IListUptimeCheckIpsRequest,
       | protos.google.monitoring.v3.IListUptimeCheckIpsResponse
@@ -1089,7 +1095,7 @@ export class UptimeCheckServiceClient {
   listUptimeCheckIps(
     request: protos.google.monitoring.v3.IListUptimeCheckIpsRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | PaginationCallback<
           protos.google.monitoring.v3.IListUptimeCheckIpsRequest,
           | protos.google.monitoring.v3.IListUptimeCheckIpsResponse
@@ -1112,12 +1118,12 @@ export class UptimeCheckServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     this.initialize();
@@ -1153,7 +1159,7 @@ export class UptimeCheckServiceClient {
    */
   listUptimeCheckIpsStream(
     request?: protos.google.monitoring.v3.IListUptimeCheckIpsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Transform {
     request = request || {};
     options = options || {};
@@ -1201,7 +1207,7 @@ export class UptimeCheckServiceClient {
    */
   listUptimeCheckIpsAsync(
     request?: protos.google.monitoring.v3.IListUptimeCheckIpsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): AsyncIterable<protos.google.monitoring.v3.IUptimeCheckIp> {
     request = request || {};
     options = options || {};

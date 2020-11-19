@@ -30,6 +30,11 @@ import * as path from 'path';
 import {Transform} from 'stream';
 import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
+/**
+ * Client JSON configuration object, loaded from
+ * `src/v3/notification_channel_service_client_config.json`.
+ * This file defines retry strategy and timeouts for all API methods in this library.
+ */
 import * as gapicConfig from './notification_channel_service_client_config.json';
 
 const version = require('../../../package.json').version;
@@ -84,9 +89,9 @@ export class NotificationChannelServiceClient {
    *     your project ID will be detected automatically.
    * @param {string} [options.apiEndpoint] - The domain name of the
    *     API remote host.
-   * @param {gax.ClientConfig} [options.clientConfig] - client configuration override.
-   *     Follows the structure of `notification_channel_service_client_config.json`.
-   * @param {boolean} fallback - Use HTTP fallback mode.
+   * @param {gax.ClientConfig} [options.clientConfig] - Client configuration override.
+   *     Follows the structure of {@link gapicConfig}.
+   * @param {boolean} [options.fallback] - Use HTTP fallback mode.
    *     In fallback mode, a special browser-compatible transport implementation is used
    *     instead of gRPC transport. In browser context (if the `window` object is defined)
    *     the fallback mode is enabled automatically; set `options.fallback` to `false`
@@ -100,6 +105,7 @@ export class NotificationChannelServiceClient {
       opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
     const port = opts?.port || staticMembers.port;
     const clientConfig = opts?.clientConfig ?? {};
+    // eslint-disable-next-line no-undef
     const fallback =
       opts?.fallback ??
       (typeof window !== 'undefined' && typeof window.fetch !== 'undefined');
@@ -398,7 +404,7 @@ export class NotificationChannelServiceClient {
   // -------------------
   getNotificationChannelDescriptor(
     request: protos.google.monitoring.v3.IGetNotificationChannelDescriptorRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.INotificationChannelDescriptor,
@@ -411,7 +417,7 @@ export class NotificationChannelServiceClient {
   >;
   getNotificationChannelDescriptor(
     request: protos.google.monitoring.v3.IGetNotificationChannelDescriptorRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.INotificationChannelDescriptor,
       | protos.google.monitoring.v3.IGetNotificationChannelDescriptorRequest
@@ -453,7 +459,7 @@ export class NotificationChannelServiceClient {
   getNotificationChannelDescriptor(
     request: protos.google.monitoring.v3.IGetNotificationChannelDescriptorRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.INotificationChannelDescriptor,
           | protos.google.monitoring.v3.IGetNotificationChannelDescriptorRequest
@@ -479,12 +485,12 @@ export class NotificationChannelServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -503,7 +509,7 @@ export class NotificationChannelServiceClient {
   }
   getNotificationChannel(
     request: protos.google.monitoring.v3.IGetNotificationChannelRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.INotificationChannel,
@@ -513,7 +519,7 @@ export class NotificationChannelServiceClient {
   >;
   getNotificationChannel(
     request: protos.google.monitoring.v3.IGetNotificationChannelRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.INotificationChannel,
       | protos.google.monitoring.v3.IGetNotificationChannelRequest
@@ -558,7 +564,7 @@ export class NotificationChannelServiceClient {
   getNotificationChannel(
     request: protos.google.monitoring.v3.IGetNotificationChannelRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.INotificationChannel,
           | protos.google.monitoring.v3.IGetNotificationChannelRequest
@@ -581,12 +587,12 @@ export class NotificationChannelServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -605,7 +611,7 @@ export class NotificationChannelServiceClient {
   }
   createNotificationChannel(
     request: protos.google.monitoring.v3.ICreateNotificationChannelRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.INotificationChannel,
@@ -615,7 +621,7 @@ export class NotificationChannelServiceClient {
   >;
   createNotificationChannel(
     request: protos.google.monitoring.v3.ICreateNotificationChannelRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.INotificationChannel,
       | protos.google.monitoring.v3.ICreateNotificationChannelRequest
@@ -664,7 +670,7 @@ export class NotificationChannelServiceClient {
   createNotificationChannel(
     request: protos.google.monitoring.v3.ICreateNotificationChannelRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.INotificationChannel,
           | protos.google.monitoring.v3.ICreateNotificationChannelRequest
@@ -687,12 +693,12 @@ export class NotificationChannelServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -711,7 +717,7 @@ export class NotificationChannelServiceClient {
   }
   updateNotificationChannel(
     request: protos.google.monitoring.v3.IUpdateNotificationChannelRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.INotificationChannel,
@@ -721,7 +727,7 @@ export class NotificationChannelServiceClient {
   >;
   updateNotificationChannel(
     request: protos.google.monitoring.v3.IUpdateNotificationChannelRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.INotificationChannel,
       | protos.google.monitoring.v3.IUpdateNotificationChannelRequest
@@ -766,7 +772,7 @@ export class NotificationChannelServiceClient {
   updateNotificationChannel(
     request: protos.google.monitoring.v3.IUpdateNotificationChannelRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.INotificationChannel,
           | protos.google.monitoring.v3.IUpdateNotificationChannelRequest
@@ -789,12 +795,12 @@ export class NotificationChannelServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -813,7 +819,7 @@ export class NotificationChannelServiceClient {
   }
   deleteNotificationChannel(
     request: protos.google.monitoring.v3.IDeleteNotificationChannelRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.protobuf.IEmpty,
@@ -823,7 +829,7 @@ export class NotificationChannelServiceClient {
   >;
   deleteNotificationChannel(
     request: protos.google.monitoring.v3.IDeleteNotificationChannelRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.protobuf.IEmpty,
       | protos.google.monitoring.v3.IDeleteNotificationChannelRequest
@@ -869,7 +875,7 @@ export class NotificationChannelServiceClient {
   deleteNotificationChannel(
     request: protos.google.monitoring.v3.IDeleteNotificationChannelRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.protobuf.IEmpty,
           | protos.google.monitoring.v3.IDeleteNotificationChannelRequest
@@ -892,12 +898,12 @@ export class NotificationChannelServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -916,7 +922,7 @@ export class NotificationChannelServiceClient {
   }
   sendNotificationChannelVerificationCode(
     request: protos.google.monitoring.v3.ISendNotificationChannelVerificationCodeRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.protobuf.IEmpty,
@@ -929,7 +935,7 @@ export class NotificationChannelServiceClient {
   >;
   sendNotificationChannelVerificationCode(
     request: protos.google.monitoring.v3.ISendNotificationChannelVerificationCodeRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.protobuf.IEmpty,
       | protos.google.monitoring.v3.ISendNotificationChannelVerificationCodeRequest
@@ -969,7 +975,7 @@ export class NotificationChannelServiceClient {
   sendNotificationChannelVerificationCode(
     request: protos.google.monitoring.v3.ISendNotificationChannelVerificationCodeRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.protobuf.IEmpty,
           | protos.google.monitoring.v3.ISendNotificationChannelVerificationCodeRequest
@@ -995,12 +1001,12 @@ export class NotificationChannelServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1019,7 +1025,7 @@ export class NotificationChannelServiceClient {
   }
   getNotificationChannelVerificationCode(
     request: protos.google.monitoring.v3.IGetNotificationChannelVerificationCodeRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.IGetNotificationChannelVerificationCodeResponse,
@@ -1032,7 +1038,7 @@ export class NotificationChannelServiceClient {
   >;
   getNotificationChannelVerificationCode(
     request: protos.google.monitoring.v3.IGetNotificationChannelVerificationCodeRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.IGetNotificationChannelVerificationCodeResponse,
       | protos.google.monitoring.v3.IGetNotificationChannelVerificationCodeRequest
@@ -1103,7 +1109,7 @@ export class NotificationChannelServiceClient {
   getNotificationChannelVerificationCode(
     request: protos.google.monitoring.v3.IGetNotificationChannelVerificationCodeRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.IGetNotificationChannelVerificationCodeResponse,
           | protos.google.monitoring.v3.IGetNotificationChannelVerificationCodeRequest
@@ -1129,12 +1135,12 @@ export class NotificationChannelServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1153,7 +1159,7 @@ export class NotificationChannelServiceClient {
   }
   verifyNotificationChannel(
     request: protos.google.monitoring.v3.IVerifyNotificationChannelRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.INotificationChannel,
@@ -1163,7 +1169,7 @@ export class NotificationChannelServiceClient {
   >;
   verifyNotificationChannel(
     request: protos.google.monitoring.v3.IVerifyNotificationChannelRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.monitoring.v3.INotificationChannel,
       | protos.google.monitoring.v3.IVerifyNotificationChannelRequest
@@ -1212,7 +1218,7 @@ export class NotificationChannelServiceClient {
   verifyNotificationChannel(
     request: protos.google.monitoring.v3.IVerifyNotificationChannelRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.monitoring.v3.INotificationChannel,
           | protos.google.monitoring.v3.IVerifyNotificationChannelRequest
@@ -1235,12 +1241,12 @@ export class NotificationChannelServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1260,7 +1266,7 @@ export class NotificationChannelServiceClient {
 
   listNotificationChannelDescriptors(
     request: protos.google.monitoring.v3.IListNotificationChannelDescriptorsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.INotificationChannelDescriptor[],
@@ -1270,7 +1276,7 @@ export class NotificationChannelServiceClient {
   >;
   listNotificationChannelDescriptors(
     request: protos.google.monitoring.v3.IListNotificationChannelDescriptorsRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: PaginationCallback<
       protos.google.monitoring.v3.IListNotificationChannelDescriptorsRequest,
       | protos.google.monitoring.v3.IListNotificationChannelDescriptorsResponse
@@ -1329,7 +1335,7 @@ export class NotificationChannelServiceClient {
   listNotificationChannelDescriptors(
     request: protos.google.monitoring.v3.IListNotificationChannelDescriptorsRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | PaginationCallback<
           protos.google.monitoring.v3.IListNotificationChannelDescriptorsRequest,
           | protos.google.monitoring.v3.IListNotificationChannelDescriptorsResponse
@@ -1352,12 +1358,12 @@ export class NotificationChannelServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1411,7 +1417,7 @@ export class NotificationChannelServiceClient {
    */
   listNotificationChannelDescriptorsStream(
     request?: protos.google.monitoring.v3.IListNotificationChannelDescriptorsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Transform {
     request = request || {};
     options = options || {};
@@ -1473,7 +1479,7 @@ export class NotificationChannelServiceClient {
    */
   listNotificationChannelDescriptorsAsync(
     request?: protos.google.monitoring.v3.IListNotificationChannelDescriptorsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): AsyncIterable<protos.google.monitoring.v3.INotificationChannelDescriptor> {
     request = request || {};
     options = options || {};
@@ -1497,7 +1503,7 @@ export class NotificationChannelServiceClient {
   }
   listNotificationChannels(
     request: protos.google.monitoring.v3.IListNotificationChannelsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.monitoring.v3.INotificationChannel[],
@@ -1507,7 +1513,7 @@ export class NotificationChannelServiceClient {
   >;
   listNotificationChannels(
     request: protos.google.monitoring.v3.IListNotificationChannelsRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: PaginationCallback<
       protos.google.monitoring.v3.IListNotificationChannelsRequest,
       | protos.google.monitoring.v3.IListNotificationChannelsResponse
@@ -1579,7 +1585,7 @@ export class NotificationChannelServiceClient {
   listNotificationChannels(
     request: protos.google.monitoring.v3.IListNotificationChannelsRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | PaginationCallback<
           protos.google.monitoring.v3.IListNotificationChannelsRequest,
           | protos.google.monitoring.v3.IListNotificationChannelsResponse
@@ -1602,12 +1608,12 @@ export class NotificationChannelServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1675,7 +1681,7 @@ export class NotificationChannelServiceClient {
    */
   listNotificationChannelsStream(
     request?: protos.google.monitoring.v3.IListNotificationChannelsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Transform {
     request = request || {};
     options = options || {};
@@ -1751,7 +1757,7 @@ export class NotificationChannelServiceClient {
    */
   listNotificationChannelsAsync(
     request?: protos.google.monitoring.v3.IListNotificationChannelsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): AsyncIterable<protos.google.monitoring.v3.INotificationChannel> {
     request = request || {};
     options = options || {};
