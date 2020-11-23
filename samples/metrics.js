@@ -185,9 +185,12 @@ async function writeTimeSeriesData(projectId) {
       },
     },
     resource: {
-      type: 'global',
+      type: 'generic_task',
       labels: {
-        project_id: projectId,
+        location: 'us-east1-a',
+        namespace: 'default',
+        job: 'daily',
+        task_id: '1',
       },
     },
     points: [dataPoint],
@@ -236,7 +239,9 @@ async function readTimeSeriesData(projectId, filter) {
   // Writes time series data
   const [timeSeries] = await client.listTimeSeries(request);
   timeSeries.forEach(data => {
-    console.log(`${data.metric.labels.instance_name}:`);
+    console.log(
+      `${data.metric.labels.store_id} ${data.resource.type} ${data.resource.labels.task_id}:`
+    );
     data.points.forEach(point => {
       console.log(JSON.stringify(point.value));
     });
@@ -260,7 +265,8 @@ async function readTimeSeriesFields(projectId) {
 
   const request = {
     name: client.projectPath(projectId),
-    filter: 'metric.type="compute.googleapis.com/instance/cpu/utilization"',
+    filter:
+      'metric.type="compute.googleapis.com/instance/cpu/utilization" resource.type="gce_instance"',
     interval: {
       startTime: {
         // Limit results to the last 20 minutes
@@ -300,7 +306,8 @@ async function readTimeSeriesAggregate(projectId) {
 
   const request = {
     name: client.projectPath(projectId),
-    filter: 'metric.type="compute.googleapis.com/instance/cpu/utilization"',
+    filter:
+      'metric.type="compute.googleapis.com/instance/cpu/utilization" resource.type="gce_instance"',
     interval: {
       startTime: {
         // Limit results to the last 20 minutes
@@ -348,7 +355,8 @@ async function readTimeSeriesReduce(projectId) {
 
   const request = {
     name: client.projectPath(projectId),
-    filter: 'metric.type="compute.googleapis.com/instance/cpu/utilization"',
+    filter:
+      'metric.type="compute.googleapis.com/instance/cpu/utilization" resource.type="gce_instance"',
     interval: {
       startTime: {
         // Limit results to the last 20 minutes
@@ -533,7 +541,7 @@ const cli = require('yargs')
   .example('node $0 get-resource cloudsql_database')
   .example('node $0 write')
   .example(
-    'node $0 read \'metric.type="compute.googleapis.com/instance/cpu/utilization"\''
+    'node $0 read \'metric.type="compute.googleapis.com/instance/cpu/utilization" resource.type="gce_instance"\''
   )
   .example('node $0 read-fields')
   .example('node $0 read-aggregate')

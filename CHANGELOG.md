@@ -4,6 +4,40 @@
 
 [1]: https://www.npmjs.com/package/@google-cloud/monitoring?activeTab=versions
 
+### [2.1.3](https://www.github.com/googleapis/nodejs-monitoring/compare/v2.1.2...v2.1.3) (2020-11-07)
+
+
+### Bug Fixes
+
+* do not modify options object, use defaultScopes ([#497](https://www.github.com/googleapis/nodejs-monitoring/issues/497)) ([447cfce](https://www.github.com/googleapis/nodejs-monitoring/commit/447cfce75ed11d66e254d72d105252e8b0ed0a3c))
+
+### [2.1.2](https://www.github.com/googleapis/nodejs-monitoring/compare/v2.1.1...v2.1.2) (2020-09-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency yargs to v16 ([#480](https://www.github.com/googleapis/nodejs-monitoring/issues/480)) ([188c55a](https://www.github.com/googleapis/nodejs-monitoring/commit/188c55a4126fbf2180fa116985bf3cbdd3c46ce8))
+
+### [2.1.1](https://www.github.com/googleapis/nodejs-monitoring/compare/v2.1.0...v2.1.1) (2020-07-24)
+
+
+### Bug Fixes
+
+* move gitattributes files to node templates ([#464](https://www.github.com/googleapis/nodejs-monitoring/issues/464)) ([db2d19d](https://www.github.com/googleapis/nodejs-monitoring/commit/db2d19d9170eb10d8f2c779589e623222991d393))
+
+## [2.1.0](https://www.github.com/googleapis/nodejs-monitoring/compare/v2.0.0...v2.1.0) (2020-06-18)
+
+
+### Features
+
+* move ts target to es2018 from es2016 ([#440](https://www.github.com/googleapis/nodejs-monitoring/issues/440)) ([f57200d](https://www.github.com/googleapis/nodejs-monitoring/commit/f57200d611a52fe1ba4c3646978f3034ee6df412))
+
+
+### Bug Fixes
+
+* proper fallback option handling ([81f52b7](https://www.github.com/googleapis/nodejs-monitoring/commit/81f52b7a697ac4f953644a81ad13aaff4b19570f))
+* update node issue template ([#447](https://www.github.com/googleapis/nodejs-monitoring/issues/447)) ([5f08bf8](https://www.github.com/googleapis/nodejs-monitoring/commit/5f08bf88f8caa969800582d6eb408759ba240278))
+
 ## [2.0.0](https://www.github.com/googleapis/nodejs-monitoring/compare/v1.7.0...v2.0.0) (2020-05-08)
 
 
