@@ -254,19 +254,21 @@ async function enablePolicies(projectId, enabled, filter) {
   };
 
   const [policies] = await client.listAlertPolicies(listAlertPoliciesRequest);
-  var responses = [];
+  const responses = [];
   for (const policy of policies) {
-    responses.push(await client.updateAlertPolicy({
-      updateMask: {
-        paths: ['enabled'],
-      },
-      alertPolicy: {
-        name: policy.name,
-        enabled: {
-          value: enabled,
+    responses.push(
+      await client.updateAlertPolicy({
+        updateMask: {
+          paths: ['enabled'],
         },
-      },
-    }));
+        alertPolicy: {
+          name: policy.name,
+          enabled: {
+            value: enabled,
+          },
+        },
+      })
+    );
   }
   responses.forEach(response => {
     const alertPolicy = response[0];
