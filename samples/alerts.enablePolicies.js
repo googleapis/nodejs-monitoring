@@ -15,6 +15,8 @@
 'use strict';
 
 function main(projectId, enabled, filter) {
+  enabled = enabled === 'true';
+
   // [START monitoring_alert_enable_policies]
   // Imports the Google Cloud client library
   const monitoring = require('@google-cloud/monitoring');

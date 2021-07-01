@@ -43,7 +43,7 @@ describe('quickstart', () => {
   it('should run the quickstart', async function () {
     this.retries(8);
     await delay(this.test); // delay the start of the test, if this is a retry.
-    const result = execSync(`node quickstart ${projectId}`);
+    const result = execSync(`node quickstart.js ${projectId}`);
     assert.match(result, /Done writing time series data/);
   });
 });

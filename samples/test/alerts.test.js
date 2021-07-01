@@ -177,15 +177,19 @@ describe('alerts', () => {
   it('should replace notification channels', async function () {
     this.retries(8);
     await delay(this.test);
+    const parts = policyOneName.split('/');
+    const projectId = parts[1];
+    const alertPolicyId = parts[3];
+    const channelId = channelName.split('/')[3];
     const stdout = execSync(
-      `node alerts.replaceChannels.js ${policyOneName} ${channelName}`
+      `node alerts.replaceChannels.js ${projectId} ${alertPolicyId} ${channelId}`
     );
     assert.include(stdout, 'Updated projects');
     assert.include(stdout, policyOneName);
   });
 
   it('should disable policies', async function () {
-    this.retries(8);
+    //this.retries(8);
     await delay(this.test);
     const stdout = execSync(
       `node alerts.enablePolicies.js ${projectId} false 'display_name.size < 28'`
@@ -217,7 +221,7 @@ describe('alerts', () => {
   it('should backup all policies', async function () {
     this.retries(8);
     await delay(this.test);
-    const output = execSync(`node backupPolicies.js ${projectId}`);
+    const output = execSync(`node alerts.backupPolicies.js ${projectId}`);
     assert.include(output, 'Saved policies to ./policies_backup.json');
     assert.ok(fs.existsSync(path.join(__dirname, '../policies_backup.json')));
     await client.deleteAlertPolicy({name: policyOneName});
@@ -226,7 +230,7 @@ describe('alerts', () => {
   it('should restore policies', async function () {
     this.retries(8);
     await delay(this.test);
-    const output = execSync(`node restorePolicies.js ${projectId}`);
+    const output = execSync(`node alerts.restorePolicies.js ${projectId}`);
     assert.include(output, 'Loading policies from ./policies_backup.json');
     const matches = output.match(
       /projects\/[A-Za-z0-9-]+\/alertPolicies\/([\d]+)/gi

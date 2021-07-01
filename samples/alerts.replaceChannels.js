@@ -14,7 +14,7 @@
 
 'use strict';
 
-function main(projectId, alertPolicyId, channelIds) {
+function main(projectId, alertPolicyId, ...channelIds) {
   // [START monitoring_alert_replace_channels]
   // [START monitoring_alert_enable_channel]
   // [START monitoring_alert_update_channel]
