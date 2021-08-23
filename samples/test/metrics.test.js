@@ -50,7 +50,7 @@ describe('metrics', async () => {
   it('should create a metric descriptors', async function () {
     this.retries(8);
     await delay(this.test);
-    const output = execSync('node metrics.createDescriptor.js');
+    const output = execSync(`node metrics.createDescriptor.js ${projectId}`);
     assert.include(output, 'Created custom Metric');
     assert.include(output, `Type: ${customMetricId}`);
   });
