@@ -12,5 +12,5 @@
   "name_pretty": "Stackdriver Monitoring",
   "default_version": "v3",
   "api_shortname": "monitoring",
-  "library_type": ""
+  "library_type": "GAPIC_AUTO"
 }
