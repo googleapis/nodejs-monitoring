@@ -43,7 +43,7 @@ const delay = async test => {
   });
 };
 
-describe('alerts', () => {
+describe.skip('alerts', () => {
   before(async () => {
     projectId = await client.getProjectId();
     await reapPolicies();
